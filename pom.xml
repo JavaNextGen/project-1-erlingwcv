@@ -14,6 +14,13 @@
 	</properties>
 
 	<dependencies>
+		<!-- This dependency will let us establish JDBC (Java Database Connectivity) 211223 per Ben-->
+          <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.14</version>
+        </dependency>
+		
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>

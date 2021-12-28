@@ -20,11 +20,21 @@ public enum Status {
         public String toString() {
             return "Pending";
         }
+        
+        // to quickly get the value for DB query
+        public int toInt() {
+        	return 1;
+        }
     },
     APPROVED {
         @Override
         public String toString() {
             return "Approved";
+        }
+        
+     // to quickly get the value for DB query
+        public int toInt() {
+        	return 2;
         }
     },
     DENIED {
@@ -32,5 +42,11 @@ public enum Status {
         public String toString() {
             return "Denied";
         }
+        
+     // to quickly get the value for DB query
+        public int toInt() {
+        	return 3;
+        }
+        
     }
 }

@@ -26,10 +26,12 @@ public class AbstractUser {
     private String password;
     private Role role;
 
+    //no args constructor
     public AbstractUser() {
         super();
     }
 
+    // all args constructor
     public AbstractUser(int id, String username, String password, Role role) {
         super();
         this.id = id;
@@ -38,6 +40,17 @@ public class AbstractUser {
         this.role = role;
     }
 
+    // All args MINUS id constructor for later use with DB
+ // to quickly get the value for DB query
+   
+    public AbstractUser(String username, String password, Role role) {
+        super();
+        // this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+    
     public int getId() {
         return id;
     }
