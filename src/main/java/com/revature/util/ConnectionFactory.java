@@ -56,7 +56,7 @@ public class ConnectionFactory {
     	// hard-coding now. Later may be put into Environment Variables
     	
     	// the url per our database schema
-    	String url = "jdbc:postgresql://localhost:5432/postgres?Schema=rev1p211206"; // database schema Script-7 in Dbeaver
+    	String url = "jdbc:postgresql://localhost:5432/postgres?currentSchema=rev1p211206"; // database schema Script-7 in Dbeaver
     	// postgre does not like upper case in schema name
     	//String url = "jdbc:postgresql://localhost:5432/postgres?currentSchema=revP1_211206"; // database is my schema name
     	// postgresql username
