@@ -4,6 +4,7 @@ import com.revature.repositories.UserDAO;
 import com.revature.services.UserService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;	
 
 
@@ -25,6 +26,7 @@ public class Menu {
 	
 	public void finMgrMenu() {
 		
+		UserService us = new UserService();
 		boolean displayMenu = true; // to toggle with the menu will continue after user input
 		Scanner scan = new Scanner(System.in);  // Scanner object to parse user input
 		
@@ -71,16 +73,25 @@ public class Menu {
 			}
 			
 			case "3": {
-				System.out.println("TBD: Get Users by ID");
+				System.out.println("TBD: Get Users by username");
 				
 				Scanner scan3 = new Scanner(System.in);
 				System.out.println("Please enter the username you are looking for: ");
 				String username3 = scan.nextLine();
 //				
 //				//List<User> userByUN = uDAO.getByUsername(username3);
+				Optional<User> oubun = us.getByUsername(username3);
 //				
+				if (oubun.isPresent() ) {
+					User ubun = new  User();
+					ubun = oubun.get();
+					System.out.println(ubun.toString());
+				} else {
+					System.out.println("Username not found");
+				}
+				
 //				for (User u : userByUN) {
-//					System.out.println(e);
+//					System.out.println(u);
 //				}
 //			
 				

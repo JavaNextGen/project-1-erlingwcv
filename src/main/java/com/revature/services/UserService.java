@@ -30,8 +30,9 @@ public class UserService {
      */
 	public Optional<User> getByUsername(String username) {
 		
+		return uDAO.getByUsername(username);
 		
-		return Optional.empty();
+		//return Optional.empty();
 	}
 	
 	// for finance manager to get all users

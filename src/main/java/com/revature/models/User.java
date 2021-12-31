@@ -17,13 +17,13 @@ package com.revature.models;
 public class User extends AbstractUser {
 	
 	// fields for the User table must match those in DB table ers_users
-	//private int ers_users_id;
-	//private String ers_username;
-	//private String ers_password;
+	private int ers_users_id;
+	private String ers_username;
+	private String ers_password;
 	private String user_first_name;
 	private String user_last_name; 
 	private String user_enmail; 
-	//private Role user_role; // Not in DB ers_users table // emaployee 1, financie manager 2
+	private Role user_role; // Not in DB ers_users table // emaployee 1, financie manager 2
 	private int user_role_id; // DB ers_users_table emaployee 1, financie manager 2
 	
 	// no args constructor
@@ -58,12 +58,12 @@ public class User extends AbstractUser {
     public User(String username, String password, String user_f_name, String user_l_name, String u_email,  Role u_role) {
         super(username, password, u_role);
         
-        //this.ers_username = username;
-        //this.ers_password = password;
+        this.ers_username = username;
+        this.ers_password = password;
         this.user_first_name = user_f_name;
         this.user_last_name = user_l_name;
         this.user_enmail = u_email;
-        //this.user_role = u_role;
+        this.user_role = u_role;
     }
     
     // constructor for Finance Manager to use to see All users
@@ -71,6 +71,7 @@ public class User extends AbstractUser {
     
     public User(String username, String user_f_name, String user_l_name, String u_email,  int user_role_id) {
         super();
+        this.ers_username = username;   // it was missing and 211231 userbyid result was null
         this.user_first_name = user_f_name;
         this.user_last_name = user_l_name;
         this.user_enmail = u_email;
@@ -84,7 +85,7 @@ public class User extends AbstractUser {
     @Override
 	public String toString() {
 		return "User [ers_username=" + ers_username + ", user_first_name=" + user_first_name + ", user_last_name="
-				+ user_last_name + ", user_enmail=" + user_enmail + ", user_role=" + user_role + "]";
+				+ user_last_name + ", user_enmail=" + user_enmail + ", user_role_id=" + user_role_id + "]";
 	}
     
     
