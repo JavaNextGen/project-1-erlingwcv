@@ -6,10 +6,12 @@ import java.util.Optional;
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
 
+
+
 /**
  * The UserService should handle the processing and retrieval of Users for the ERS application.
  *
- * {@code getByUsername} is the only method required;
+ * {@code getByUsername} is the only method required; 
  * however, additional methods can be added.
  *
  * Examples:
@@ -28,6 +30,9 @@ public class UserService {
 	/**
 	 *     Should retrieve a User with the corresponding username or an empty optional if there is no match.
      */
+	
+	// Done getbyUserName 211231
+
 	public Optional<User> getByUsername(String username) {
 		
 		return uDAO.getByUsername(username);
@@ -36,9 +41,10 @@ public class UserService {
 	}
 	
 	// for finance manager to get all users
-	public Optional<User> getAllUsers() {
+	// Done getAllUsers 211231
+	public Optional<List<User>> getAllUsers() {
 		
-		uDAO.getAllDBUsers();
+		return uDAO.getAllUsers();
 		
 		// for (User u : allUsers) {
 		//	System.out.println(e);
@@ -46,8 +52,18 @@ public class UserService {
 		
 		
 		
-		return Optional.empty();
+		// return Optional.empty();
 	}
+	
+	//start 211231
+	//create new user by username...===================================================
+	public void createUser(User newu) {
+		
+		uDAO.create(newu);
+		
+		//return Optional.empty();
+	}
+	
 	
 	
 	

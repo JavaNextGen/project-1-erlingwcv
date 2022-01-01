@@ -36,5 +36,20 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- https://javalin.io/documentation 211229-->
+		<dependency>
+			<groupId>io.javalin</groupId>
+			<artifactId>javalin</artifactId>
+			<version>4.1.1</version>
+		</dependency>
+		
+		<!--  coming with Javalin or Postman 211229 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.31</version>
+		</dependency>
+		
 	</dependencies>
 </project>

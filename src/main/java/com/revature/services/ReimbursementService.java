@@ -6,6 +6,7 @@ import com.revature.models.User;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The ReimbursementService should handle the submission, processing,
@@ -13,15 +14,17 @@ import java.util.List;
  *
  * {@code process} and {@code getReimbursementsByStatus} are the minimum methods required;
  * however, additional methods can be added.
- *
+ *    
  * Examples:
  * <ul>
- *     <li>Create Reimbursement</li>
- *     <li>Update Reimbursement</li>
- *     <li>Get Reimbursements by ID</li>
- *     <li>Get Reimbursements by Author</li>
- *     <li>Get Reimbursements by Resolver</li>
- *     <li>Get All Reimbursements</li>
+ *     <li>Create Reimbursement</li>  // 
+ *     <li>Update Reimbursement</li>  // 
+ *     <li>Get Reimbursements by ID</li>  // fin mgr only
+ *     <li>Get Reimbursements by Author</li>  
+ *     <li>Get Reimbursements by Resolver</li> // fin mgr only
+ *     <li>Get All Reimbursements</li>          // fin mgr only
+ *     
+ *             getReimbursementsByStatus       // fin mgr only: required
  * </ul>
  */
 public class ReimbursementService {
@@ -44,10 +47,26 @@ public class ReimbursementService {
         return null;
     }
 
+    // ================Reimb By Status======Fin Manager Only===========================================================
     /**
      * Should retrieve all reimbursements with the correct status.
      */
-    public List<Reimbursement> getReimbursementsByStatus(Status status) {
+    public List<Reimbursement> getByStatus(Status status) {
+    	
+    	
+    	
+    	// return rDAO.getReimbursementsByStatus(status);
+    	
+    	
+    	
+    	
         return Collections.emptyList();
     }
+    
+    
+    // ================Create Reimb =================================================================================
+    
+    
+    
+    
 }

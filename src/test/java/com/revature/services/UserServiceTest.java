@@ -34,7 +34,13 @@ public class UserServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        GENERIC_EMPLOYEE_1 = new User(1, "genericEmployee1", "genericPassword", Role.EMPLOYEE);
+//      below is the model code as provided  
+    	//GENERIC_EMPLOYEE_1 = new User(1, "genericEmployee1", "genericPassword", Role.EMPLOYEE);
+        
+       // 211231 not done yet: need to find a way to convert the role data type
+        // 220101 username1, pw1
+       GENERIC_EMPLOYEE_1 = new User(1, "username1", "pw1", Role.EMPLOYEE);    
+        
     }
 
     @Test

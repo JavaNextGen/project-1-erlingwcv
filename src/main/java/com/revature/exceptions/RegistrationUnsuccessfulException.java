@@ -8,6 +8,8 @@ public class RegistrationUnsuccessfulException extends RuntimeException {
 
     public RegistrationUnsuccessfulException(String message) {
         super(message);
+        // 220101 
+        System.out.println(message);
     }
 
     public RegistrationUnsuccessfulException(String message, Throwable cause) {
