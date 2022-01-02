@@ -97,6 +97,56 @@ public class ReimbursementDAO {
     	return Collections.emptyList();
     }
 
+    
+    
+    // create a Reimbursement ========================================================================
+    
+//    this.reimb_author = author_id;  // int
+//	this.reimb_amount = amount; // double, required
+//	this.reimb_description = desc; // string required
+//	this.reimb_receipt = receipt; // blob
+//	this.reimb_type_id = type_id; // int required -reimb type
+//    
+    
+    // NO BLOB new request
+    public void createReimb(Reimbursement newReimb) {
+    	
+    	try(Connection conn  = ConnectionFactory.getConnection()) {
+    		String sql = "INSERT INTO ers_reimbursement (reimb_author, reimb_amount, reimb_description, reimb_type_id, reimb_status_id, reimb_submitted) VALUES (?,?,?,?,?,?)";
+    		// insert by fields only, not by SQL stmt
+    		PreparedStatement ps = conn.prepareStatement(sql);
+   		// parameter for reach question mark per order above 
+       		ps.setInt(1, newReimb.getReimb_author());  // required entry: auth id
+    		ps.setDouble(2, newReimb.getReimb_amount());  // required entry: amount
+    		ps.setString(3, newReimb.getReimb_description()); // required entry: desc
+    		ps.setInt(4, newReimb.getReimb_type_id());   // required type id
+       		ps.setInt(5, newReimb.getReimb_status_id());     // required entry: status id
+    		ps.setTimestamp(6,  newReimb.getReimb_submitted());  // sys added submission date
+       		
+    		// executeUpdate, not execute query    		
+    		ps.executeUpdate();  // 
+   		
+  		
+    		System.out.println("Reimbursement entry Successful! --reimbDAO");		// shown after closed and opened after the above correction 211229
+    		ps.close();
+    		
+    		} catch(SQLException e) {
+    			System.out.println("Reimbursement entry has failed. --reimbDAO");
+    			e.printStackTrace();
+    		}
+ 	
+//    		if (Optional.ofNullable(userToBeRegistered) == null) {
+//    			// 220101
+//    	
+//    			// noRegis("User registration not completed. Please try again.");
+//    		}
+    	
+    }
+    
+    
+    
+    
+    
     /**
      * <ul>
      *     <li>Should Update an existing Reimbursement record in the DB with the provided information.</li>

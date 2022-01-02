@@ -3,6 +3,7 @@ package com.revature.services;
 import com.revature.models.Reimbursement;
 import com.revature.models.Status;
 import com.revature.models.User;
+import com.revature.repositories.ReimbursementDAO;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +30,11 @@ import java.util.Optional;
  */
 public class ReimbursementService {
 
+		// Instantiate a Reimb DAO
+	
+		ReimbursementDAO rDAO = new ReimbursementDAO();
+	
+	
     /**
      * <ul>
      *     <li>Should ensure that the user is logged in as a Finance Manager</li>
@@ -66,7 +72,12 @@ public class ReimbursementService {
     
     // ================Create Reimb =================================================================================
     
-    
+    public void create(Reimbursement nReimb) {
+    	
+    	rDAO.createReimb(nReimb);
+    	
+    	
+    }
     
     
 }

@@ -1,10 +1,22 @@
 package com.revature.usermenus;
 
+import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
+import com.revature.services.ReimbursementService;
 import com.revature.services.UserService;
 
+import java.sql.Blob;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;	
@@ -26,9 +38,13 @@ public class CLImenu {
 	UserDAO uDAO = new UserDAO();
 	
 
-	public void userMenu() {
+	public void userMenu( ) {
+		// ============= include user id? =================================
+		// should take a parameter for user_id
 		
 		UserService us = new UserService();
+		ReimbursementService rms = new ReimbursementService();
+		
 		boolean displayMenu = true; // to toggle with the menu will continue after user input
 		Scanner scan = new Scanner(System.in);  // Scanner object to parse user input
 		
@@ -50,8 +66,8 @@ public class CLImenu {
 			System.out.println("Type the number that represents your selection: ");
 			System.out.println("1. Create User 220101");
 			System.out.println("2. Update User Information");
-	//		System.out.println("3. Get Users by ID");
-	//		System.out.println("4. Get Users by Email");
+	//		System.out.println("3. Review All Reimbursement Entries");
+			System.out.println("4. Create New Reimbursement Entry");
 			System.out.println("5. Get Reimbursements by Username");
 			System.out.println("6. Exit: Log out the ERS Employee's Menu");
 			
@@ -136,7 +152,73 @@ public class CLImenu {
 			}
 			
 			case "4": {
-				System.out.println("TBD: Get Users by Email");
+				//System.out.println("4. Create New Reimbursement Entry");	================================
+				
+				Reimbursement anewR = new Reimbursement();
+				
+//				ps.setInt(1, newReimb.getReimb_author());  // required entry: auth id
+//	    		ps.setDouble(2, newReimb.getReimb_amount());  // required entry: amount
+//	    		ps.setString(3, newReimb.getReimb_description()); // required entry: desc
+//	    		ps.setBlob(, newReimb.getReimb_receipt());   // receipt
+//				reimb type 4
+				//ps.setInt(5, newReimb.getReimb_status_id());     // required entry: status id
+//	    		//           6. reimb_submitted date 
+				
+				System.out.println("Now enter info below for New Reimburesement request:");
+// to do		// 1. System Plug in -user who is making the request
+				// System plugs in author_id from login page per username and password
+				int u_id = 1; 
+				anewR.setReimb_author(u_id); // hard code 
+				
+				// 2. amount (user1)
+				System.out.println("1. Amount to request for reimbursement (required):");
+				Double amount = scan.nextDouble();
+				anewR.setReimb_amount(amount);
+				
+				
+				// 3. desc (user2) 
+				System.out.println("2. Description for reimbursement request (required): "); 
+				
+				String desc = scan.next();  // .nextLine() making error like skipping. next() only good for one word
+				anewR.setReimb_description(desc);
+				
+// to do		// 4. receipt how to use Blob? (user)
+//				// https://docs.oracle.com/javase/8/docs/api/java/sql/class-use/Blob.html
+//				System.out.println("Receipt for your reimbursement request: ");
+//				Blob blob =Connection.createBlob();
+//				String receipt = scan.nextLine();
+//				anewR.setReimb_receipt(CallableStatement.setBlob(receipt)); // 
+//				
+				// 4. reimb type ?? (user3) (required)
+				System.out.println("3. Type of reimbursement request 1 LODGING,2 TRAVEL, 3FOOD, or4 OTHER.(required): "); 
+				int type_id = scan.nextInt();  // 220101 error : type mismatch
+				anewR.setReimb_type_id(type_id); // 1 LODGING,2 TRAVEL, 3FOOD, or4 OTHER.
+				
+				// 5. system plugs in below
+				// reimb status id (required)
+				int s_id = 1; // 1. Pending
+				anewR.setReimb_status_id(s_id); //  VALUES ('PENDING'),('APPROVED'),('DENIED');
+				
+				//  6. reimb submitted date -system plugs in 
+				// https://mkyong.com/java/java-date-and-calendar-examples/
+				//SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+				//sdf.getCalendar();
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // error "yyyy/MM/dd HH:mm:ss"
+				LocalDateTime dS = LocalDateTime.now();
+				//OffsetDateTime ds = OffsetDateTime.now();
+				String now = dtf.format(dS);
+				Timestamp ds = Timestamp.valueOf(now);
+				anewR.setReimb_submitted(ds);
+				
+				
+				
+				rms.create(anewR);
+				
+				System.out.println("220101: Your reimbursement request entry was successful!");
+				// scan.close(); // cannot close before the menu is exited
+				break;
+				
+				
 			}
 			
 			case "5": {
