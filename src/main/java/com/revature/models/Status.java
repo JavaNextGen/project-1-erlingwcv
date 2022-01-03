@@ -22,6 +22,7 @@ public enum Status {
         }
         
         // to quickly get the value for DB query
+        @Override
         public int toInt() {
         	return 1;
         }
@@ -33,6 +34,7 @@ public enum Status {
         }
         
      // to quickly get the value for DB query
+        @Override
         public int toInt() {
         	return 2;
         }
@@ -44,6 +46,7 @@ public enum Status {
         }
         
      // to quickly get the value for DB query
+        @Override
         public int toInt() {
         	return 3;
         }

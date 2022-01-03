@@ -1,6 +1,7 @@
 package com.revature.usermenus;
 
 import com.revature.models.Reimbursement;
+import com.revature.models.Status;
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
 import com.revature.services.ReimbursementService;
@@ -35,18 +36,21 @@ public class CLImenu {
 
 	// All of the menu display options and control are contained within this method
 	UserService us = new UserService(); // use its methods on menu items selected
-	UserDAO uDAO = new UserDAO();
+	//UserDAO uDAO = new UserDAO(); // DAO cannot be seen by users
+	ReimbursementService rms = new ReimbursementService(); // Users can only see services
 	
+	
+	Scanner scan = new Scanner(System.in);  // Scanner object to parse user input
 
 	public void userMenu( ) {
 		// ============= include user id? =================================
 		// should take a parameter for user_id
 		
-		UserService us = new UserService();
-		ReimbursementService rms = new ReimbursementService();
+		//UserService us = new UserService();
+		//ReimbursementService rms = new ReimbursementService();
 		
 		boolean displayMenu = true; // to toggle with the menu will continue after user input
-		Scanner scan = new Scanner(System.in);  // Scanner object to parse user input
+		//Scanner scan = new Scanner(System.in);  // Scanner object to parse user input
 		
 		// First, let's give the user a pretty greeting :)
 		
@@ -62,13 +66,13 @@ public class CLImenu {
 			// Menu options
 			// per folder .services/UserService.java
 			
-			// ==================To be coded ===============================================================================
+			// =======Employee Menu===========To be coded ===============================================================================
 			System.out.println("Type the number that represents your selection: ");
 			System.out.println("1. Create User 220101");
 			System.out.println("2. Update User Information");
-	//		System.out.println("3. Review All Reimbursement Entries");
+			System.out.println("3. Review All Reimbursement Entries");
 			System.out.println("4. Create New Reimbursement Entry");
-			System.out.println("5. Get Reimbursements by Username");
+			System.out.println("5. Update Reimbursements (by Username}");
 			System.out.println("6. Exit: Log out the ERS Employee's Menu");
 			
 			//parse user input after they choose a menu option, and put it into a 
@@ -120,35 +124,12 @@ public class CLImenu {
 			
 			
 			case "3": {
-				System.out.println("211231done: Get Users by username");
+				System.out.println("TBD: Update Reimbursement by Reimb ID");
 				
-				Scanner scan3 = new Scanner(System.in);
-				System.out.println("Please enter the username you are looking for: ");
-				String username3 = scan3.nextLine();
-//				
-//				//List<User> userByUN = uDAO.getByUsername(username3);
-				Optional<User> oubun = us.getByUsername(username3);
 				
-				// the code did not stop printing, when username was not in DB
-//				if (oubun.isPresent() != true) {
-//					System.out.println("Username not found");
-//				}
-//				
-				if (oubun.isPresent() ) {
-					User ubun = new  User();
-					ubun = oubun.get();
-					System.out.println(ubun.toString());
-				}
-//				} else {
-//					System.out.println("Username not found");
-//				}
 				
-//				for (User u : userByUN) {
-//					System.out.println(u);
-//				}
-//			
-				scan3.close();
-				break;
+				
+				
 			}
 			
 			case "4": {
@@ -167,7 +148,7 @@ public class CLImenu {
 				System.out.println("Now enter info below for New Reimburesement request:");
 // to do		// 1. System Plug in -user who is making the request
 				// System plugs in author_id from login page per username and password
-				int u_id = 1; 
+				int u_id = 3; 
 				anewR.setReimb_author(u_id); // hard code 
 				
 				// 2. amount (user1)
@@ -282,14 +263,14 @@ public class CLImenu {
 	
 	public void finMgrMenu() {
 		
-		UserService us = new UserService();
+		//UserService us = new UserService();  // declared at the beginning of the menu class, not the method
 		boolean displayMenu = true; // to toggle with the menu will continue after user input
-		Scanner scan = new Scanner(System.in);  // Scanner object to parse user input
+		//Scanner scan = new Scanner(System.in);  // Scanner object to parse user input
 		
 		// First, let's give the user a pretty greeting :)
 		
 		System.out.println("=============================================================");
-		System.out.println("Finance Manager, welcome to The Employee Reimbursment System (ERS)");
+		System.out.println("Finance Manager, welcome to ERS, the Employee Reimbursment System");
 		System.out.println("=============================================================");
 		
 		// display the menu as long as variable displayMenu == true
@@ -301,12 +282,21 @@ public class CLImenu {
 			// per folder .services/UserService.java
 			
 			System.out.println("Type the number that represents your selection: ");
-			System.out.println("1. Get Reimbursements by Status"); //WIP
-			System.out.println("2. Update User Information");  //TBD
-			System.out.println("3. Get Users by ID");			// TBD
-			System.out.println("4. Get Users by Email");		// TBD
-			System.out.println("5. Get All Users");             // TBD
-			System.out.println("6. Exit: Log out the ERS Finance Manager's Menu");
+			System.out.println("1. Get Reimbursements by Status"); // required WIP
+			System.out.println("2. Process Reimbursements"); // TBD required
+			//			 *     	3	Get Reimbursements by Username </li>  // fin mgr only
+//			 *     <li>			4	Get Reimbursements by Author</li>   // fin mgr only
+//			 *     <li>			5	Get Reimbursements by Resolver</li> // fin mgr only
+		//			 *          6	Get All Reimbursements</li>          // fin mgr only
+			System.out.println("7. Get Users by Username");			// 211231 required
+			System.out.println("8. Get Users by Email");		// TBD
+			System.out.println("9. Get All Users");             // done 211231
+//			 <li>               10. Create Reimbursement</li>  //    employee
+//			 *     <li>         11. Update Reimbursement</li>  // employee
+			System.out.println("12. Update User Information");  //TBD
+
+			
+			System.out.println("20. Exit: Log out the ERS Finance Manager's Menu");
 			
 			//parse user input after they choose a menu option, and put it into a 
 			// String variable
@@ -316,24 +306,66 @@ public class CLImenu {
 			// Ben to add more comments here once we do DATABASE CONNECTIVITY
 			
 			switch (input) {
-			
+	
+// ====Manager 11111111111111 ================Get Reimb by Status (required) ================			
 			case "1": {
 				
-				System.out.println("TBD: getReimbursementsByStatus");
+				System.out.println("220102wip: get(Reimbursements)ByStatus");
+				
+				System.out.println("Please select 1 PENDING 2 APPROVED 3 DENIED: ");
+				String reimbStatus = scan.nextLine();
+				switch (reimbStatus) {
+				case "1": {
+					Status p = Status.PENDING;
+					List<Reimbursement> rbs = rms.getReimbursementsByStatus(p);  // reimbursementService class
+					
+					//Optional<User> oubun = us.getByUsername(username3);
+					
+					// the code did not stop printing, when username was not in DB
+//					if (oubun.isPresent() != true) {
+//						System.out.println("Username not found");
+//					}
+//					
+					if (rbs.isEmpty() == false ) {
+						for (int i = 0; i < rbs.size(); i++) {
+						Reimbursement r = rbs.get(i);
+						System.out.println(r.toString());
+						}
+					}
+//					
+					if (rbs.isEmpty() == true) {
+						System.out.println("Reimbursement by Status not found");
+					}
+					
+					
+					
+					
+					
+				}
+				
+				
+				
+				}
+				
+				
+				
 				break;	
 			}
 			
-			case "2": {
-				System.out.println("TBD: Update User Information");
-				break;
-			}
+// ==== Manager ===== 222222222  ===== Process Reimbursments
+			System.out.println("2. Process Reimbursements"); // TBD required
 			
-			case "3": {
-				System.out.println("211231done: Get Users by username");
+			
+			
+			
+	// ======Manager === 333333  =====Reimb by Username ==========
+//			 *     <li>			3	Get Reimbursements by Username </li>  // fin mgr only
+
+		case "NEXT": {
 				
-				Scanner scan3 = new Scanner(System.in);
+				
 				System.out.println("Please enter the username you are looking for: ");
-				String username3 = scan3.nextLine();
+				String username3 = scan.nextLine();
 //				
 //				//List<User> userByUN = uDAO.getByUsername(username3);
 				Optional<User> oubun = us.getByUsername(username3);
@@ -356,15 +388,88 @@ public class CLImenu {
 //					System.out.println(u);
 //				}
 //			
-				scan3.close();
+				
 				break;
+				
 			}
 			
+			
+	
+			
+			
+			
+			
+			
+			
+// == Manager ==== 4 ============Reimb by Author ==============
+//			 *     <li>			4	Get Reimbursements by Author</li>   // fin mgr only			
+			
+			
+			
+			
+			
+			
+// === Manaer === 5 ==================Reimb by Resolver ===============
+//			 *     <li>			5	Get Reimbursements by Resolver</li> // fin mgr only
+			case "2": {
+				
+		
+				
+				
+// == Manager == 6 =============== Review All Reimbursements =============
+				//			 *    6	Get All Reimbursements</li>          // fin mgr only
+				
+				
+				
+				
+				
+			case "7": {
+				System.out.println("7. Get Users by Username");			// 211231 required
+				System.out.println("211231done: Get Users by username");  // required
+				
+				//Scanner scan3 = new Scanner(System.in);
+				System.out.println("Please enter the username you are looking for: ");
+				String username3 = scan.nextLine();
+//				
+//				//List<User> userByUN = uDAO.getByUsername(username3);
+				Optional<User> oubun = us.getByUsername(username3);
+				
+				// the code did not stop printing, when username was not in DB
+//				if (oubun.isPresent() != true) {
+//					System.out.println("Username not found");
+//				}
+//				
+				if (oubun.isPresent() ) {
+					User ubun = new  User();
+					ubun = oubun.get();
+					System.out.println(ubun.toString());
+				}
+//				
+				if (oubun.isPresent() == false) {
+					System.out.println("Username not found");
+				}
+				
+//				for (User u : userByUN) {
+//					System.out.println(u);
+//				}
+//			
+//				scan3.close();  // only close scanner when exit the entire menu
+				break;
+			}
+				
+
+// ==== Manager === 88888888 ========== Get User by Email =====================			
+			System.out.println("84. Get Users by Email");		// TBD			
 			case "4": {
 				System.out.println("TBD: Get Users by Email");
 			}
+
+
 			
-			case "5": {
+			
+// === Nanager == 999999999 ======= Get All Users ========================
+			System.out.println("95. Get All Users");             // done 211231			
+			case "9": {
 				System.out.println("211231done: Get All Users");
 				Optional<List<User>> oaUsers = us.getAllUsers();
 				// runtime check the value from DB select
@@ -394,8 +499,35 @@ public class CLImenu {
 				
 				break;
 			}
+
 			
-			case "6": {
+// === Manager ==== 10   10   10 ====  Create Self Reimb ==============================
+//			 <li>               10. Create Reimbursement</li>  //    employee
+			
+			
+
+			
+				System.out.println("TBD: @code process Update User Information");
+				
+				
+				
+				break;
+			}
+			
+			
+// === Manager == 11  11   11  ======Update Self Reimb ===================
+			
+//			 *     <li>         11. Update Reimbursement</li>  // employee
+			
+			
+			
+// == Manager == 12 12    12 ==== Update User Info =====
+			System.out.println("12. Update User Information");  //TBD
+			
+
+			
+			
+			case "20": {
 				System.out.println("by 211231 You selected to exit");
 				displayMenu = false;
 				break;
@@ -404,6 +536,8 @@ public class CLImenu {
 				System.out.println("Invalid selection. Please try again : '(");
 				break;
 			}
+			
+			
 			
 			
 			

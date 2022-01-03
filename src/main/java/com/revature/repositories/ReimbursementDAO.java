@@ -5,10 +5,12 @@ import com.revature.models.Status;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -30,49 +32,106 @@ public class ReimbursementDAO {
         
     	try(Connection conn = ConnectionFactory.getConnection()) {
     		// Initiate an empty ResultSet object that will store the results of our SQL query
-    		ResultSet rs = null;
-    		
+    		// ResultSet rs = null;  // cannot do here, it will never get populated 220102
+    		    		
     		// Write a query that we want to send to the database, and assign it to a String
     		// String sql = "SELECT * FROM rev1p211206.ers_users WHERE ers_username = username;"; // SQL stmt not taken as concatenated strings
     		// String sql = "SELECT * FROM rev1p211206.ers_users WHERE ers_username = ?";
-     		String sql = "SELECT * FROM ers_users WHERE ers_username = ?";
+     		//String sql = "SELECT * FROM ers_users WHERE ers_username = ?";
+    		
+    		//switch (status.toString()) {
+    		//case "Pending":
+    		//String sql = "SELECT * FROM mv_reimb_by_status"; // working if not wrapped by other lines
+    		//java.sql.Statement ss = conn.createStatement(); // working paired with above and below
+    		//rs = ss.executeQuery(sql); //working good with above
+    		
+    		// now just select Reimbursement table
+    		String sql = "SELECT * FROM rev1p211206.ers_reimbursement WHERE reimb_status_id = ? ORDER BY reimb_author";
+    		
+    			
+    		//	break;
+    		//}
+    		
+    		//String sql = "SELECT * FROM mv_reimb_by_status WHERE ers_reimbursement.reimb_status_id = ?";
+    		
 
     		// schema name to be included. otherwise JDBC do not see the table
     		// Put the SQL query into a Statement object (The Connection object has a method for this)
     		// Statement statement = conn.createStatement();
     		// This time should use PreparedStatement to prevent SQL injection
+    		//PreparedStatement ps = conn.prepareStatement(sql);
     		PreparedStatement ps = conn.prepareStatement(sql);
-    		// put the username parameter in the PreparedStatement to complete the SQL
-    		ps.setString(1, username); // 1st question mark in SQL, its variable
     		
+    		 
+    		
+    		// put the username parameter in the PreparedStatement to complete the SQL
+    		//ps.setString(1, username); // 1st question mark in SQL, its variable
+    		System.out.println(status.toString());
+    		if (status.toString().contentEquals("Pending")) {
+    		
+    		
+    			ps.setInt(1, 1); // 1st question mark in SQL, its variable
+    		}
+    		
+    		if (status.toString().contentEquals("Approved")) {
+        		
+        		ps.setInt(1, 2); // 1st question mark in SQL, its variable
+        		}
+    		
+    		if (status.toString().contentEquals("Denied")) {
+        		
+        		 ps.setInt(1, 3); // 1st question mark in SQL, its variable
+        		}
     		// Execute the query, by putting the results into our ResultSet object
     		// The Statement object has a method that takes Strings to execute as a SQL query
     		//rs = statement.executeQuery(sql);
-    		rs = ps.executeQuery(); // sql already included in ps on line 33
+    		//rs = ps.executeQuery(); // sql already included in ps on line 33
+    		//rs = ps.executeUpdate(); // sql already included in ps on line 33
+    		ResultSet rs = ps.executeQuery();
     		
     		// All the above makes a call to our database. Now we need to store the data in an ArrayList.
     		
     		//Create an empty ArrayList to be filled with the data from the database
     		// since username is unique, just need a user object to take the sql results
     		//List<User> userList = new ArrayList<>();
-    		User userbyid = new User();
+    		List<Reimbursement> reimblist = new ArrayList<>();
+    		//User userbyid = new User();
     		
     		// while there are results in the ResultSet..
     		while(rs.next()) {
     			// use the all args constructor to create a new User object from each returned row from the DB
-    			User u = new User(
-    				// we want to use rs.get from each column in the record
-    				//	rs.getInt("ers_user_id"),		// DB use only?
-    					rs.getString("ers_username"),  // 211231 says Null. why?
-    					rs.getString("user_first_name"),
-    					rs.getString("user_last_name"),
-    				//	rs.getString("ers_password"), // confidential?
-    					rs.getString("user_email"),
-    					rs.getInt("user_role_id")
+    			//User u = new User(
+    			Reimbursement r = new Reimbursement(
+    			// we want to use rs.get from each column in the recordset
+    					rs.getInt("reimb_id"),                  // Constructor from reimb table 220102
+    					rs.getDouble("reimb_amount"), 
+    					rs.getTimestamp("reimb_submitted"), 
+    					rs.getTimestamp("reimb_resolved"), 
+    					rs.getString("reimb_description"), 
+    					rs.getBlob("reimb_receipt"),
+    	 				rs.getInt("reimb_author"),
+    					rs.getInt("reimb_resolver"),
+    					rs.getInt("reimb_status_id"),
+    					rs.getInt("reimb_type_id")               // Constructor from reimb table 220102
     					);
+    			
+//    			rs.getString("reimb_status"), //mv_reimb_by_status
+//				rs.getInt("reimb_author"),
+//				rs.getInt("reimb_id"),
+//				rs.getString("reimb_type"),
+//				rs.getDouble("reimb_amount"), 
+//				rs.getTimestamp("reimb_submitted"), 
+//				rs.getTimestamp("reimb_resolved"), 
+//				rs.getString("reimb_description"), 
+//				rs.getBlob("reimb_receipt"), 
+//				rs.getString("user_last_name"),
+//				rs.getString("user_first_name"),
+//				rs.getString("user_email"),
+//				rs.getInt("reimb_resolver")
+//		
     			// populate the ArrayList with each new User object
     			//userList.add(u); // u is the new User object we created above
-    			userbyid = u;
+    			reimblist.add(r);
     			
     			//Optional<User> userbyid = Optional.ofNullable(u);
     		}
@@ -81,10 +140,11 @@ public class ReimbursementDAO {
     		// then return the populated ArrayList of Users
     		//return userbyid; // error msg: cannot be resolved to a variable
     		//return Optional.of(userbyid);
-    		return Optional.ofNullable(userbyid);
+    		//return Optional.ofNullable(reimblist);
+    		return reimblist;
     				
     	} catch (SQLException e) {
-    		System.out.println("Somethiong went wrong selecting users by username!");
+    		System.out.println("Somethiong went wrong selecting reimbursements by status!");
     		e.printStackTrace();
     	}
     	
@@ -98,8 +158,14 @@ public class ReimbursementDAO {
     }
 
     
+    // ================= Process Reimbursement by Fin Manager =========Menu item2=================================
+    // * After processing, the reimbursement will have its status changed to either APPROVED or DENIED.
     
-    // create a Reimbursement ========================================================================
+    
+    
+    
+    
+    // create a Reimbursement =======by Employee =================================================================
     
 //    this.reimb_author = author_id;  // int
 //	this.reimb_amount = amount; // double, required
@@ -128,7 +194,7 @@ public class ReimbursementDAO {
    		
   		
     		System.out.println("Reimbursement entry Successful! --reimbDAO");		// shown after closed and opened after the above correction 211229
-    		ps.close();
+    		//ps.close();
     		
     		} catch(SQLException e) {
     			System.out.println("Reimbursement entry has failed. --reimbDAO");
@@ -154,7 +220,66 @@ public class ReimbursementDAO {
      *     <li>Should return a Reimbursement object with updated information.</li>
      * </ul>
      */
+    // employee update reimbursement made earlier if the status is not Approved
     public Reimbursement update(Reimbursement unprocessedReimbursement) {
-    	return null;
-    }
-}
+    	
+    	
+//    	/**
+//         * Update actor's last name based on actor's id
+//         *
+//         * @param id
+//         * @param lastName
+//         * @return the number of affected rows
+//         */
+//        public int updateLastName(int id, String lastName) {
+//            String SQL = "UPDATE actor "
+//                    + "SET last_name = ? "
+//                    + "WHERE actor_id = ?";
+//
+            int affectedrows = 0;
+
+    	String SQL = "UPDATE ers_reimbursement "
+    			+ "SET reimb_amount = ?, reimb_description = ? "
+    			+ "WHERE reimb_id = ? "
+    			+ " AND reimb_status_id = 1";
+    	
+    	
+    	        try (Connection conn = ConnectionFactory.getConnection();
+                    PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+
+                pstmt.setDouble(1, unprocessedReimbursement.getReimb_amount());
+                pstmt.setString(2, unprocessedReimbursement.getReimb_description());
+                pstmt.setInt(3, unprocessedReimbursement.getReimb_id());
+                
+                           
+                affectedrows = pstmt.executeUpdate();
+                
+                String sqlCheck = "SELECT * FROM ers_reimbursement WHERE reimb_id = ? ";
+                PreparedStatement upps = conn.prepareStatement(sqlCheck);
+           
+                upps.setInt(1,  unprocessedReimbursement.getReimb_id());
+    			//Statement s = conn.createStatement();
+    			ResultSet rs = upps.executeQuery();
+    			
+    			//ChallengeEmployee updatedChallengeEmployee = new ChallengeEmployee(
+    			
+    			Reimbursement nR = new Reimbursement(	
+    						rs.getInt("reimb_id"),
+    						rs.getDouble("reimb_amount"),
+    						rs.getString("reimb_description"),
+    						rs.getBlob("reimb_receipt"),
+    						rs.getInt("reimb_type_id"),
+    						rs.getInt("reimb_author"),
+    						rs.getTimestamp("reimb_submitted")
+    					);
+                
+    			return nR; 
+
+            } catch (SQLException ex) {
+            	ex.printStackTrace();
+                System.out.println(ex.getMessage());
+        }
+				return null;
+    }            
+}    	       
+   

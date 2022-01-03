@@ -25,12 +25,25 @@ public enum Role {
             return "Employee";
         }
         
+        // to match DB role_id
+        @Override
+        public int toInt() {
+        	return 1;
+        }
+        
     },
     FINANCE_MANAGER {
         @Override
         public String toString() {
             return "Finance Manager";
         }
+        
+     // to match DB role_id
+        @Override
+        public int toInt() {
+        	return 2;
+        }
+        
         
    }
    

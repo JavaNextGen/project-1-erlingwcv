@@ -40,6 +40,13 @@ public class Reimbursement extends AbstractReimbursement {
 //		TIME [ WITHOUT TIMEZONE ] 	LocalTime
 //		TIMESTAMP [ WITHOUT TIMEZONE ] 	LocalDateTime
 //		TIMESTAMP WITH TIMEZONE 	OffsetDateTime
+		// The timestamp is a string that represents a timestamp value in the format specified by format .
+//		IYYY: ISO 8601 week-numbering year (4 or m...
+//				YYYY: year in 4 digits
+//				Pattern: Description
+//
+//				PostgreSQL TO_TIMESTAMP() Function By Practical Examples
+//				https://www.postgresqltutorial.com › postgresql-to_timesta...
 		
 		
 		private String reimb_description; //  varchar(250),
@@ -49,14 +56,63 @@ public class Reimbursement extends AbstractReimbursement {
 		private int reimb_status_id; // int REFERENCES ers_reimbursement_status (reimb_status_id),
 		private int reimb_type_id; // int REFERENCES ers_reimbursement_type (reimb_type_id) -- FOREIGN KEY
 		
+//      above fields are in the Reimbursement table
+//		BELOW are fields to be used in reimbByStatus query
+		private String reimb_status;
+public String getReimb_status() {
+			return reimb_status;
+		}
+
+		public void setReimb_status(String reimb_status) {
+			this.reimb_status = reimb_status;
+		}
+
+		public String getReimb_type() {
+			return reimb_type;
+		}
+
+		public void setReimb_type(String reimb_type) {
+			this.reimb_type = reimb_type;
+		}
+
+		public String getUser_last_name() {
+			return user_last_name;
+		}
+
+		public void setUser_last_name(String user_last_name) {
+			this.user_last_name = user_last_name;
+		}
+
+		public String getUser_first_name() {
+			return user_first_name;
+		}
+
+		public void setUser_first_name(String user_first_name) {
+			this.user_first_name = user_first_name;
+		}
+
+		public String getUser_email() {
+			return user_email;
+		}
+
+		public void setUser_email(String user_email) {
+			this.user_email = user_email;
+		}
+
+		//		reimb_author,
+//		reimb_id;
+		private String reimb_type;
+//		reimb_amount, 
+//		reimb_submitted, 
+//		reimb_resolved, 
+//		reimb_description, 
+//		reimb_receipt, 
+		private String user_last_name;
+		private String user_first_name;
+		private String user_email;
+//		reimb_resolver
 		
-		// The timestamp is a string that represents a timestamp value in the format specified by format .
-//		IYYY: ISO 8601 week-numbering year (4 or m...
-//				YYYY: year in 4 digits
-//				Pattern: Description
-//
-//				PostgreSQL TO_TIMESTAMP() Function By Practical Examples
-//				https://www.postgresqltutorial.com › postgresql-to_timesta...
+		
 
 		
 		// constructor for employee to create a reimbursement
@@ -99,6 +155,26 @@ public class Reimbursement extends AbstractReimbursement {
 			this.reimb_resolver = resolver_id; //	reimb_resolver int REFERENCES ers_users (ers_users_id),
 		}
 		
+		// constructor for fin manager to get reimbursements by status -materialized view?
+		public Reimbursement(String reimb_status, int reimb_author, int reimb_id, String reimb_type, 
+				double reimb_amount, Timestamp reimb_submitted, Timestamp reimb_resolved, String reimb_description, 
+				Blob reimb_receipt, String user_last_name, String user_first_name, String user_email, int reimb_resolver) {
+			
+			this.reimb_status = reimb_status; 
+			this.reimb_author = reimb_author;
+			this.reimb_id = reimb_id;
+			this.reimb_type = reimb_type;
+			this.reimb_amount = reimb_amount;
+			this.reimb_submitted = reimb_submitted;
+			this.reimb_resolved = reimb_resolved;
+			this.reimb_description = reimb_description;
+			this.reimb_receipt = reimb_receipt;
+			this.user_last_name = user_last_name;
+			this.user_first_name = user_first_name;
+			this.user_email = user_email;
+			this.reimb_resolver = reimb_resolver;
+			
+		}
 		
 //		reimb_id serial PRIMARY KEY UNIQUE,
 //		reimb_amount decimal(16,2),
@@ -130,8 +206,26 @@ public class Reimbursement extends AbstractReimbursement {
 		}
 
 		
-// === getters and setters		
+// ======== Constructor from reimb table 220102 ============	
 		
+	public Reimbursement(int reimb_id, double reimb_amount, Timestamp reimb_submitted, 
+			Timestamp reimb_resolved, String reimb_description, Blob reimb_receipt,
+			int reimb_auther, int reimb_resolver, int reimb_status_id, int reimb_type_id) {
+		// TODO Auto-generated constructor stub
+		
+		
+	}
+
+	
+// ======= Constructor for employee update reimbursement menu item ======220102===============================	
+	public Reimbursement(int reimb_id, double reimb_amount, String reimb_description, Blob reimb_receipt, int reimb_type_id, int reimb_author, Timestamp reimb_submitted) {
+		// TODO Auto-generated constructor stub
+	}
+
+	// === getters and setters	
+	
+	
+	
 	public int getReimb_id() {
 		return reimb_id;
 	}
