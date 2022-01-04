@@ -79,6 +79,34 @@ public class User extends AbstractUser {
         //this.user_role = u_role;
     }
     
+    // Constructor for employee self update
+    public User(int ers_users_id, String ers_username, String ers_password, String user_f_name, String user_l_name, String u_email) {
+        super();
+        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
+        this.ers_username = ers_username;   // it was missing and 211231 userbyid result was null
+        this.ers_password = ers_password;
+        this.user_first_name = user_f_name;
+        this.user_last_name = user_l_name;
+        this.user_enmail = u_email;
+    //    this.user_role_id = user_role_id;  // User itself cannot change the role
+        //this.user_role = u_role;
+    }
+    
+    // Constructor for employee self update email only, inlcuding the first and last name
+    public User(int ers_users_id, String user_f_name, String user_l_name, String u_email) {
+        super();
+        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
+//        this.ers_username = ers_username;   // it was missing and 211231 userbyid result was null
+//        this.ers_password = ers_password;
+        this.user_first_name = user_f_name;
+        this.user_last_name = user_l_name;
+        this.user_enmail = u_email;
+    //    this.user_role_id = user_role_id;  // User itself cannot change the role
+        //this.user_role = u_role;
+    }
+    
+    
+    
     
     // our User objects can be printed out (without user_id and password) -- returns a String describing the object
     
@@ -90,6 +118,16 @@ public class User extends AbstractUser {
     
     
     // Getters and setters so we can access and change the private variables up above
+    
+    
+    public int getErs_users_id() {
+    	return ers_users_id;
+    }
+    
+    public void setErs_users_id(int ers_users_id) {
+    	this.ers_users_id = ers_users_id;
+    }
+    
     
 	public String getErs_username() {
 		return ers_username;
@@ -167,59 +205,9 @@ public class User extends AbstractUser {
     // HashCode() and equals() are necessary if we want to compare (test the equality of ) our objects
     // per data pulled out of our DB ers_users table
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((ers_password == null) ? 0 : ers_password.hashCode());
-		result = prime * result + ((ers_username == null) ? 0 : ers_username.hashCode());
-		result = prime * result + ((user_enmail == null) ? 0 : user_enmail.hashCode());
-		result = prime * result + ((user_first_name == null) ? 0 : user_first_name.hashCode());
-		result = prime * result + ((user_last_name == null) ? 0 : user_last_name.hashCode());
-		result = prime * result + user_role_id;
-		return result;
-	}
+	
 
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (ers_password == null) {
-			if (other.ers_password != null)
-				return false;
-		} else if (!ers_password.equals(other.ers_password))
-			return false;
-		if (ers_username == null) {
-			if (other.ers_username != null)
-				return false;
-		} else if (!ers_username.equals(other.ers_username))
-			return false;
-		if (user_enmail == null) {
-			if (other.user_enmail != null)
-				return false;
-		} else if (!user_enmail.equals(other.user_enmail))
-			return false;
-		if (user_first_name == null) {
-			if (other.user_first_name != null)
-				return false;
-		} else if (!user_first_name.equals(other.user_first_name))
-			return false;
-		if (user_last_name == null) {
-			if (other.user_last_name != null)
-				return false;
-		} else if (!user_last_name.equals(other.user_last_name))
-			return false;
-		if (user_role_id != other.user_role_id)
-			return false;
-		return true;
-	}
-    
+	
 	
 	
 	   

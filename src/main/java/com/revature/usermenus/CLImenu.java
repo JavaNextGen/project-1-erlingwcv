@@ -6,7 +6,9 @@ import com.revature.models.User;
 import com.revature.repositories.UserDAO;
 import com.revature.services.ReimbursementService;
 import com.revature.services.UserService;
+import com.revature.util.ConnectionFactory;
 
+import java.nio.file.FileSystemNotFoundException;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -33,7 +35,12 @@ import java.util.Scanner;
 
 
 public class CLImenu {
+	
+	static String cUserName;
+	static String cPassword;
 
+	static int user_id;
+	
 	// All of the menu display options and control are contained within this method
 	UserService us = new UserService(); // use its methods on menu items selected
 	//UserDAO uDAO = new UserDAO(); // DAO cannot be seen by users
@@ -72,7 +79,7 @@ public class CLImenu {
 			System.out.println("2. Update User Information");
 			System.out.println("3. Review All Reimbursement Entries");
 			System.out.println("4. Create New Reimbursement Entry");
-			System.out.println("5. Update Reimbursements (by Username}");
+			System.out.println("5. Update Unprocessed Reimbursements (by Reimb id)");
 			System.out.println("6. Exit: Log out the ERS Employee's Menu");
 			
 			//parse user input after they choose a menu option, and put it into a 
@@ -82,9 +89,9 @@ public class CLImenu {
 			
 			// Ben to add more comments here once we do DATABASE CONNECTIVITY
 			
-			switch (input) {
+			switch ("E"+input) {
 			
-			case "1": {
+			case "E1": {
 				
 				System.out.println("220101: Create User");
 				User anewu = new User();
@@ -115,15 +122,32 @@ public class CLImenu {
 				System.out.println("220101: Your registration was successful!");
 				break;	
 			}
-			
-			case "2": {
+
+//  === Employee ===  2  2  2  2  ======   Update User info =====Done 220104 12:32am=============================			
+			case "E2": {
 				System.out.println("220101: Update User Information");
+				
+				//System.out.println("Your Username?");
+				//String upUn = scan.nextLine();
+				
+				User beforeUpdate = new User();
+				User afterUpdate = new User();
+				beforeUpdate.setErs_users_id(1);   // manually set now, should be from login
+				beforeUpdate.setUser_enmail("u1email3@gmail.com");
+				
+				afterUpdate = us.eUserUpdate(beforeUpdate);
+				
+				System.out.println("Below is for your records: ");
+				System.out.print("You,  " + afterUpdate.getUser_first_name());
+				System.out.println(" " + afterUpdate.getUser_last_name() + ", just changed your email to ");
+				System.out.println(afterUpdate.getUser_enmail());
+				
 				break;
 			}
 			
 			
-			
-			case "3": {
+// === Employee === 3  3   3  3  =================================================			
+			case "E3": {
 				System.out.println("TBD: Update Reimbursement by Reimb ID");
 				
 				
@@ -132,7 +156,7 @@ public class CLImenu {
 				
 			}
 			
-			case "4": {
+			case "E4": {
 				//System.out.println("4. Create New Reimbursement Entry");	================================
 				
 				Reimbursement anewR = new Reimbursement();
@@ -146,10 +170,13 @@ public class CLImenu {
 //	    		//           6. reimb_submitted date 
 				
 				System.out.println("Now enter info below for New Reimburesement request:");
-// to do		// 1. System Plug in -user who is making the request
+        		// 1. System Plug in -user who is making the request
 				// System plugs in author_id from login page per username and password
-				int u_id = 3; 
-				anewR.setReimb_author(u_id); // hard code 
+// ****************** verify the legit user id
+				
+				int rm_id = 1; 
+// *****************  verify the legit user id
+				anewR.setReimb_author(rm_id); // hard code 
 				
 				// 2. amount (user1)
 				System.out.println("1. Amount to request for reimbursement (required):");
@@ -193,7 +220,7 @@ public class CLImenu {
 				
 				
 				
-				rms.create(anewR);
+				rms.createReimb(anewR);
 				
 				System.out.println("220101: Your reimbursement request entry was successful!");
 				// scan.close(); // cannot close before the menu is exited
@@ -202,38 +229,42 @@ public class CLImenu {
 				
 			}
 			
-			case "5": {
-				System.out.println("211231done: Get All Users");
-				Optional<List<User>> oaUsers = us.getAllUsers();
-				// runtime check the value from DB select
-				System.out.println(oaUsers.isPresent());
+			case "E5": {  //Menu E5 Update Unprocessed Reimbursements
+				Reimbursement unpro = new Reimbursement();
 				
-					if (oaUsers.isPresent()) {
-						List<User> allUsers = oaUsers.get();
-						//User u = new User();
-						//allUsers.forEach(u) {
-							
-						//};
-						
-							for (User u : allUsers) {
-								System.out.println(u.toString());
-							}
-					} else {
-							System.out.println("All Users are not on file");
-					}
-					//.displayMenu.}
+// control to do //1. ask and get reimb id verified 
+				System.out.println("Please enter reimb id to indicate which trxn to update: ");
+				int er_id = scan.nextInt();
+				unpro.setReimb_id(er_id);
+				
+				// 2. amount (user1)
+				System.out.println("1. Amount to request for reimbursement (required):");
+				Double amount = scan.nextDouble();
+				unpro.setReimb_amount(amount);
+				
+				
+				// 3. desc (user2) 
+				System.out.println("2. Description for reimbursement request (required): "); 
+				
+				String desc = scan.next();  // .nextLine() making error like skipping. next() only good for one word
+				unpro.setReimb_description(desc);
+				
+				// 3.
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // error "yyyy/MM/dd HH:mm:ss"
+				LocalDateTime dS = LocalDateTime.now();
+				//OffsetDateTime ds = OffsetDateTime.now();
+				String now = dtf.format(dS);
+				Timestamp ds = Timestamp.valueOf(now);
+				unpro.setReimb_submitted(ds);
+				
+				rms.updateReimb(unpro);
+				
 					
-				//List<User> allUsers = uDAO.getAllUser();
-				//us.getAllUsers();
-				//for (User u : allUsers) {
-				//	System.out.println(u);
-				//.displayMenu.}
-			
 				
 				break;
 			}
 			
-			case "6": {
+			case "E6": {
 				System.out.println("by 211231 You selected to exit");
 				displayMenu = false;
 				break;
@@ -256,7 +287,7 @@ public class CLImenu {
 	}
 	
 	
-	
+// ===================================================================================================================	
 	// Finance Manager Only Menu
 	
 	// =====-===================================================
@@ -305,16 +336,17 @@ public class CLImenu {
 			
 			// Ben to add more comments here once we do DATABASE CONNECTIVITY
 			
-			switch (input) {
+			switch ("M"+input) {
 	
 // ====Manager 11111111111111 ================Get Reimb by Status (required) ================			
-			case "1": {
+			case "M1": {
 				
 				System.out.println("220102wip: get(Reimbursements)ByStatus");
 				
 				System.out.println("Please select 1 PENDING 2 APPROVED 3 DENIED: ");
 				String reimbStatus = scan.nextLine();
 				switch (reimbStatus) {
+				
 				case "1": {
 					Status p = Status.PENDING;
 					List<Reimbursement> rbs = rms.getReimbursementsByStatus(p);  // reimbursementService class
@@ -353,15 +385,17 @@ public class CLImenu {
 			}
 			
 // ==== Manager ===== 222222222  ===== Process Reimbursments
+		case "M2": {
+				
 			System.out.println("2. Process Reimbursements"); // TBD required
 			
-			
-			
+			break;
+			}	
 			
 	// ======Manager === 333333  =====Reimb by Username ==========
 //			 *     <li>			3	Get Reimbursements by Username </li>  // fin mgr only
 
-		case "NEXT": {
+		case "M3": {
 				
 				
 				System.out.println("Please enter the username you are looking for: ");
@@ -403,7 +437,11 @@ public class CLImenu {
 			
 // == Manager ==== 4 ============Reimb by Author ==============
 //			 *     <li>			4	Get Reimbursements by Author</li>   // fin mgr only			
+		case "M4": {
 			
+			
+		break;	
+		}
 			
 			
 			
@@ -411,19 +449,45 @@ public class CLImenu {
 			
 // === Manaer === 5 ==================Reimb by Resolver ===============
 //			 *     <li>			5	Get Reimbursements by Resolver</li> // fin mgr only
-			case "2": {
+		case "M5": {
 				
-		
+			break;
+			}
 				
 				
 // == Manager == 6 =============== Review All Reimbursements =============
-				//			 *    6	Get All Reimbursements</li>          // fin mgr only
+		case "M6" : {
+			
+		break;	
+		}
+		
+		
+		//			 *    6	Get All Reimbursements</li>          // fin mgr only
+//				//Optional<List<User>> oaUsers = us.getAllUsers();
+//				// runtime check the value from DB select
+//				System.out.println(oaUsers.isPresent());
+//				
+//					if (oaUsers.isPresent()) {
+//						List<User> allUsers = oaUsers.get();
+//						//User u = new User();
+//						//allUsers.forEach(u) {
+//							
+//						//};
+//						
+//							for (User u : allUsers) {
+//								System.out.println(u.toString());
+//							}
+//					} else {
+//							System.out.println("All Users are not on file");
+//						
+//				
 				
 				
+	
 				
 				
-				
-			case "7": {
+// === Manager 7 =====       Get User by Username (required) ===========================				
+	case "M7": {
 				System.out.println("7. Get Users by Username");			// 211231 required
 				System.out.println("211231done: Get Users by username");  // required
 				
@@ -454,23 +518,28 @@ public class CLImenu {
 //				}
 //			
 //				scan3.close();  // only close scanner when exit the entire menu
-				break;
-			}
+		break;
+		}
 				
 
 // ==== Manager === 88888888 ========== Get User by Email =====================			
-			System.out.println("84. Get Users by Email");		// TBD			
-			case "4": {
+						
+		case "M8": {
 				System.out.println("TBD: Get Users by Email");
+				
+				System.out.println("M8. Get Users by Email");		// TBD
+			break;
 			}
 
 
 			
 			
 // === Nanager == 999999999 ======= Get All Users ========================
-			System.out.println("95. Get All Users");             // done 211231			
-			case "9": {
+					
+		case "M9": {
+				System.out.println("M9. Get All Users");             // done 211231	
 				System.out.println("211231done: Get All Users");
+				
 				Optional<List<User>> oaUsers = us.getAllUsers();
 				// runtime check the value from DB select
 				System.out.println(oaUsers.isPresent());
@@ -503,11 +572,11 @@ public class CLImenu {
 			
 // === Manager ==== 10   10   10 ====  Create Self Reimb ==============================
 //			 <li>               10. Create Reimbursement</li>  //    employee
-			
+		case "M10": {		
 			
 
 			
-				System.out.println("TBD: @code process Update User Information");
+				System.out.println("M10 TBD: @code process Update User Information");
 				
 				
 				
@@ -516,26 +585,40 @@ public class CLImenu {
 			
 			
 // === Manager == 11  11   11  ======Update Self Reimb ===================
+		case "M11": {
 			
-//			 *     <li>         11. Update Reimbursement</li>  // employee
-			
-			
+		
+//			 *     <li>         M11. Update Reimbursement</li>  // employee
+		break;	
+		}	
 			
 // == Manager == 12 12    12 ==== Update User Info =====
-			System.out.println("12. Update User Information");  //TBD
+		case "M12": {
 			
-
+		
+		System.out.println("M12. Update User Information");  //TBD
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		break;	
+		}
 			
-			
-			case "20": {
+// == Manager == 20 20 20 ======== Manager Menu Exit =================			
+		case "M20": {
 				System.out.println("by 211231 You selected to exit");
 				displayMenu = false;
 				break;
-			}
-			default: {
+		}
+		default: {
 				System.out.println("Invalid selection. Please try again : '(");
 				break;
-			}
+		}
 			
 			
 			

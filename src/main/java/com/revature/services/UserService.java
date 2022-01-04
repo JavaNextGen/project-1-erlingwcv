@@ -64,6 +64,15 @@ public class UserService {
 		//return Optional.empty();
 	}
 	
+// ==== Menu E 2 ===== Employee Self Update User Info ================================
+    
+    public User eUserUpdate(User unupdated) {
+    	
+    	return uDAO.eupdate(unupdated);
+    	
+    }
+	
+	
 	
 	
 	

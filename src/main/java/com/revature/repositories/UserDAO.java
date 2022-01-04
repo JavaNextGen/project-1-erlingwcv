@@ -21,6 +21,9 @@ public class UserDAO {
     /**
      * Should retrieve a User from the DB with the corresponding username or an empty optional if there is no match.
      */
+	
+// === Menu M7 required  Done 211231 ========Get User by Username =============================================
+	
     public Optional<User> getByUsername(String username) { // username should be unique in DB
     	try(Connection conn = ConnectionFactory.getConnection()) {
     		// Initiate an empty ResultSet object that will store the results of our SQL query
@@ -86,7 +89,7 @@ public class UserDAO {
         
     }
     
-    
+// ===== Menu =M9 done 211231================Get All Users====================================================    
  	//public Optional<User> getAllDBUsers() {
     public Optional<List<User>> getAllUsers() {
     	
@@ -151,7 +154,7 @@ public class UserDAO {
      }
     	
    	
-    
+// ====  Menu E1 Done 211231 ==========Create New User ==========================  
 
     /**
      * <ul>
@@ -201,6 +204,56 @@ public class UserDAO {
     	
         // return Optional.ofNullable(userToBeRegistered);
     }
+    
+// ==== Menu E2 Employee User Update ====Done 12:32am 220104 =====================================================
+    
+    public User eupdate(User unupdated) {
+    	try(Connection conn  = ConnectionFactory.getConnection()) {
+ //   	ResultSet rs = null;	// error: Duplicate local variable
+    	String SQL1 = "UPDATE ers_users SET user_email = ? WHERE ers_users_id = ?";
+    	PreparedStatement ps1 = conn.prepareStatement(SQL1);
+    	ps1.setString(1,  unupdated.getUser_enmail());
+    	ps1.setInt(2,  unupdated.getErs_users_id());  // 
+    	
+    	int userId = unupdated.getErs_users_id();
+    
+    	int affectedRows = ps1.executeUpdate();		
+    	//ps1.close();
+    	
+    	//ResultSet rs = ps1.getResultSet(); // NoPointerException
+    	
+    	// now receive from DB the updated user
+    	String SQL2 = "SELECT * FROM ers_users WHERE ers_users_id = ?";  // typo ers_user_id
+    	PreparedStatement ps2 = conn.prepareStatement(SQL2);
+    	//ps2.setInt(1, 1);
+    	ps2.setInt(1, userId);
+    	ResultSet rs = ps2.executeQuery();
+    	
+    
+    	//System.out.println(rs.toString());
+    	while (rs.next()) {
+    		User updatedU = new User(		// per user email-only constructor
+    		rs.getInt("ers_users_id"),		// DB use only
+//			rs.getString("ers_username"),  // confidential
+//			rs.getString("user_password"),
+			rs.getString("user_first_name"),
+			rs.getString("user_last_name"),
+			rs.getString("user_email")
+//			rs.getInt("user_role_id")
+			);
+    	//return unupdated;
+    	return updatedU;
+    	}
+    	} catch(SQLException e) {
+			System.out.println("Employee user update has failed.");
+			e.printStackTrace();
+			
+		}
+    	
+    	return null;
+    }
+    
+    
     
 // public void insertNewUser(User newUser) {
 //		

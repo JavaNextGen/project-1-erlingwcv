@@ -59,46 +59,10 @@ public class Reimbursement extends AbstractReimbursement {
 //      above fields are in the Reimbursement table
 //		BELOW are fields to be used in reimbByStatus query
 		private String reimb_status;
-public String getReimb_status() {
-			return reimb_status;
-		}
-
-		public void setReimb_status(String reimb_status) {
-			this.reimb_status = reimb_status;
-		}
-
-		public String getReimb_type() {
-			return reimb_type;
-		}
-
-		public void setReimb_type(String reimb_type) {
-			this.reimb_type = reimb_type;
-		}
-
-		public String getUser_last_name() {
-			return user_last_name;
-		}
-
-		public void setUser_last_name(String user_last_name) {
-			this.user_last_name = user_last_name;
-		}
-
-		public String getUser_first_name() {
-			return user_first_name;
-		}
-
-		public void setUser_first_name(String user_first_name) {
-			this.user_first_name = user_first_name;
-		}
-
-		public String getUser_email() {
-			return user_email;
-		}
-
-		public void setUser_email(String user_email) {
-			this.user_email = user_email;
-		}
-
+		
+		
+		
+		
 		//		reimb_author,
 //		reimb_id;
 		private String reimb_type;
@@ -225,6 +189,49 @@ public String getReimb_status() {
 	// === getters and setters	
 	
 	
+	public String getReimb_status() {
+		return reimb_status;
+	}
+
+	public void setReimb_status(String reimb_status) {
+		this.reimb_status = reimb_status;
+	}
+
+	public String getReimb_type() {
+		return reimb_type;
+	}
+
+	public void setReimb_type(String reimb_type) {
+		this.reimb_type = reimb_type;
+	}
+
+	public String getUser_last_name() {
+		return user_last_name;
+	}
+
+	public void setUser_last_name(String user_last_name) {
+		this.user_last_name = user_last_name;
+	}
+
+	public String getUser_first_name() {
+		return user_first_name;
+	}
+
+	public void setUser_first_name(String user_first_name) {
+		this.user_first_name = user_first_name;
+	}
+
+	public String getUser_email() {
+		return user_email;
+	}
+
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
+	}
+
+	
+	
+	
 	
 	public int getReimb_id() {
 		return reimb_id;
@@ -250,7 +257,7 @@ public String getReimb_status() {
 		this.reimb_submitted = reimb_submitted;
 	}
 
-	public String getReimb_resolved() {
+	public Timestamp getReimb_resolved() {
 		return reimb_resolved;
 	}
 

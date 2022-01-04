@@ -165,7 +165,7 @@ public class ReimbursementDAO {
     
     
     
-    // create a Reimbursement =======by Employee =================================================================
+// ===== Menu E1 Done 211231 create a Reimbursement =======by Employee =================================================================
     
 //    this.reimb_author = author_id;  // int
 //	this.reimb_amount = amount; // double, required
@@ -175,7 +175,7 @@ public class ReimbursementDAO {
 //    
     
     // NO BLOB new request
-    public void createReimb(Reimbursement newReimb) {
+    public void create(Reimbursement newReimb) {
     	
     	try(Connection conn  = ConnectionFactory.getConnection()) {
     		String sql = "INSERT INTO ers_reimbursement (reimb_author, reimb_amount, reimb_description, reimb_type_id, reimb_status_id, reimb_submitted) VALUES (?,?,?,?,?,?)";
@@ -187,11 +187,11 @@ public class ReimbursementDAO {
     		ps.setString(3, newReimb.getReimb_description()); // required entry: desc
     		ps.setInt(4, newReimb.getReimb_type_id());   // required type id
        		ps.setInt(5, newReimb.getReimb_status_id());     // required entry: status id
-    		ps.setTimestamp(6,  newReimb.getReimb_submitted());  // sys added submission date
+    		ps.setTimestamp(6, newReimb.getReimb_submitted());  // sys added submission date
        		
     		// executeUpdate, not execute query    		
     		ps.executeUpdate();  // 
-   		
+    		
   		
     		System.out.println("Reimbursement entry Successful! --reimbDAO");		// shown after closed and opened after the above correction 211229
     		//ps.close();
@@ -211,7 +211,7 @@ public class ReimbursementDAO {
     
     
     
-    
+ // ==== Menu E5 WIP 220102 =============== E Update Reimb ======= Problem: DB results null   
     
     /**
      * <ul>
@@ -221,6 +221,7 @@ public class ReimbursementDAO {
      * </ul>
      */
     // employee update reimbursement made earlier if the status is not Approved
+    
     public Reimbursement update(Reimbursement unprocessedReimbursement) {
     	
     	
@@ -236,28 +237,40 @@ public class ReimbursementDAO {
 //                    + "SET last_name = ? "
 //                    + "WHERE actor_id = ?";
 //
-            int affectedrows = 0;
+            	int affectedrows = 0;
 
-    	String SQL = "UPDATE ers_reimbursement "
-    			+ "SET reimb_amount = ?, reimb_description = ? "
-    			+ "WHERE reimb_id = ? "
-    			+ " AND reimb_status_id = 1";
+//    	String SQL = "UPDATE ers_reimbursement "
+//    			+ "SET reimb_amount = ?, reimb_description = ? reimb_submitted = ?"
+//    			+ "WHERE reimb_id = ? "
+//    			+ " AND reimb_status_id = 1";
+    	
+    	String SQL = "UPDATE ers_reimbursement SET reimb_amount = ?, reimb_description = ? reimb_submitted = ? WHERE (reimb_id = ? AND reimb_status_id = 1)";
     	
     	
-    	        try (Connection conn = ConnectionFactory.getConnection();
-                    PreparedStatement pstmt = conn.prepareStatement(SQL)) {
-
+    	        try (Connection conn = ConnectionFactory.getConnection()
+                    ) {
+    	        PreparedStatement pstmt = conn.prepareStatement(SQL);	
                 pstmt.setDouble(1, unprocessedReimbursement.getReimb_amount());
                 pstmt.setString(2, unprocessedReimbursement.getReimb_description());
-                pstmt.setInt(3, unprocessedReimbursement.getReimb_id());
+                pstmt.setTimestamp(3, unprocessedReimbursement.getReimb_submitted());
+                pstmt.setInt(4, unprocessedReimbursement.getReimb_id());
                 
-                           
+                int myrid = unprocessedReimbursement.getReimb_id();
+                
+                System.out.println(unprocessedReimbursement.getReimb_submitted());
+                System.out.println("myrid is " + myrid);
+ 
+                //pstmt.executeUpdate(SQL);  // what syntax error?, then changed to no int version. Still 10:52pm 220102
                 affectedrows = pstmt.executeUpdate();
+                System.out.println("Rows affected "+ affectedrows);
+                //pstmt.executeUpdate();
+                //pstmt.execute();
+                //pstmt.close();
                 
-                String sqlCheck = "SELECT * FROM ers_reimbursement WHERE reimb_id = ? ";
+                String sqlCheck = "SELECT * FROM ers_reimbursement WHERE reimb_id = ?";
                 PreparedStatement upps = conn.prepareStatement(sqlCheck);
            
-                upps.setInt(1,  unprocessedReimbursement.getReimb_id());
+                upps.setInt(1, myrid);
     			//Statement s = conn.createStatement();
     			ResultSet rs = upps.executeQuery();
     			
@@ -272,10 +285,11 @@ public class ReimbursementDAO {
     						rs.getInt("reimb_author"),
     						rs.getTimestamp("reimb_submitted")
     					);
-                
+                System.out.println("User " + nR.getUser_first_name() + "has updated his/her trxn id " + nR.getReimb_id());
     			return nR; 
 
             } catch (SQLException ex) {
+            	System.out.println("Your reimbursement update has failed.");
             	ex.printStackTrace();
                 System.out.println(ex.getMessage());
         }
