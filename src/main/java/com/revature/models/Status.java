@@ -21,11 +21,7 @@ public enum Status {
             return "Pending";
         }
         
-        // to quickly get the value for DB query
-        @Override
-        public int toInt() {
-        	return 1;
-        }
+
     },
     APPROVED {
         @Override
@@ -33,11 +29,7 @@ public enum Status {
             return "Approved";
         }
         
-     // to quickly get the value for DB query
-        @Override
-        public int toInt() {
-        	return 2;
-        }
+
     },
     DENIED {
         @Override
@@ -45,11 +37,6 @@ public enum Status {
             return "Denied";
         }
         
-     // to quickly get the value for DB query
-        @Override
-        public int toInt() {
-        	return 3;
-        }
-        
+       
     }
 }

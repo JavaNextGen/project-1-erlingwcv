@@ -13,7 +13,7 @@ import io.javalin.Javalin;
 
 
 
-
+// Erling: 220108 12pm crashed: it appears due to live paste on pages with CTX 
 // Erling: 220101 It appears that Javalin caused Building errors at least 2
 
 // Start 12/15/2021

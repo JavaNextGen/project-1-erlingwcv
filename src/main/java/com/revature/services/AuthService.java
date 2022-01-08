@@ -1,6 +1,10 @@
 package com.revature.services;
 
+import com.revature.exceptions.RegistrationUnsuccessfulException;
 import com.revature.models.User;
+import com.revature.models.LoginDTO;
+import com.revature.repositories.LoginDAO;
+import com.revature.repositories.UserDAO;
 
 import java.util.Optional;
 
@@ -26,11 +30,40 @@ public class AuthService {
      *     <li>Should throw exception if the passwords do not match.</li>
      *     <li>Must return user object if the user logs in successfully.</li>
      * </ul>
-     */
-    public User login(String username, String password) {
-        return null;
+    */
+	
+	User ul = new User();
+	LoginDAO ld = new LoginDAO();
+	//UserDTO uDTO = new UserDTO();
+	
+    public User userLogin(String username, String password) {
+        
+    	
+    	try {
+    		ul = ld.login(username, password);
+    				
+    		int uid = ul.getErs_users_id();   		
+    		//int urid = ul.getUser_role_id();
+    		
+    		if (uid > 0 ) {
+    			
+    			return ul;	
+    			
+    		}
+    	
+    
+    	} catch (RegistrationUnsuccessfulException e) {
+    		e.getStackTrace();
+    		System.out.println(e.toString());
+    		System.out.println("Username does not exit!");
+    		
+    	}
+    return null;
+        
     }
 
+// +++++++++++ To Do: add new user ++++++++++++++++++++++++++    
+    
     /**
      * <ul>
      *     <li>Should ensure that the username/email provided is unique.</li>
@@ -45,7 +78,17 @@ public class AuthService {
      * After registration, the id will be a positive integer.
      */
     public User register(User userToBeRegistered) {
-        return null;
+
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	return null;
     }
 
     /**
@@ -57,3 +100,4 @@ public class AuthService {
         return Optional.empty();
     }
 }
+

@@ -49,8 +49,13 @@ public class ReimbursementService {
      * The Resolver should be null. Additional fields may be null.
      * After processing, the reimbursement will have its status changed to either APPROVED or DENIED.    // Menu item 2
      */
-    public Reimbursement process(Reimbursement unprocessedReimbursement, Status finalStatus, User resolver) {
-        return null;
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		
+		public Reimbursement process(Reimbursement unprocessedReimbursement, Status finalStatus, User resolver) {
+ 
+		
+		return null;
     }
 
     // ================Process Reimbursements by Fin Manager ========================
@@ -59,7 +64,7 @@ public class ReimbursementService {
     
     
     
-    
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    
     
     // ================Reimb By Status======Fin Manager Only===========================================================
     /**
@@ -78,6 +83,7 @@ public class ReimbursementService {
 //    	}
     }
     
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     // =========Employee=======Create New Reimb =================================================================================
     
@@ -88,6 +94,7 @@ public class ReimbursementService {
     	
     }
     
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
     
     // ==Menu E5=======Employee Update Unprocessed Reimbursement =========================
     
@@ -97,8 +104,5 @@ public class ReimbursementService {
     	return rDAO.update(unprocessed);
     }
     
-    
-    
-    
-    
 }
+

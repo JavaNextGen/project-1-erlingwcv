@@ -31,7 +31,7 @@ public class UserService {
 	 *     Should retrieve a User with the corresponding username or an empty optional if there is no match.
      */
 	
-	// Done getbyUserName 211231
+	// Done getbyUserName 211231 ================================================================
 
 	public Optional<User> getByUsername(String username) {
 		
@@ -40,7 +40,7 @@ public class UserService {
 		//return Optional.empty();
 	}
 	
-	// for finance manager to get all users
+// ===== finance manager to get all users  ============================================
 	// Done getAllUsers 211231
 	public Optional<List<User>> getAllUsers() {
 		
@@ -77,3 +77,4 @@ public class UserService {
 	
 	
 }
+
