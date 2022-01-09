@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<title>Fin Mgr Reimb Menu</title>
+		<meta charset="utf-8"/>
+		<title>ERS Fin Manager to Get All Users</title>
 		<!-- This is a link to a bootstrap stylesheet, which will basically set a premade style for your page -->
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -17,40 +18,34 @@
 		<!--We need a div called container to hold all of our bootstrap styling-->
 		<div class="container">
 
-		<h3>Welcome to ERS Fin Mgr Reimb Menu</h3>
+		<h3>Welcome to the ERS!</h3>
 
-			<!-- <div>
-			<!-- Login Elements Here -->
+			<div>
+			<!-- Login Starts -->
 			<div id="loginRow" class="row">
 				<h3>Please Enter your Login Information!</h3>
 				<input id="username" placeholder="Username"/>
 				<!-- default type is text -->
 				<!-- <input type="text"> -->
 				<input id="password" type="password" placeholder="Password" />
-				<button id="loginButton" class="btn btn-primary col-sm-4">Login</button>
-			</div> -->
-
-
+				<button id="loginButton" class="btn">Login</button>
+			</div>
 
 			<br />
 			<br />
 			<!-- We want to display(table) all of the employee information when it comes back from the server -->
 			<div id="table-row" class="row">
-				<table id="mreimbTable" class="table table-hover table-bordered table-dark">
+				<table id="userTable" class="table table-hover table-bordered table-dark">
 					<thead>
 						<tr>
-							<th>Reimb ID</th>
-							<th>Status</th>			
-							<th>Author</th>			
-							<th>Resolver</th>
-							<th>Amount</th>
-							<th>Desc</th>
-							<th>Type</th>
-							<th>Submitted</th>
-							<th>Processed</th> 
+							<th>Username</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Email</th>
+							<th>Role ID</th>
 						</tr>
 					</thead>
-					<tbody id="mreimbBody">
+					<tbody id="userBody">
 						<!--We'll leave this blank: it will be filled by our JS when data comes in-->
 					</tbody>
 				</table>
@@ -59,12 +54,11 @@
 			<br />
 			<br />
 
-			<button id="mreimb01Button" class="btn btn-primary">Reimb by Status</button>
-			<button id="mreimb02Button" class="btn btn-primary">Reimb Processing</button>
+			<button id="getUserButton" class="btn btn-primary">Show Users</button>
 		</div>
 
 	</div>
 
-		<script src="mreimbmenu.js"></script>
+		<script src="m09getallusers.js"></script>
 	</body>
 </html>

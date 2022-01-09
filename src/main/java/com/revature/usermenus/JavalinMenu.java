@@ -26,6 +26,53 @@ import io.javalin.Javalin;
 
 public class JavalinMenu {
 
+// Fin Manager Menu 	(numbered for HLML & JS file names)
+// Manager mReimb	===========
+// mr01getbystatus		01. Get Reimbursements by Status"); // required WIP
+// mr02getbyusername  	02.	Get Reimbursements by Username </li>  // fin mgr only
+// mr03getbyauthor		03.	Get Reimbursements by Author</li>   // fin mgr only
+// mr04getbyresolverid	04.	Get Reimbursements by Resolver_id</li> // fin mgr only
+
+// Manager mUser  =============	
+// mu11getbyusername	11. Get Users by Username");			// 211231 required
+// mu12getbyemail		12. Get Users by Email");		// TBD	
+	
+// mr21process   		21. Process Reimbursements"); // TBD required	
+// mr22getall			22. Get All Reimbursements</li>          // fin mgr only
+// mr23update         	23. Update Reimbursement</li>  // employee
+// mr24create         	24. Create Reimbursement</li>  //    employee
+	
+// mu31getall			31. Get All Users");             // done 211231
+// mu32update			32. Update User Information");  //TBD
+// mu33create			33. Create User Information");  //TBD
+	
+
+
+	
+// Employee Menu 	(numbered for HLML & JS file names)	
+//   Employee Menu ===============
+	// eReimb =========	
+//	er01review    		01. Review All Reimbursement Entries");
+//	er02create			02. Create New Reimbursement Entry");
+//	er03update			03. Update Unprocessed Reimbursements (by Reimb id)");
+		
+	
+	// eUser ===========	
+//	eu11update 			11. Update User Information");
+//	eu12create			12.	Create User 220101");
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 ////	ChallengeEmployeesController cec = new ChallengeEmployeesController();
 //	

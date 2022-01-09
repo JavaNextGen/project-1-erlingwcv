@@ -4,7 +4,7 @@ package com.revature.javalin;
 //import com.google.gson.Gson;
 //import com.revature.models.User;
 //import com.revature.models.UserNRole;
-//import com.revature.services.UserService;
+import com.revature.services.UserService;
 //import io.javalin.http.Handler;
 
 
@@ -24,7 +24,7 @@ public class FinMgrFork {
 	//
 	//public class FinMgrController {
 	//	
-//			UserService us = new UserService();
+			UserService us = new UserService();
 //			
 ////			TODO: CREATE A CONTROLLER FOR JAVALIN FOR EACH OF THE SERVICES REQUESTEDD
 //			

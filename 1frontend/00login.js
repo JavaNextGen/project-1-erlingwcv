@@ -92,14 +92,20 @@ async function loginFunction() {
 
     //control flow based on successful/unsuccessful login
     if(response.status === 202) {
+        if(response.role === 2) {
         // erling: open the corresponding window for use
        // window.open(url, '_blank').focus();
  //    // hardcoding a window like user menu to open
-//    // window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/m09getallusers.html", '_blank"').focus;
-      
+    window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/00finmgr.html", '_blank"').focus;
+        } else if (response.role === 1){
+ window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/emenu.html", '_blank"').focus;
+  
+            <!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
+        }
+
 
         //wipe our login row and welcome the user 
-        document.getElementById("loginRow").innerText="Welcome to ERS!";
+        //document.getElementById("loginRow").innerText="Welcome to ERS!";
         
     } else {
         document.getElementById("loginRow").innerText="Login failed! Refresh the page";

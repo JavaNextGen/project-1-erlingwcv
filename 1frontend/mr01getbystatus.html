@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ERS Fin Mgr Main Menu</title>
+		<!-- This is a link to a bootstrap stylesheet, which will basically set a premade style for your page -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+			crossorigin="anonymous"
+		/>
+		<!--bootstrap classes cheatsheet-->
+		<!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
+
+	</head>
+	<body>
+		<!--We need a div called container to hold all of our bootstrap styling-->
+		<div class="container">
+
+		<h3>Welcome to ERS Finance Manager Menu</h3>
+
+			<!-- <div>
+			<!-- Entry Elements Here -->
+			<h3>Please enter your search and click the button below!</h3>
+			<div id="mchoiceRow" class="row">
+				<!-- Reimb related with entry before click: -->
+				<!-- <input id="status" placeholder="Status" class="input col-sm-3"/> -->
+				<button id="mstatusButton" class="btn btn-primary col-sm-3">Get by Status</button>
+				<!-- <input id="username" placeholder="Username" class="input col-sm-3"/> -->
+				<button id="musernameButton" class="btn btn-primary col-sm-3">Get by Username</button>
+				<!-- <input id="author" placeholder="Author" class="input col-sm-3"/> -->
+				<button id="mauthorButton" class="btn btn-primary col-sm-3">Get by Author</button>
+				<!-- <input id="resolverid" placeholder="Resolver ID" class="input col-sm-3"/> -->
+				<button id="mresolveridButton" class="btn btn-primary col-sm-3">Get by Resolver ID</button>
+				<!-- default type is text -->
+				<!-- <input type="text"> -->
+								
+			<br></br>
+				
+				<input id="managerid" placeholder="Manager User ID" />
+				<button id="loginButton" class="btn btn-info  ">Manager in session</button>
+			<br><br/>
+				<!-- User related with entry before click:-->
+				<button id="muusernameButton" class="btn btn-primary col-sm-3">Get User by Username</button>
+				<!-- <input id="resolverid" placeholder="Resolver ID" class="input col-sm-3"/> -->
+				<button id="muemailButton" class="btn btn-primary col-sm-3">Get User by Email Address</button>
+			</div> 
+
+
+
+			<br>
+			</br>
+			<!-- We want to display(table) all of the requested  information when it comes back from the server -->
+			<!-- <div id="table-row" class="row">
+				<table id="mreimbTable" class="table table-hover table-bordered table-dark">
+					<thead>
+						<tr>
+							<th>Reimb ID</th>
+							<th>Status</th>			
+							<th>Author</th>			
+							<th>Resolver</th>
+							<th>Amount</th>
+							<th>Desc</th>
+							<th>Type</th>
+							<th>Submitted</th>
+							<th>Processed</th> 
+						</tr>
+					</thead>
+					<tbody id="mreimbBody">
+						<!--We'll leave this blank: it will be filled by our JS when data comes in-->
+					</tbody>
+				</table>
+			</div> 
+ 
+			<br>
+			<!-- actions just by clicking-->
+			</br>
+			<!-- reimb related: -->
+			<button id="mprocessButton" class="btn btn-primary">Process Reimb</button>
+			<button id="mgetreimbButton" class="btn btn-primary">Get All Reimb</button>
+			<button id="mcreateButton" class="btn btn-primary">Create Reimb</button>
+			<button id="mupdateButton" class="btn btn-primary">Update Reimb</button>
+
+			<br>
+			<!-- user related: -->
+			</br>
+			<button id="mgetuserButton" class="btn btn-primary">Get All Users</button>
+			<button id="mcreateuButton" class="btn btn-primary">Create User</button>
+			<button id="mupdateuButton" class="btn btn-primary">Update User</button>
+		</div> 
+
+	</div>
+
+		<script src="mreimbmenu.js"></script>
+	</body>
+</html>
