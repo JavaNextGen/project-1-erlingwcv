@@ -348,6 +348,8 @@ public boolean usernameNull (String username) {
      * Note: The userToBeRegistered will have an id=0, and username and password will not be null.
      * Additional fields may be null.
      */
+    
+    
     public void create(User userToBeRegistered) {
     	
     	RegistrationUnsuccessfulException noRegis = new RegistrationUnsuccessfulException();

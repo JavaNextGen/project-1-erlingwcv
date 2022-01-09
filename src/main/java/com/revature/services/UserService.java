@@ -59,18 +59,7 @@ public class UserService {
 		
 	}
 	
-	//start 211231
-	//create new user by username...===================================================
-//	public void createUser(User newu) {
-//		
-//		uDAO.create(newu);
-//		
-//		//return Optional.empty();
-//	}
-	
-// ==== Menu E 2 ===== Employee Self Update User Info ================================
-    
-    ÷
+
 	
 	
 	

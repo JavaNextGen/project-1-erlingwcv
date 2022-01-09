@@ -22,9 +22,9 @@ public class User extends AbstractUser {
 	private String ers_password;
 	private String user_first_name;
 	private String user_last_name; 
-	private String user_enmail; 
-	private Role user_role; // Not in DB ers_users table // emaployee 1, financie manager 2
-	private int user_role_id; // DB ers_users_table emaployee 1, financie manager 2
+	private String user_email; 
+	private Role user_role; // Not in DB ers_users table // employee 1, finance manager 2
+	private int user_role_id; // DB ers_users_table employee 1, finance manager 2
 	
 	// no args constructor
 
@@ -49,7 +49,7 @@ public class User extends AbstractUser {
         //this.ers_password = password;
         this.user_first_name = user_f_name;
         this.user_last_name = user_l_name;
-        this.user_enmail = u_email;
+        this.user_email = u_email;
         //this.user_role = role;        
     }
     
@@ -62,7 +62,7 @@ public class User extends AbstractUser {
         this.ers_password = password;
         this.user_first_name = user_f_name;
         this.user_last_name = user_l_name;
-        this.user_enmail = u_email;
+        this.user_email = u_email;
         this.user_role = u_role;
     }
     
@@ -74,7 +74,7 @@ public class User extends AbstractUser {
         this.ers_username = username;   // it was missing and 211231 userbyid result was null
         this.user_first_name = user_f_name;
         this.user_last_name = user_l_name;
-        this.user_enmail = u_email;
+        this.user_email = u_email;
         this.user_role_id = user_role_id;
         //this.user_role = u_role;
     }
@@ -87,7 +87,7 @@ public class User extends AbstractUser {
         this.ers_password = ers_password;
         this.user_first_name = user_f_name;
         this.user_last_name = user_l_name;
-        this.user_enmail = u_email;
+        this.user_email = u_email;
     //    this.user_role_id = user_role_id;  // User itself cannot change the role
         //this.user_role = u_role;
     }
@@ -100,7 +100,7 @@ public class User extends AbstractUser {
 //        this.ers_password = ers_password;
         this.user_first_name = user_f_name;
         this.user_last_name = user_l_name;
-        this.user_enmail = u_email;
+        this.user_email = u_email;
     //    this.user_role_id = user_role_id;  // User itself cannot change the role
         //this.user_role = u_role;
     }
@@ -122,7 +122,7 @@ public class User extends AbstractUser {
 	@Override
 	public String toString() {
 		return "User [ers_username=" + ers_username + ", user_first_name=" + user_first_name + ", user_last_name="
-				+ user_last_name + ", user_enmail=" + user_enmail + ", user_role_id=" + user_role_id + "]";
+				+ user_last_name + ", user_email=" + user_email + ", user_role_id=" + user_role_id + "]";
 	}
     
     
@@ -170,12 +170,12 @@ public class User extends AbstractUser {
 		this.user_last_name = user_last_name;
 	}
 
-	public String getUser_enmail() {
-		return user_enmail;
+	public String getUser_email() {
+		return user_email;
 	}
 
-	public void setUser_enmail(String user_enmail) {
-		this.user_enmail = user_enmail;
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
 	}
 
 	public Role getUser_role() {

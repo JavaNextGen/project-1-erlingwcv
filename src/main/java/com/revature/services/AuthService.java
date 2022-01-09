@@ -70,7 +70,44 @@ public class AuthService {
         
     }
 
-// +++++++++++ To Do: add new user ++++++++++++++++++++++++++    
+// +++++++++++ pull requesting user info from DB
+    
+    
+    
+    
+    
+    
+    
+    
+// ++++++++++++ verify username to be unique ++++++++++++++
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+// ++++++++++++ verify password to match ++++++++++++++++
+    
+    
+    
+    
+    
+    
+    
+    
+    
+// +++++++++++++verify email address to be unqiue ++++++++++++++
+    
+    
+    
+    
+    
+    
+    // +++++++++++ To Do: add new user ++++++++++++++++++++++++++    
     
     /**
      * <ul>
@@ -85,20 +122,27 @@ public class AuthService {
      * Note: userToBeRegistered will have an id=0, additional fields may be null.
      * After registration, the id will be a positive integer.
      */
-    public User register(User userToBeRegistered) {
-
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	return null;
-    }
-
+    
+        
+//    public User register(User userToBeRegistered) {
+//
+//    	
+//    	String un2ck = userToBeRegistered.getErs_username();
+//   // if  	
+//  // throw new  	UsernameNotUniqueException
+//    	
+//    	
+//    	
+//    	
+//    	
+//    	
+//    	
+//    	return null;
+//    }
+//
+  
+    
+    
     /**
      * This is an example method signature for retrieving the currently logged-in user.
      * It leverages the Optional type which is a useful interface to handle the
