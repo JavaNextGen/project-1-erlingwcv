@@ -1,5 +1,13 @@
 package com.revature.javalin;
 
+//import java.util.List;
+//import com.google.gson.Gson;
+//import com.revature.models.User;
+//import com.revature.models.UserNRole;
+//import com.revature.services.UserService;
+//import io.javalin.http.Handler;
+
+
 public class FinMgrFork {
 	
 	//package com.revature.controllers;
@@ -25,7 +33,7 @@ public class FinMgrFork {
 //			// Sits between the Javalin Front Controller and the Service Layer
 //			// We'll either be getting data from the service layer (which is our DAO)
 //			// ORR sending data to the service layer (will probably return some response that it was successful)
-//			
+//	======================================================================================		
 //			//public Handler getChallengeEmployeesHandler = (ctx) -> {
 //			public Handler getAllUsersHandler = (ctx) -> {	
 //				if(ctx.req.getSession() != null) { //if the session exist
@@ -47,11 +55,11 @@ public class FinMgrFork {
 //					
 	//
 //				} else {
-//					ctx.result("Oh no you failed to get the employees!!!!");
+//					ctx.result("Oh no you failed to get the users!!!!");
 //					ctx.status(404);
 //				}
 //			};
-////			
+////	====================================================================		
 ////			// Add 
 ////			
 ////			public Handler insertChallengeEmployeeHandler = (ctx) -> {
@@ -76,7 +84,7 @@ public class FinMgrFork {
 ////				
 ////				
 ////			};
-//			
+//	===========================================================================================		
 //			// get user by username
 //			// get by ID via Javalin
 //			//public Handler getChallengeEmployeeByIdHandler = (ctx) -> {
@@ -116,7 +124,7 @@ public class FinMgrFork {
 //			};
 	//
 	//
-//			
+//	===========================================================================================		
 ////			// update (put)
 ////			
 ////					public Handler updateChallengeEmployeeHandler = (ctx) -> {
@@ -141,7 +149,7 @@ public class FinMgrFork {
 ////			
 	////
 ////					};
-	////
+	////======================================================================================
 ////			// delete by ID
 ////					
 ////					public Handler deleteChallengeEmployeeByIdHandler = (ctx) -> {
