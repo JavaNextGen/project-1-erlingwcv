@@ -32,18 +32,26 @@ public class AuthService {
      * </ul>
     */
 	
-	User ul = new User();
-	LoginDAO ld = new LoginDAO();
+	User luser = new User();
+	LoginDAO ldao = new LoginDAO();
 	//UserDTO uDTO = new UserDTO();
 	
     public User userLogin(String username, String password) {
         
     	
     	try {
-    		ul = ld.login(username, password);
+    		ul = ldao.login(username, password);
     				
-    		int uid = ul.getErs_users_id();   		
+    		int uid = luser.getErs_users_id();   		
     		//int urid = ul.getUser_role_id();
+    		
+ //   		boolean unameMatch = this.usernameMatch(username);
+//    		boolean pwMatch = this.passwordMatch(password);
+//    					
+//    			if (unameMatch == true && pwMatch == true) {
+//    		
+    		
+    		
     		
     		if (uid > 0 ) {
     			

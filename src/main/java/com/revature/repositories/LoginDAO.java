@@ -153,11 +153,11 @@ public class LoginDAO {
 							
 			// should return Role so corresponding menu can be presented to user
 	
-		boolean unameMatch = this.usernameMatch(username);
-		boolean pwMatch = this.passwordMatch(password);
-					
-			if (unameMatch == true && pwMatch == true) {
-					
+//		boolean unameMatch = this.usernameMatch(username);
+//		boolean pwMatch = this.passwordMatch(password);
+//					
+//			if (unameMatch == true && pwMatch == true) {
+//					
 			// Initiate an empty ResultSet object that will store the results of our SQL query		
 					ResultSet rs = null;
 					
@@ -171,8 +171,8 @@ public class LoginDAO {
 		    				+ "FROM ers_users\n"
 		    				//+ "LEFT JOIN ers_user_roles \n"
 		    				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
-		    				+ "WHERE ers_username = ? ers_password =? ";
-			 		
+		    				+ "WHERE ers_username = ?";
+					//+ "WHERE ers_username = ? ers_password =? ";
 			
 					// schema name to be included. otherwise JDBC do not see the table
 					// Put the SQL query into a Statement object (The Connection object has a method for this)
@@ -181,7 +181,7 @@ public class LoginDAO {
 					PreparedStatement ps = conn.prepareStatement(sql);
 					// put the username parameter in the PreparedStatement to complete the SQL
 					ps.setString(1, username); // 1st question mark in SQL, its variable
-					ps.setString(2, password); // 1st question mark in SQL, its variable
+					//ps.setString(2, password); // 1st question mark in SQL, its variable
 					
 					// Execute the query, by putting the results into our ResultSet object
 					// The Statement object has a method that takes Strings to execute as a SQL query
@@ -196,14 +196,14 @@ public class LoginDAO {
 							while(rs.next()) {
 							// use the all args constructor to create a new User object from each returned row from the DB
 							User loginUser = new User(
-								// we want to use rs.get from each column in the record
-									rs.getInt("ers_user_id"),		// DB use only?
-								//	rs.getString("ers_username"),  // 211231 says Null. why?
-								//	rs.getString("ers_password"), // confidential?
-								//	rs.getString("user_first_name"),
-								//	rs.getString("user_last_name"),
-								//	rs.getString("user_email"),
-									rs.getInt("user_role_id")
+// fix constructor for?			// we want to use rs.get from each column in the record
+//									rs.getInt("ers_user_id"),		// DB use only?
+//									rs.getString("ers_username"),  // 211231 says Null. why?
+//									rs.getString("ers_password"), // confidential?
+//									rs.getString("user_first_name"),
+//									rs.getString("user_last_name"),
+//									rs.getString("user_email"),
+//									rs.getInt("user_role_id")
 									);
 							// populate the ArrayList with each new User object
 							return loginUser;

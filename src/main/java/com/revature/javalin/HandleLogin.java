@@ -1,5 +1,6 @@
 package com.revature.javalin;
 
+import com.revature.models.User;
 
 //import com.google.gson.Gson;
 //import com.revature.models.LoginDTO;
@@ -20,7 +21,16 @@ public class HandleLogin {
 //			LoginDTO LDTO = gson.fromJson(body, LoginDTO.class); //turn that JSON String into a LoginDTO object
 	//control flow to determine what happens in the event of successful/unsuccessful login
 			//invoke the login() method of the AuthService using the username and password from the LoginDTO
-//			if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
+				
+				// 0. JS LoginDTO to be used to for DB search by username
+				// 1. a fat user info to be pulled from DB to verify password and email
+				// 2. Then, a thin user with info like userid, name and role to be passed to JS to
+				// 2.1 choose the right menu for the user
+				// 2.2 and greet the user with their name
+				User toJS = new User();
+			
+	
+	//			if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
 				//create a user session so that they can access the applications other functionalities
 //				ctx.req.getSession(); //req is a "Request Object", we establish sessions through it
 				//return a successful status code

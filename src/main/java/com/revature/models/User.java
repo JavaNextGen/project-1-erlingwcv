@@ -109,8 +109,17 @@ public class User extends AbstractUser {
     
     
     // our User objects can be printed out (without user_id and password) -- returns a String describing the object
-    
-    @Override
+    // Constructor for passing successful user login to JS
+    public User(int ers_users_id, String user_first_name, String user_last_name, int user_role_id) {
+		// TODO Auto-generated constructor stub
+    	
+    	this.ers_users_id = ers_users_id;
+    	this.user_first_name = user_first_name;
+    	this.user_last_name = user_last_name;
+    	this.user_role_id = user_role_id;
+	}
+
+	@Override
 	public String toString() {
 		return "User [ers_username=" + ers_username + ", user_first_name=" + user_first_name + ", user_last_name="
 				+ user_last_name + ", user_enmail=" + user_enmail + ", user_role_id=" + user_role_id + "]";
