@@ -1,12 +1,12 @@
 package com.revature.javalin;
 
 import com.revature.results.FMuserViews;
-//import java.util.List;
+import java.util.List;
 //import com.google.gson.Gson;
 //import com.revature.models.User;
 //import com.revature.models.UserNRole;
 import com.revature.services.UserService;
-//import io.javalin.http.Handler;
+import io.javalin.http.Handler;
 
 
 public class FinMgrFork {
@@ -35,7 +35,7 @@ public class FinMgrFork {
 //			// *****This layer is where we'll parse our JSON into Java objects and vice vera*****
 //			// Sits between the Javalin Front Controller and the Service Layer
 //			// We'll either be getting data from the service layer (which is our DAO)
-//			// ORR sending data to the service layer (will probably return some response that it was successful)
+//			// OR sending data to the service layer (will probably return some response that it was successful)
 //	
 // ==== M get User by Username ==========
 //			// get user by username
