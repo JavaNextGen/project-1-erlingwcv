@@ -1,57 +1,52 @@
 package com.revature;
-//package com.revature;
+
+
+import java.sql.Connection;
+import java.sql.SQLException;
 //
-//import java.sql.Connection;
-//import java.sql.SQLException;
-//
-//import com.revature.controllers.AuthController;
+import com.revature.controls.HandleAuth;
 ////import com.revature.controllers.EmployeeController;
 ////import com.revature.models.Menu;
-//import com.revature.util.ConnectionFactory;
+import com.revature.util.ConnectionFactory;
 //
-//import io.javalin.Javalin;
+import io.javalin.Javalin;
 //
 ////public class Launcher
 //public class CtxLoginDriver {
+public class JavalinDriver {
 //
-//	public static void main(String[] args) {
+	public static void main(String[] args) {
 //		
 //		//instantiating controller objects to use their method
 //		//EmployeeController ec = new EmployeeController();
-//		AuthController ac = new AuthController();
+		HandleAuth ha = new HandleAuth();
 //		
 //		
 //		//Testing Database Connectivity - just testing whether our Connection (from ConnectionFactory) is successful
-//		try(Connection conn = ConnectionFactory.getConnection()){
-//			System.out.println("Connection Successful :)");
-//		} catch(SQLException e) {
-//			System.out.println("Connection failed");
-//			e.printStackTrace();
-//		}
+		try(Connection conn = ConnectionFactory.getConnection()){
+			System.out.println("Connection Successful :)");
+		} catch(SQLException e) {
+			System.out.println("Connection failed");
+			e.printStackTrace();
+		}
 //
 //		// to get port ready for front end
-//		Javalin app = Javalin.create(
-//					config -> {
-//						config.enableCorsForAllOrigins(); // allows the server to process JS requests from anywhere
-//					}
-//				).start(3000);
+		Javalin app = Javalin.create(
+					config -> {
+						config.enableCorsForAllOrigins(); // allows the server to process JS requests from anywhere
+					}
+				).start(3000);
 //
 //
 //
 //		//handler ending in /login to send and inputted username/password to be validated
-//		app.post("/login", ac.userLoginHandler);
+		app.post("/login", ha.loginHandler);
+		
+		// Now the hander is from JS at login.html?
+		// let response = await fetch (url + "login", {
+	}
 //
-//		
-//		
-//		
-//		
-//		
-//		
-//
-//
-//	}
-//
-//}
+}
 
 
 

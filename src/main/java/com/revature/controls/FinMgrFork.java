@@ -1,15 +1,16 @@
-package com.revature.javalin;
-
-import com.revature.results.FMuserViews;
-import java.util.List;
-//import com.google.gson.Gson;
-//import com.revature.models.User;
-//import com.revature.models.UserNRole;
-import com.revature.services.UserService;
-import io.javalin.http.Handler;
-
-
-public class FinMgrFork {
+package com.revature.controls;
+//package com.revature.websvc;
+//
+//import com.revature.results.FMuserViews;
+//import java.util.List;
+////import com.google.gson.Gson;
+////import com.revature.models.User;
+////import com.revature.models.UserNRole;
+//import com.revature.services.UserService;
+//import io.javalin.http.Handler;
+//
+//
+//public class FinMgrFork {
 	
 	//package com.revature.controllers;
 	//
@@ -25,8 +26,8 @@ public class FinMgrFork {
 	//
 	//public class FinMgrController {
 	//	
-			UserService us = new UserService();
-			FMuserViews fmu = new FMuserViews();
+//			UserService us = new UserService();
+//			FMuserViews fmu = new FMuserViews();
 			
 //			
 ////			TODO: CREATE A CONTROLLER FOR JAVALIN FOR EACH OF THE SERVICES REQUESTEDD
@@ -83,7 +84,7 @@ public class FinMgrFork {
 			
 			
 			
-			======================================================================================		
+//			======================================================================================		
 //			//public Handler getChallengeEmployeesHandler = (ctx) -> {
 //			public Handler getAllUsersHandler = (ctx) -> {	
 //				if(ctx.req.getSession() != null) { //if the session exist
@@ -244,4 +245,4 @@ public class FinMgrFork {
 	
 	
 
-}
+//}

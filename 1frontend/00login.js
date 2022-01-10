@@ -1,6 +1,20 @@
 const url = "http://localhost:3000/" //putting our base URL in a variable for cleaner code below
 //eventually, we'll use this in our fetch requests and make calls to our server by appending endpoints
 
+
+// Erling keep user role id and user id ++++++++++++++++++++++++++
+// Javascript in Page 1:
+
+// var favoritemovie = "Shrek";
+// sessionStorage.setItem("favoriteMovie", favoritemovie);
+
+// Javascript in Page 2:
+
+// var favoritemovie = sessionStorage.getItem("favoriteMovie");
+// console.log(favoritemovie);
+// https://lage.us/Javascript-Pass-Variables-to-Another-Page.html
+
+
 //add eventListeners to our buttons to give them functionality
 //document.getElementById("regisButton").addEventListener("click", registerFunction);
 document.getElementById("loginButton").addEventListener("click", loginFunction);
@@ -39,16 +53,19 @@ async function registrationFunction() {
        //future fetches will also require this "include" value to send the cookie back
    });
 
-   console.log(response.status); //userful for debug :)
+   //console.log(response.status); //userful for debug :)
+    console.log(response);
 
    //control flow based on successful/unsuccessful login
-   if(response.status === 202) {
+   //if(response.status === 202) {
        if(response.role === 2) {
        // erling: open the corresponding window for use
       // window.open(url, '_blank').focus();
 //    // hardcoding a window like user menu to open
    window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/00finmgr.html", '_blank"').focus;
-       } else if (response.role === 1){
+       };
+       
+       if (response.role === 1){
 window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/emenu.html", '_blank"').focus;
  
            <!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
@@ -58,7 +75,7 @@ window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erling
        //wipe our login row and welcome the user 
        //document.getElementById("loginRow").innerText="Welcome to ERS!";
        
-   } else {
+    if (response.role === 0) {
        document.getElementById("loginRow").innerText="Registration failed! Refresh the page";
    }
 
@@ -129,8 +146,8 @@ async function loginFunction() {
 
     //we want to send the user/pass as JSON, so we need a JS object to send
     let userLogin = {
-        username:usern,
-        password:userp
+        ers_username:usern,
+        ers_password:userp
     }
     //This object will reflect our DTO in Java... This is the data we want to transfer!
 
@@ -148,18 +165,21 @@ async function loginFunction() {
         //future fetches will also require this "include" value to send the cookie back
     });
 
-    console.log(response.status); //userful for debug :)
-
+    //console.log(response.status); //userful for debug :)
+    console.log(response);
     //control flow based on successful/unsuccessful login
-    if(response.status === 202) {
-        if(response.role === 2) {
+    //if(response.status === 202) {
+
+        if(response.user_role_id === 2) {
         // erling: open the corresponding window for use
        // window.open(url, '_blank').focus();
  //    // hardcoding a window like user menu to open
     window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/00finmgr.html", '_blank"').focus;
-        } else if (response.role === 1){
- window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/emenu.html", '_blank"').focus;
-  
+        } 
+        
+        if (response.user_role_id === 1){
+ //window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/emenu.html", '_blank"').focus;
+            document.location.href("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/employee.html")
             <!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
         }
 
@@ -167,7 +187,7 @@ async function loginFunction() {
         //wipe our login row and welcome the user 
         //document.getElementById("loginRow").innerText="Welcome to ERS!";
         
-    } else {
+        if (response.user_role_id === 0) {
         document.getElementById("loginRow").innerText="Login failed! Refresh the page";
     }
 

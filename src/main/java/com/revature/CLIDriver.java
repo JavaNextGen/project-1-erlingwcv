@@ -1,5 +1,5 @@
 package com.revature;
-//package com.revature;
+
 //
 //import java.sql.Connection;
 //import java.sql.SQLException;
@@ -35,55 +35,7 @@ package com.revature;
 ////				}
 ////			).start(3000);
 //    	
-//    	System.out.println("Welcome to ERS for all your reimbursement needs.");
-//    	System.out.println("Are you a " + Role.FINANCE_MANAGER + " ? Enter Y for Yes, N for No");
 //    	
-//    	
-//    	String feedback = sc.nextLine();
-//    	
-//    	
-//    	if (feedback.compareToIgnoreCase("N") == 0) {
-//    		
-//    		menu.userMenu();
-//    	}
-//    	
-//    	// use Javalin controller to direct the user per its role
-//    	
-////    	ChallengeEmployeesController cec = new ChallengeEmployeesController();
-//    	
-//    	    	
-//    	//Here is the actual functionality of our application ===================
-//    	
-//    	
-//    	
-//    	if (feedback.compareToIgnoreCase("Y") == 0) {
-//    	
-//    	// Use the Menu Class's displayMenu() method to give the user the menu
-//    	menu.finMgrMenu();
-//    	}
-//    	
-//    	// This is our entire main method (until we learn Javalin in Week 4)
-////    	// 220101 copy from wk04 javalinChallenge by Charles Jester
-////    	
-//////    	ChallengeEmployeesController cec = new ChallengeEmployeesController();
-////		
-////		// First test connection to our database is working
-//////		try (Connection conn = ConnectionUtil.getConnection()){
-//////			System.out.println("You did the connection thing. Good job, here's a cookie!");
-//////		} catch (SQLException e) {
-//////			e.printStackTrace();
-//////			System.out.println("OoOoOf. That Connection ain't happening, you done screwed up!");
-//////		}
-////		
-////		// IMPLEMENT JAVALIN HERE
-////		// moved to the front of the class 
-////		
-//////		Javalin app = Javalin.create(
-//////				config -> {
-//////					config.enableCorsForAllOrigins(); // allows the server to process JS requests from anywhere
-//////				}
-//////			).start(3000);
-////	
 ////		//app.get("/employee", cec.getChallengeEmployeesHandler); // did not work after change
 ////		app.get("/employee",  cec.getChallengeEmployeesHandler);  // retyped. In fact, table not seen
 ////		// result: localhost:3000/employee
@@ -114,3 +66,54 @@ package com.revature;
 //    	
 //    }
 //}
+
+
+System.out.println("Welcome to ERS for all your reimbursement needs.");
+//System.out.println("Are you a " + Role.FINANCE_MANAGER + " ? Enter Y for Yes, N for No");
+//
+//
+//String feedback = sc.nextLine();
+//
+//
+//if (feedback.compareToIgnoreCase("N") == 0) {
+//	
+//	menu.userMenu();
+//}
+//
+//// use Javalin controller to direct the user per its role
+//
+////ChallengeEmployeesController cec = new ChallengeEmployeesController();
+//
+//    	
+////Here is the actual functionality of our application ===================
+//
+//
+//
+//if (feedback.compareToIgnoreCase("Y") == 0) {
+//
+//// Use the Menu Class's displayMenu() method to give the user the menu
+//menu.finMgrMenu();
+//}
+//
+//// This is our entire main method (until we learn Javalin in Week 4)
+////// 220101 copy from wk04 javalinChallenge by Charles Jester
+////
+//////ChallengeEmployeesController cec = new ChallengeEmployeesController();
+////
+////// First test connection to our database is working
+//////try (Connection conn = ConnectionUtil.getConnection()){
+//////	System.out.println("You did the connection thing. Good job, here's a cookie!");
+//////} catch (SQLException e) {
+//////	e.printStackTrace();
+//////	System.out.println("OoOoOf. That Connection ain't happening, you done screwed up!");
+//////}
+////
+////// IMPLEMENT JAVALIN HERE
+////// moved to the front of the class 
+////
+//////Javalin app = Javalin.create(
+//////		config -> {
+//////			config.enableCorsForAllOrigins(); // allows the server to process JS requests from anywhere
+//////		}
+//////	).start(3000);
+////

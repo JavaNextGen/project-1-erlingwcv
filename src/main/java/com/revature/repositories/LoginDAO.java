@@ -35,7 +35,6 @@ public class LoginDAO {
     		
     		String sql = " SELECT \n"
     				+ "user_role_id \n"
-    				+ "ers_username \n"
     				+ "FROM ers_users\n"
     				//+ "LEFT JOIN ers_user_roles \n"
     				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
@@ -59,11 +58,38 @@ public class LoginDAO {
     		//Create an empty ArrayList to be filled with the data from the database
     		// since username is unique, just need a user object to take the sql results
     		//List<User> userList = new ArrayList<>();
-    		String  rsResult = rs.getString("ers_username");
-    		if (rsResult.equalsIgnoreCase(username)== true) {
-    			return rs.getInt("user_role_id");
+    		while(rs.next()) {
+    		//String  rsResult = rs.getString("ers_username");
+    		int user_role_idFound = rs.getInt("user_role_id");
+    		if (user_role_idFound > 0) {
+    			return user_role_idFound;
     			// return true;
-    		}     			
+    		}
+    		
+    		}
+//    		while(rs.next()) {
+//    			// use the all args constructor to create a new User object from each returned row from the DB
+//    			User u = new User(
+//    				// we want to use rs.get from each column in the record
+//    				//	rs.getInt("ers_user_id"),		// DB use only?
+//    					rs.getString("ers_username"),  // 211231 says Null. why?
+//    					rs.getString("user_first_name"),
+//    					rs.getString("user_last_name"),
+//    				//	rs.getString("ers_password"), // confidential?
+//    					rs.getString("user_email"),
+//    					rs.getInt("user_role_id")
+//    					);
+//    			// populate the ArrayList with each new User object
+//    			//userList.add(u); // u is the new User object we created above
+//    			userbyid = u;
+//    			
+//    			//Optional<User> userbyid = Optional.ofNullable(u);
+//    		}
+    		
+    		
+    		
+    		
+    		     			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Somethiong went wrong trying to verify username!");
@@ -115,15 +141,19 @@ public class LoginDAO {
     		//Create an empty ArrayList to be filled with the data from the database
     		// since username is unique, just need a user object to take the sql results
     		//List<User> userList = new ArrayList<>();
-    		String  rsResult = rs.getString("ers_password");
-    		if (rsResult.equalsIgnoreCase(password)== true) {
-    			return rs.getInt("ers_users_id");
-    			// return true;
-    		}  else {
-    			throw new MyPasswordNoMatchException("Password No Match");
+    		while(rs.next()) {
+        		//String  rsResult = rs.getString("ers_username");
+        		int ers_users_idFound = rs.getInt("ers_users_id");
+        		String erspasswordFound = rs.getString("ers_password");
+        		
+        			if (erspasswordFound.equals(password) ) {
+        			return ers_users_idFound;
+        			// return true;
+        			}  else {
+        			throw new MyPasswordNoMatchException("Password No Match");		
+        			}
+        	}
     		
-    		
-    		}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Somethiong went wrong trying to verify password!");
