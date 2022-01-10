@@ -36,10 +36,13 @@ public class AuthService {
 	
 	
 // 1 =============== whether to approve login and send user info for the next step 	
-    public User userLogin(String username, String password) {
+    public User userLogin(LoginDTO logindto) {
     	User u2Ctx = new User();
     	LoginDAO ldao = new LoginDAO();
     	UserDAO udao = new UserDAO();
+    	
+    	String username = logindto.getErs_username();
+    	String password = logindto.getErs_password();
     	  	
     	  	
     	try {
