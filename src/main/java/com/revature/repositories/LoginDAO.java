@@ -14,7 +14,7 @@ public class LoginDAO {
 	// 1. usernameFound (per username): for unique or existing or match
 	// 2. passwordMatch (per username & password): for matching
 	// 3. emailFound (per email): for unique or existing
-	
+	// 4. userIdFound (per username): for new user registration
 	
 	
 	//hardcoding username/password - which you WON'T do in P1
@@ -183,6 +183,57 @@ public boolean user_emailFound (String regis_email) {
     }
 
 						
+////4 +++++++ Login User ID Found method for user before registration =====================
+//	// to be called by services like login, createUser or updateUser
+//	public boolean ers_users_idFound (String username) {
+//		
+//		try(Connection conn = ConnectionFactory.getConnection()) {
+// 		// Initiate an empty ResultSet object that will store the results of our SQL query
+// 		ResultSet rs = null;
+// 		
+// 		// Write a query that we want to send to the database, and assign it to a String
+// 		// String sql = "SELECT * FROM rev1p211206.ers_users WHERE ers_username = username;"; // SQL stmt not taken as concatenated strings
+// 		// String sql = "SELECT * FROM rev1p211206.ers_users WHERE ers_username = ?";
+//  		//String sql = "SELECT * FROM ers_users WHERE ers_username = ?";
+// 		
+// 		String sql = " SELECT \n"
+// 				+ "ers_users_id \n"
+// 				+ "FROM ers_users\n"
+// 				//+ "LEFT JOIN ers_user_roles \n"
+// 				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
+// 				+ "WHERE ers_username = ?";
+//
+// 		// schema name to be included. otherwise JDBC do not see the table
+// 		// Put the SQL query into a Statement object (The Connection object has a method for this)
+// 		// Statement statement = conn.createStatement();
+// 		// This time should use PreparedStatement to prevent SQL injection
+// 		PreparedStatement ps = conn.prepareStatement(sql);
+// 		// put the username parameter in the PreparedStatement to complete the SQL
+// 		ps.setString(1, username); // 1st question mark in SQL, its variable
+// 		
+// 		// Execute the query, by putting the results into our ResultSet object
+// 		// The Statement object has a method that takes Strings to execute as a SQL query
+// 		//rs = statement.executeQuery(sql);
+// 		rs = ps.executeQuery(); // sql already included in ps on line 33
+// 		
+// 		// All the above makes a call to our database. Now we need to store the data in an ArrayList.
+// 		
+// 		//Create an empty ArrayList to be filled with the data from the database
+// 		// since username is unique, just need a user object to take the sql results
+// 		//List<User> userList = new ArrayList<>();
+// 		int rsResult = rs.getInt("ers_users_id");
+// 		
+// 		if (rsResult >0) {
+// 			return true;
+// 		}     			
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			System.out.println("Somethiong went wrong trying to register username!");
+//			e.printStackTrace();
+//		}		
+// return false;
+// 		
+// }
 				
 		
 // =========== Login 1 to grant a user access to corresponding ERS menus   ==================================================

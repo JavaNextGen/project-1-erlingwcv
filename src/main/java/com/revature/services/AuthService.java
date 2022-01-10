@@ -1,8 +1,11 @@
 package com.revature.services;
 
 import com.revature.exceptions.MyPasswordNoMatchException;
+import com.revature.exceptions.MyUserEmailNotUniqueException;
 import com.revature.exceptions.MyUserNotExistingException;
+import com.revature.exceptions.NewUserHasNonZeroIdException;
 import com.revature.exceptions.RegistrationUnsuccessfulException;
+import com.revature.exceptions.UsernameNotUniqueException;
 import com.revature.models.User;
 import com.revature.models.LoginDTO;
 import com.revature.repositories.LoginDAO;
@@ -46,17 +49,17 @@ public class AuthService {
     	  	
     	  	
     	try {
-    		boolean unm = ldao.ers_usernameFound(username);
+    		boolean unf = ldao.ers_usernameFound(username);
     		boolean upm = ldao.ers_passwordMatch(username, password);
     		// verify whether username is found
-    		if (unm == false )	{
+    		if (unf == false )	{
     			
     			throw new MyUserNotExistingException("User Does Not Exist.");
     		// verify whether password is matched	
     		} else if (upm == false ) {
     			throw new MyPasswordNoMatchException("The Passwords Do Not Match");
     			
-    		} else if ((unm == true) && (upm == true)) {
+    		} else if ((unf == true) && (upm == true)) {
     				Optional<User> ou2Ctx = udao.getByUsername(username);
     				u2Ctx = ou2Ctx.get();
     				
@@ -137,7 +140,7 @@ public class AuthService {
      */
     
         
-//    public User register(User userToBeRegistered) {
+    public User register(User userToBeRegistered) {
 //
 //    	
 //    	String un2ck = userToBeRegistered.getErs_username();
@@ -153,7 +156,63 @@ public class AuthService {
 //    	return null;
 //    }
 //
-  
+    User u2Ctx = new User();
+	LoginDAO ldao = new LoginDAO();
+	UserDAO udao = new UserDAO();
+	
+	String username = userToBeRegistered.getErs_username();
+	int usersid = userToBeRegistered.getErs_users_id();
+	String email = userToBeRegistered.getUser_email();  	
+	  	
+	boolean regisSuccess;
+	try {
+		boolean unf = ldao.ers_usernameFound(username);
+		boolean uef = ldao.user_emailFound(email);
+		// verify whether username is found
+		if (unf == true )	{
+			
+			throw new UsernameNotUniqueException("Username Not Unique.");
+		// verify whether password is matched	
+		} else if (usersid <> 0 ) {
+			throw new NewUserHasNonZeroIdException("New User Has Non-Zero ID");
+			
+		} else if (uef == true) {
+			throw new MyUserEmailNotUniqueException("User Email Not Unique");
+		} else {
+// insert a new user in			
+				regisSuccess = udao.create(userToBeRegistered);
+				if (regisSuccess == true ) {
+			
+	    		return userToBeRegistered;	
+			
+	    		}
+	    		throw new RegistrationUnsuccessfulException("Registration Failed.")
+			   }	
+		
+	} catch (UsernameNotUniqueException e) {
+		e.getStackTrace();
+		e.getLocalizedMessage();
+		System.out.println("User Does Not Exist.");}
+	  catch (NewUserHasNonZeroIdException e) {
+		e.getStackTrace();
+		e.getLocalizedMessage();
+		System.out.println("The Passwords Do Not Match."); }
+	  catch (MyUserEmailNotUniqueException e) {
+		  e.getStackTrace();
+		  e.getLocalizedMessage();
+		  System.out.println("User Email Not Unique");
+	  }
+	  catch (RegistrationUnsuccessfulException e) {
+		e.getStackTrace();
+		e.getLocalizedMessage();
+		System.out.println(e.toString());
+		System.out.println("Username does not exit!");
+		
+	}
+return null;
+    
+}
+
     
     
     /**

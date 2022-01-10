@@ -299,23 +299,15 @@ public boolean usernameNull (String username) {
      */
     
     
-    public void create(User userToBeRegistered) {
+    public boolean create(User userToBeRegistered) {
     	
     	RegistrationUnsuccessfulException noRegis = new RegistrationUnsuccessfulException();
     	
     	try(Connection conn  = ConnectionFactory.getConnection()) {
-    		// check whether username is unique
-        	
-        	// check whether email address is unique
-        	
-        	
-        	
-        	
-        	
-        		
-    		
-    		
-    		
+    		// To check whether username is unique
+        	// To check whether email address is unique
+        	// see AuthService's register method
+     		
     		String sql = "INSERT INTO ers_users \n"
     				+ "(ers_username, \n"    //1 unique, not null
     				+ "ers_password, \n"      //2   not null
@@ -339,7 +331,7 @@ public boolean usernameNull (String username) {
    		
   		
     		System.out.println("User Registration Successful! --userDAO");		// shown after closed and opened after the above correction 211229
-    		
+    		return true;
     		
     		} catch(SQLException e) {
     			System.out.println("User registration has failed. --userDAO");
@@ -349,13 +341,13 @@ public boolean usernameNull (String username) {
  	
     		if (Optional.ofNullable(userToBeRegistered) == null) {
     			// 220101
-    			
+    			return false;
     			// noRegis("User registration not completed. Please try again.");
     		}
     		
     		
-    		noRegis.printStackTrace();
-    	
+    		//noRegis.printStackTrace();
+    		return false;
     	
         // return Optional.ofNullable(userToBeRegistered);
     }
