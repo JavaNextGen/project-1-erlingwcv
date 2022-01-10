@@ -173,7 +173,7 @@ public class AuthService {
 			
 			throw new UsernameNotUniqueException("Username Not Unique.");
 		// verify whether password is matched	
-		} else if (usersid <> 0 ) {
+		} else if (usersid != 0 ) {
 			throw new NewUserHasNonZeroIdException("New User Has Non-Zero ID");
 			
 		} else if (uef == true) {

@@ -2,9 +2,69 @@ const url = "http://localhost:3000/" //putting our base URL in a variable for cl
 //eventually, we'll use this in our fetch requests and make calls to our server by appending endpoints
 
 //add eventListeners to our buttons to give them functionality
-//document.getElementById("getEmployeeButton").addEventListener("click", getEmployees);
+//document.getElementById("regisButton").addEventListener("click", registerFunction);
 document.getElementById("loginButton").addEventListener("click", loginFunction);
 
+async function registrationFunction() {
+   //gather the user inputs from the login inputs
+   let usern = document.getElementById("nusername").value;
+   let userp = document.getElementById("npassword").value;
+   let usere = document.getElementById("nemail").value;
+   let userr = document.getElementById("nrole").value;
+   let userf = document.getElementById("nfname").value;
+   let userl = document.getElementById("nlname").value;
+
+   //we want to send the user/pass as JSON, so we need a JS object to send
+   let userRegis = {
+       ers_username:usern,
+       ers_password:userp,
+       user_email:usere,
+       user_role:userr,
+       user_first_name:userf,
+       user_last_name:userl
+   }
+   //This object will reflect our DTO in Java... This is the data we want to transfer!
+
+   console.log(userRegis)
+
+   //fetch request to the server
+   //remember the second parameter fetch can take? It's essentially for configuring our fetch request
+   //fetch sends a GET by default, but this seconds parameter can change that and more!
+   let response = await fetch (url + "login", {
+
+       method: "POST", //send a POST request (would be a GET if we didn't do this...)
+       body: JSON.stringify(userRegis), //turn our user object into JSON
+       credentials: "include"
+       //this last line will ensure that the cookie is captured (so that we can have a user session)
+       //future fetches will also require this "include" value to send the cookie back
+   });
+
+   console.log(response.status); //userful for debug :)
+
+   //control flow based on successful/unsuccessful login
+   if(response.status === 202) {
+       if(response.role === 2) {
+       // erling: open the corresponding window for use
+      // window.open(url, '_blank').focus();
+//    // hardcoding a window like user menu to open
+   window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/00finmgr.html", '_blank"').focus;
+       } else if (response.role === 1){
+window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/emenu.html", '_blank"').focus;
+ 
+           <!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
+       }
+
+
+       //wipe our login row and welcome the user 
+       //document.getElementById("loginRow").innerText="Welcome to ERS!";
+       
+   } else {
+       document.getElementById("loginRow").innerText="Registration failed! Refresh the page";
+   }
+
+
+
+}
 
 //remember, async returns a promise (which fetch request return)
 // async function getEmployees() {

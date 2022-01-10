@@ -16,8 +16,22 @@ import java.util.Optional;
 // UserDAO has one method to receive by username, and another method to create a new user by username
 
 public class UserDAO {
+
 	
-	//=======Username check Unique method =====================
+	
+// +++++++ Convert Role from String to int +++++++from Javalin to DB++++++++++++++++++++
+	public int userRoleStringToId(String role) {
+		switch (role) {
+		case "EMPLOYEE":
+			return 1;
+		case "FINANCE_MANAGER":
+			return 2;
+		default:
+			return 1;
+		}	
+	}
+	
+//+++++++++    Username check Unique method +++++++++++++++++++++++
 	// to be called by createUser or updateUser
 	public boolean usernameUnique (String username) {
 		
@@ -67,7 +81,7 @@ public class UserDAO {
     return false;
     		
     }
-// ============ Username Check Existence ==========================	
+// ++++++++++++ Username Check Existence +++++++++++++++++++	
 	
 public boolean usernameNull (String username) {
 		
@@ -302,6 +316,7 @@ public boolean usernameNull (String username) {
     public boolean create(User userToBeRegistered) {
     	
     	RegistrationUnsuccessfulException noRegis = new RegistrationUnsuccessfulException();
+    	UserDAO roleconvert = new UserDAO();
     	
     	try(Connection conn  = ConnectionFactory.getConnection()) {
     		// To check whether username is unique
@@ -311,21 +326,21 @@ public boolean usernameNull (String username) {
     		String sql = "INSERT INTO ers_users \n"
     				+ "(ers_username, \n"    //1 unique, not null
     				+ "ers_password, \n"      //2   not null
-    				+ "user_first_name, \n"   // 3 
-    				+ "user_last_name, \n"    // 4
-    				+ "user_email, \n"        // 5 unique, not null, 
-    				+ "user_role_id) \n"      // 6
+    				+ "user_email, \n"        // 3 unique, not null, 
+    				+ "user_role_id) \n"      // 4
+    				+ "user_last_name, \n"    // 5		
+    				+ "user_first_name, \n"   // 6 
     				+ "VALUES (?,?,?,?,?,?)";
     		// insert by fields only, not by SQL stmt
     		PreparedStatement ps = conn.prepareStatement(sql);
    		// parameter for reach question mark per order above 
     		ps.setString(1, userToBeRegistered.getErs_username());  // required entry: username
     		ps.setString(2, userToBeRegistered.getErs_password());  // required entry: password
-    		ps.setString(3, userToBeRegistered.getUser_first_name());
-    		ps.setString(4, userToBeRegistered.getUser_last_name());
-    		ps.setString(5, userToBeRegistered.getUser_email());   // required entry: email
-    		ps.setInt(6, userToBeRegistered.getUser_role_id());     // required entry: role id
-    		
+    		ps.setString(3, userToBeRegistered.getUser_email());   // required entry: email
+    		ps.setInt(4, roleconvert.userRoleStringToId(userToBeRegistered.getUser_role().toString()));     // required entry: role id
+    		ps.setString(5, userToBeRegistered.getUser_last_name());
+    		ps.setString(6, userToBeRegistered.getUser_first_name());
+    	  
     		// executeUpdate, not execute query    		
     		ps.executeUpdate();  // 
    		

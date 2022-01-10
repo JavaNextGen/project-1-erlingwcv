@@ -17,12 +17,12 @@
 		<!--We need a div called container to hold all of our bootstrap styling-->
 	<div class="container">
 		
-		<h3>Welcome to the ERS</h3>
+		<h3>Welcome to the ERS Login and Registration</h3>
 
 		<div>
 			<!-- Login Elements Here -->
 			<div id="loginRow" class="row">
-				<h3>Please Enter your Login Information!</h3>
+				<h3>Please Enter Your Login Information!</h3>
 				<input id="username" placeholder="Username" class=" input col-sm-4"/>
 				<br>
 				<br>
@@ -37,6 +37,51 @@
 
 
 		</div>
+				<br>
+				</br>
+		<div>
+			<!-- Registration Elements Here -->
+			<!-- (ers_username, \n"    //1 unique, not null
+    				+ "ers_password, \n"      //2   not null
+					+ "user_email, \n"        // 5 unique, not null, 
+					+ "user_Role) \n
+    				+ "user_first_name, \n"   // 3 
+    				+ "user_last_name, \n"    // 4 -->
+    				
+    				
+
+					<h3>Please Enter Your Registration Information!</h3>
+					<button id="usernameinButton" class="btn btn-info col-sm-3">Username</button>
+					<input id="nusername" placeholder="Username" class=" input col-sm-4"/>
+					<br>
+					<button id="loginButton" class="btn btn-info col-sm-3">Password</button>
+					<input id="npassword" type="password" placeholder = "Password" class=" input col-sm-4"/>
+					<br>
+					<button id="emailButton" class="btn btn-info col-sm-3">User Email</button>
+					<input id="nemail" placeholder="Email Address" class=" input col-sm-4"/>
+					<br>
+					<button id="userroleButton" class="btn btn-info col-sm-3">User Role</button>
+					<select id="nrole" placeholder="User Role to Select" class = "select col-sm-4"/>
+						<option value = "EMPLOYEE">Employee</option>
+						<option value = "FINANCE_MANAGER">Finance Manager</option>
+					</select>	
+					<br>
+					<button id="userfnameButton" class="btn btn-info col-sm-3">First Name</button>
+					<input id="nfname" placeholder="First Name" class=" input col-sm-4"/>
+					<br>							
+					<button id="userlnameButton" class="btn btn-info col-sm-3">Last Name</button>
+					<input id="nlname" placeholder="Last Name" class=" input col-sm-4"/>
+					<br>
+					<button id="regisButton" class="btn btn-primary col-sm-7">Sumbit Registration</button>
+
+
+
+
+		</div>
+
+
+
+
 
 	</div>
 
