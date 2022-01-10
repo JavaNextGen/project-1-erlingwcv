@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import com.revature.exceptions.MyPasswordNoMatchException;
+import com.revature.exceptions.MyUserNotExistingException;
 import com.revature.exceptions.RegistrationUnsuccessfulException;
 import com.revature.models.User;
 import com.revature.models.LoginDTO;
@@ -32,35 +34,48 @@ public class AuthService {
      * </ul>
     */
 	
-	User luser = new User();
-	LoginDAO ldao = new LoginDAO();
-	//UserDTO uDTO = new UserDTO();
 	
+// 1 =============== whether to approve login and send user info for the next step 	
     public User userLogin(String username, String password) {
-        
-    	
+    	User u2Ctx = new User();
+    	LoginDAO ldao = new LoginDAO();
+    	UserDAO udao = new UserDAO();
+    	  	
+    	  	
     	try {
-    		ul = ldao.login(username, password);
+    		boolean unm = ldao.ers_usernameFound(username);
+    		boolean upm = ldao.ers_passwordMatch(username, password);
+    		// verify whether username is found
+    		if (unm == false )	{
+    			
+    			throw new MyUserNotExistingException("User Does Not Exist.");
+    		// verify whether password is matched	
+    		} else if (upm == false ) {
+    			throw new MyPasswordNoMatchException("The Passwords Do Not Match");
+    			
+    		} else if ((unm == true) && (upm == true)) {
+    				Optional<User> ou2Ctx = udao.getByUsername(username);
+    				u2Ctx = ou2Ctx.get();
     				
-    		int uid = luser.getErs_users_id();   		
-    		//int urid = ul.getUser_role_id();
+    				int uid = u2Ctx.getErs_users_id();   		
+    	    		int urid = u2Ctx.getUser_role_id(); 
     		
- //   		boolean unameMatch = this.usernameMatch(username);
-//    		boolean pwMatch = this.passwordMatch(password);
-//    					
-//    			if (unameMatch == true && pwMatch == true) {
-//    		
-    		
-    		
-    		
-    		if (uid > 0 ) {
+    	    		// If userID is greater than 0, DB has records for the user
+    	    		if (uid > 0 ) {
     			
-    			return ul;	
+    	    		return u2Ctx;	
     			
-    		}
-    	
-    
-    	} catch (RegistrationUnsuccessfulException e) {
+    	    		}
+    	    		
+    			   }	
+    		
+    	} catch (MyUserNotExistingException e) {
+    		e.getStackTrace();
+    		System.out.println("User Does Not Exist.");}
+    	  catch (MyPasswordNoMatchException e) {
+    		e.getStackTrace();
+    		System.out.println("The Passwords Do Not Match."); }
+    	  catch (RegistrationUnsuccessfulException e) {
     		e.getStackTrace();
     		System.out.println(e.toString());
     		System.out.println("Username does not exit!");
@@ -71,10 +86,7 @@ public class AuthService {
     }
 
 // +++++++++++ pull requesting user info from DB
-    
-    
-    
-    
+   
     
     
     
@@ -84,9 +96,7 @@ public class AuthService {
     
     
     
-    
-    
-    
+     
     
     
     
@@ -100,7 +110,7 @@ public class AuthService {
     
     
     
-// +++++++++++++verify email address to be unqiue ++++++++++++++
+// +++++++++++++verify email address to be unique ++++++++++++++
     
     
     
