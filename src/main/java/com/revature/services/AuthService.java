@@ -42,36 +42,42 @@ public class AuthService {
     public User userLogin(LoginDTO logindto) {
     	User u2Ctx = new User();
     	LoginDAO ldao = new LoginDAO();
-    	UserDAO udao = new UserDAO();
+    	//UserDAO udao = new UserDAO();   // not needed if just return a slim user with role_id & user_id
     	
     	String username = logindto.getErs_username();
     	String password = logindto.getErs_password();
     	  	
     	  	
     	try {
-    		boolean unf = ldao.ers_usernameFound(username);
-    		boolean upm = ldao.ers_passwordMatch(username, password);
+//    		boolean unf = ldao.ers_usernameFound(username);
+//    		boolean upm = ldao.ers_passwordMatch(username, password);
+//    		to make the verification results more useful, the the data type changed
+//			from boolean to int    		
+    		int unf = ldao.ers_usernameFound(username);
+    		int upm = ldao.ers_passwordMatch(username, password);
     		// verify whether username is found
-    		if (unf == false )	{
-    			
+    		//if (unf == false )	{
+    		if (unf == 0 )	{	
     			throw new MyUserNotExistingException("User Does Not Exist.");
     		// verify whether password is matched	
-    		} else if (upm == false ) {
+    		//} else if (upm == false ) {
+    		} else if (upm == 0 ) {	
     			throw new MyPasswordNoMatchException("The Passwords Do Not Match");
     			
-    		} else if ((unf == true) && (upm == true)) {
-    				Optional<User> ou2Ctx = udao.getByUsername(username);
-    				u2Ctx = ou2Ctx.get();
-    				
-    				int uid = u2Ctx.getErs_users_id();   		
-    	    		int urid = u2Ctx.getUser_role_id(); 
+    		//} else if ((unf == true) && (upm == true)) {
+    		} else if ((unf >0) && (upm >0)) {
+    			//Optional<User> ou2Ctx = udao.getByUsername(username);
+    				u2Ctx.setUser_role_id(unf);
+    				u2Ctx.setErs_users_id(upm);
+//    				int uid = u2Ctx.getErs_users_id();   		
+//    	    		int urid = u2Ctx.getUser_role_id(); 
     		
     	    		// If userID is greater than 0, DB has records for the user
-    	    		if (uid > 0 ) {
+    	    		//if (uid > 0 ) {
     			
     	    		return u2Ctx;	
     			
-    	    		}
+    	    		//}
     	    		
     			   }	
     		
@@ -166,10 +172,10 @@ public class AuthService {
 	  	
 	boolean regisSuccess;
 	try {
-		boolean unf = ldao.ers_usernameFound(username);
+		int unf = ldao.ers_usernameFound(username);
 		boolean uef = ldao.user_emailFound(email);
 		// verify whether username is found
-		if (unf == true )	{
+		if (unf > 0 )	{
 			
 			throw new UsernameNotUniqueException("Username Not Unique.");
 		// verify whether password is matched	

@@ -11,8 +11,8 @@ async function registrationFunction() {
    let userp = document.getElementById("npassword").value;
    let usere = document.getElementById("nemail").value;
    let userr = document.getElementById("nrole").value;
-   let userf = document.getElementById("nfname").value;
-   let userl = document.getElementById("nlname").value;
+   let userf = document.getElementById("nlname").value;
+   let userl = document.getElementById("nfname").value;
 
    //we want to send the user/pass as JSON, so we need a JS object to send
    let userRegis = {
@@ -20,8 +20,8 @@ async function registrationFunction() {
        ers_password:userp,
        user_email:usere,
        user_role:userr,
-       user_first_name:userf,
-       user_last_name:userl
+       user_last_name:userl,
+       user_first_name:userf
    }
    //This object will reflect our DTO in Java... This is the data we want to transfer!
 

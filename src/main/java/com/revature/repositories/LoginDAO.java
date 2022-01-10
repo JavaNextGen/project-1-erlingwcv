@@ -20,9 +20,10 @@ public class LoginDAO {
 	//hardcoding username/password - which you WON'T do in P1
 	
 // 1 +++++++ Login Username Found method for "unique" or "found" answers =====================
+//   +++++++ if user found, return user_role_id as proof, as part of response to frontend	220110
 	// to be called by services like login, createUser or updateUser
-	public boolean ers_usernameFound (String username) {
-		
+//	public boolean ers_usernameFound (String username) {
+	public int ers_usernameFound (String username) {	
 		try(Connection conn = ConnectionFactory.getConnection()) {
     		// Initiate an empty ResultSet object that will store the results of our SQL query
     		ResultSet rs = null;
@@ -33,6 +34,7 @@ public class LoginDAO {
      		//String sql = "SELECT * FROM ers_users WHERE ers_username = ?";
     		
     		String sql = " SELECT \n"
+    				+ "user_role_id \n"
     				+ "ers_username \n"
     				+ "FROM ers_users\n"
     				//+ "LEFT JOIN ers_user_roles \n"
@@ -59,21 +61,25 @@ public class LoginDAO {
     		//List<User> userList = new ArrayList<>();
     		String  rsResult = rs.getString("ers_username");
     		if (rsResult.equalsIgnoreCase(username)== true) {
-    			return true;
+    			return rs.getInt("user_role_id");
+    			// return true;
     		}     			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Somethiong went wrong trying to verify username!");
 			e.printStackTrace();
 		}		
-    return false;
+    return 0;
+	//return false;
     		
     }
 	
 // 2 ++++++++ Login User Password Match-per-Username/Password Method ++++++++++++++++++++	
+// +++++++ if successs, return ers_users_id as proof, as part of response to frontend
 	// to be called by createUser or updateUser
-	public boolean ers_passwordMatch (String username, String password) {
-	
+	//public boolean ers_passwordMatch (String username, String password) {
+	public int ers_passwordMatch (String username, String password) {
+		
 		try(Connection conn = ConnectionFactory.getConnection()) {
     		// Initiate an empty ResultSet object that will store the results of our SQL query
     		ResultSet rs = null;
@@ -84,7 +90,7 @@ public class LoginDAO {
      		//String sql = "SELECT * FROM ers_users WHERE ers_username = ?";
     		
     		String sql = " SELECT \n"
-    				+ "ers_username \n"
+    				+ "ers_users_id \n"
     				+ "ers_password \n"
     				+ "FROM ers_users\n"
     				//+ "LEFT JOIN ers_user_roles \n"
@@ -111,7 +117,8 @@ public class LoginDAO {
     		//List<User> userList = new ArrayList<>();
     		String  rsResult = rs.getString("ers_password");
     		if (rsResult.equalsIgnoreCase(password)== true) {
-    			return true;
+    			return rs.getInt("ers_users_id");
+    			// return true;
     		}  else {
     			throw new MyPasswordNoMatchException("Password No Match");
     		
@@ -126,7 +133,8 @@ public class LoginDAO {
 			e.printStackTrace();
 			System.out.println("Password Incorrect. Try Again");
 		} 	
-    return false;
+    return 0;
+	//return false;
 
 	};
 
