@@ -1,6 +1,6 @@
 package com.revature.exceptions;
 
-public class MyUserNotExistingException extends RuntimeException {
+public class MyUserNotExistingException extends Exception {
 
 	public MyUserNotExistingException() {
         super();

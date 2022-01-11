@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.revature.exceptions.MyEmailNotFoundException;
 import com.revature.exceptions.MyPasswordNoMatchException;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
@@ -167,12 +168,12 @@ public class LoginDAO {
     return 0;
 	//return false;
 
-	};
+	}
 
 
 // 3 ++++++++++++++ User Email Found Method for "unique" answers	+++++++++++++++++++++++++++++
 	
-public boolean user_emailFound (String regis_email) {
+	public boolean user_emailFound (String regis_email) {
 		
 		try(Connection conn = ConnectionFactory.getConnection()) {
     		// Initiate an empty ResultSet object that will store the results of our SQL query
@@ -208,16 +209,37 @@ public boolean user_emailFound (String regis_email) {
     		//Create an empty ArrayList to be filled with the data from the database
     		// since username is unique, just need a user object to take the sql results
     		//List<User> userList = new ArrayList<>();
-    		String  rsResult = rs.getString("user_email");
-    		if (rsResult.equalsIgnoreCase(regis_email)== true) {
-    			return true;
-    		}     			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Somethiong went wrong trying to verify email!");
-			e.printStackTrace();
-		}		
-    return false;
+    		while(rs.next()) {
+        		////String  rsResult = rs.getString("ers_username");
+        		////int ers_users_idFound = rs.getInt("ers_users_id");
+        		////String erspasswordFound = rs.getString("ers_password");
+    	   		
+        		String  rsMail = rs.getString("user_email");
+        		if (rsMail.equalsIgnoreCase(regis_email)== true) {
+        			return true;			
+        		}  else {
+        			throw new MyEmailNotFoundException("Email Address Not Found");		
+        			}
+       		
+    				////if (erspasswordFound.equals(password) ) {
+        			////return ers_users_idFound;
+        			//// return true;
+        			////}  else {
+        			////throw new MyPasswordNoMatchException("Password No Match");		
+        			////}
+    		} catch (MyEmailNotFoundException e) {
+    				e.printStackTrace();
+    				e.getLocalizedMessage();
+    				System.out.println("Email Address Not Found.")
+    		} catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    				System.out.println("Somethiong went wrong trying to verify email!");
+    				e.printStackTrace();
+    				e.getLocalizedMessage();
+    		}
+    				
+    		
+     return false;
     		
     }
 

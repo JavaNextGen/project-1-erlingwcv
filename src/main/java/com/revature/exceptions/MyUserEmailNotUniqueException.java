@@ -1,6 +1,6 @@
 package com.revature.exceptions;
 
-public class MyUserEmailNotUniqueException extends RuntimeException {
+public class MyUserEmailNotUniqueException extends Exception {
 
 	public MyUserEmailNotUniqueException() {
         super();
