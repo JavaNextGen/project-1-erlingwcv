@@ -26,7 +26,7 @@ public class User extends AbstractUser {
 	private Role user_role; // Not in DB ers_users table // employee 1, finance manager 2
 	private int user_role_id; // DB ers_users_table employee 1, finance manager 2
 	
-	// no args constructor
+//01 +++	// no args constructor
 
     public User() {
         super();
@@ -36,11 +36,12 @@ public class User extends AbstractUser {
      * This includes the minimum parameters needed for the {@link com.revature.models.AbstractUser} class.
      * If other fields are needed, please create additional constructors.
      */
+//02 ++++++
     public User(int id, String username, String password, Role role) {
         super(id, username, password, role);
     }
     
-    
+//03 ++++++    
    // user id included for DB table ers_users (Role role to convert into user_role_id later)
     public User(int id, String username, String password, String user_f_name, String user_l_name, String u_email,  Role role) {
         super(id, username, password, role);
@@ -53,6 +54,7 @@ public class User extends AbstractUser {
         //this.user_role = role;        
     }
     
+//04 ++++
     // all args MINUS ers_users_id: we have the ability later to add a user, whose ers_user_id is auto-generated!
     // User(String, String, String, String, int)
     public User(String username, String password, String user_f_name, String user_l_name, String u_email,  Role u_role) {
@@ -65,10 +67,10 @@ public class User extends AbstractUser {
         this.user_email = u_email;
         this.user_role = u_role;
     }
-    
+ 
+//05 ++++     
     // constructor for Finance Manager to use to see All users
-    // User(String, String, String, String, int)
-    
+    // User(String, String, String, String, int)  
     public User(String username, String user_f_name, String user_l_name, String u_email,  int user_role_id) {
         super();
         this.ers_username = username;   // it was missing and 211231 userbyid result was null
@@ -76,9 +78,25 @@ public class User extends AbstractUser {
         this.user_last_name = user_l_name;
         this.user_email = u_email;
         this.user_role_id = user_role_id;
+        //this.ers_users_id = ers_users_id;
         //this.user_role = u_role;
     }
+
+ //06 ++++     dao method udm7
+    // constructor for Finance Manager to use to see select username by users
+    // User(String, String, String, String, int, int)  // Auth used it 220111
+    public User(String username, String user_f_name, String user_l_name, String u_email,  int user_role_id, int ers_users_id) {
+        super();
+        this.ers_username = username;   // it was missing and 211231 userbyid result was null
+        this.user_first_name = user_f_name;
+        this.user_last_name = user_l_name;
+        this.user_email = u_email;
+        this.user_role_id = user_role_id;
+        this.ers_users_id = ers_users_id;
+        //this.user_role = u_role;
+    }   
     
+ //07 ++++++   
     // Constructor for employee self update
     public User(int ers_users_id, String ers_username, String ers_password, String user_f_name, String user_l_name, String u_email) {
         super();
@@ -92,6 +110,7 @@ public class User extends AbstractUser {
         //this.user_role = u_role;
     }
     
+ //08 +++++   
     // Constructor for employee self update email only, inlcuding the first and last name
     public User(int ers_users_id, String user_f_name, String user_l_name, String u_email) {
         super();
@@ -107,7 +126,7 @@ public class User extends AbstractUser {
     
     
     
-    
+//09 +++++++    
     // our User objects can be printed out (without user_id and password) -- returns a String describing the object
     // Constructor for passing successful user login to JS
     public User(int ers_users_id, String user_first_name, String user_last_name, int user_role_id) {
@@ -119,7 +138,7 @@ public class User extends AbstractUser {
     	this.user_role_id = user_role_id;
 	}
 
-    
+ // 10 ++++++++   
  // Constructor for login password verification 
     public User(int ers_users_id, String user_password) {
         super();

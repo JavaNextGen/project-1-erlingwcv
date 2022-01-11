@@ -221,7 +221,7 @@ public class UserDAO {
      * Should retrieve a User from the DB with the corresponding username or an empty optional if there is no match.
      */
 	
-// === Menu M7 required  Done 211231 ========Get User by Username =============================================
+// ==="dao method udm7: uc06 (user constructor)" Menu M7 required  Done 211231 ========Get User by Username =============================================
 	
     public Optional<User> getByUsername(String username) { // username should be unique in DB
     	try(Connection conn = ConnectionFactory.getConnection()) {
@@ -238,7 +238,8 @@ public class UserDAO {
     				+ "user_first_name, \n"
     				+ "user_last_name, \n"
     				+ "user_email, \n"
-    				+ "user_role_id\n"
+    				+ "user_role_id, \n"
+    				+ "ers_users_id \n"           // this is to match a User constructor
     				+ "FROM ers_users\n"
     				//+ "LEFT JOIN ers_user_roles \n"
     				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
@@ -275,7 +276,8 @@ public class UserDAO {
     					rs.getString("user_last_name"),
     				//	rs.getString("ers_password"), // confidential?
     					rs.getString("user_email"),
-    					rs.getInt("user_role_id")
+    					rs.getInt("user_role_id"),
+    					rs.getInt("ers_users_id")
     					);
     			// populate the ArrayList with each new User object
     			//userList.add(u); // u is the new User object we created above

@@ -16,10 +16,10 @@ const url = "http://localhost:3000/" //putting our base URL in a variable for cl
 
 
 //add eventListeners to our buttons to give them functionality
-//document.getElementById("regisButton").addEventListener("click", registerFunction);
+document.getElementById("regisButton").addEventListener("click", registerFunction);
 document.getElementById("loginButton").addEventListener("click", loginFunction);
 
-async function registrationFunction() {
+async function registerFunction() {
    //gather the user inputs from the login inputs
    let usern = document.getElementById("nusername").value;
    let userp = document.getElementById("npassword").value;
@@ -54,19 +54,20 @@ async function registrationFunction() {
    });
 
    //console.log(response.status); //userful for debug :)
-    console.log(response);
+    //console.log(response);
+    console.log(response.json());
 
    //control flow based on successful/unsuccessful login
    //if(response.status === 202) {
-       if(response.role === 2) {
+       if(response.status === 202) {
        // erling: open the corresponding window for use
       // window.open(url, '_blank').focus();
 //    // hardcoding a window like user menu to open
-   window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/00finmgr.html", '_blank"').focus;
+   window.open("finmgr.html", '_blank"').focus;
        };
        
-       if (response.role === 1){
-window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/emenu.html", '_blank"').focus;
+       if (response.status === 201){
+window.open("employee.html", '_blank"').focus;
  
            <!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
        }
@@ -75,7 +76,7 @@ window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erling
        //wipe our login row and welcome the user 
        //document.getElementById("loginRow").innerText="Welcome to ERS!";
        
-    if (response.role === 0) {
+    if (response.status > 202) {
        document.getElementById("loginRow").innerText="Registration failed! Refresh the page";
    }
 
@@ -182,9 +183,16 @@ async function loginFunction() {
     //console.log(JSON.stringify(response).value);
     //let User =response.json().value ;
     //const User = response.json(); //Uncaught (in promise) TypeError: Response.json: Body has already been consumed
-    if (response.statusText === "202" ) {
-        console.log(response.statusText);
+    if (response.status === 202 ) {      // number no need quotes to wrap
+       // console.log(response.statusText); // not working
         console.log(response.status);
+
+        //let found = response.find(value => Promise); // find is not a function
+       // console.log(found);
+      //  console.log(Promise.value); // not working
+        //let id = response.jason(Promise.value); // not working
+       // console.log(id);  // not working
+      //  console.log(data.value);  // not working
    // window.open("finmgr.html", '_blank"').focus;
     //  document.location("finmgr.html")
         // window.open()
@@ -206,7 +214,12 @@ async function loginFunction() {
         
         if (response.status === 201) {
             console.log(response.status);
-            console.log(response.statusText);
+           // console.log(response.jason()); // not working
+         //  let id = response.jason().Promise.value; // not working
+      //   let id = response.jason(Promise.value); //
+      ///  console.log(id);  //
+       //     console.log(data.value);
+            //console.log(response.statusText); // not working
 
         // if (User === "1") {
         //    console.log(User);
@@ -230,7 +243,14 @@ async function loginFunction() {
        
         if (response.status > 202) {
             console.log(response.status);
-            console.log(response.statusText);
+            //console.log(response.statusText); // not workiing
+            //console.log(Promise.value); // not working
+        //    console.log(response.value); // not working
+          //  console.log(response.jason()); // not working
+          //let id = response.jason().Promise.value; // not working
+     //     let id = response.jason(Promise.value);
+      //  console.log(id);
+       //     console.log(data.value);
       //  if (User === "0") {
       //      console.log(User);
         //if (User.value === 0 ) {
