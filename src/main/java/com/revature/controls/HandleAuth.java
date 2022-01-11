@@ -22,54 +22,54 @@ import io.javalin.http.Handler;
 		
 			
 
-		public Handler loginHandler = (ctx) -> {
-		//public Handler loginRequestHandler = (ctx) -> {
-		AuthService as = new AuthService();
-			User uToJS = new User();  // per authservice's login method	
-		//		what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request
-//		GET requests will have empty request bodies, but POST requests, which send data, will have some data.
-//		//turn the body (data) of the POST request into a Java String
-		String body = ctx.body();	
-//		Add the dependency into your pom.xml so it can import the Gson library		
-//		Use gson library to convert the java object to a JSON string
-//		create a new Gson object to make Java <-> JSON conversions
-		Gson inputgson = new Gson();
-			
-//		A login request via a LoginDTO is received below:
-//			LoginDTO LDTO = gson.fromJson(body, LoginDTO.class); //turn that JSON String into a LoginDTO object
-		LoginDTO lDTO = inputgson.fromJson(body, LoginDTO.class);
-		//control flow to determine what happens in the event of successful/unsuccessful login
-			//invoke the login() method of the AuthService using the username and password from the LoginDTO
-		uToJS = as.userLogin(lDTO);
-		
-		System.out.println("uToJS is " +uToJS.toString());
-
-		//create a new gson to sendback to frontend				
-		Gson outputgson = new Gson();
-		String gson2JS = outputgson.toJson(uToJS);
-		//String JSONEmployeeus = gson.toJson(ouById);
-//			if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
-//			Give a response body with a JSON string 
-//			ctx.result(InputStream) oallUsers.get());	
-		int roleNum = uToJS.getUser_role_id();
-		String role2go = Integer.toString(uToJS.getUser_role_id());
-		System.out.println("role2go is " + role2go);
-		ctx.result(role2go);
-		//ctx.result(gson2JS);
- 		//ctx.json(uToJS);
- 		//ctx.contentType("User");
-		if (roleNum == 1) {
-			ctx.status(201);
-		} 
-		
-		if (roleNum == 2) {
-			ctx.status(202);
-		}
-		
-		//ctx.status(200);
-		};
-		
-}
+//		public Handler loginHandler = (ctx) -> {
+//		//public Handler loginRequestHandler = (ctx) -> {
+//		AuthService as = new AuthService();
+//			User uToJS = new User();  // per authservice's login method	
+//		//		what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request
+////		GET requests will have empty request bodies, but POST requests, which send data, will have some data.
+////		//turn the body (data) of the POST request into a Java String
+//		String body = ctx.body();	
+////		Add the dependency into your pom.xml so it can import the Gson library		
+////		Use gson library to convert the java object to a JSON string
+////		create a new Gson object to make Java <-> JSON conversions
+//		Gson inputgson = new Gson();
+//			
+////		A login request via a LoginDTO is received below:
+////			LoginDTO LDTO = gson.fromJson(body, LoginDTO.class); //turn that JSON String into a LoginDTO object
+//		LoginDTO lDTO = inputgson.fromJson(body, LoginDTO.class);
+//		//control flow to determine what happens in the event of successful/unsuccessful login
+//			//invoke the login() method of the AuthService using the username and password from the LoginDTO
+//		uToJS = as.userLogin(lDTO);
+//		
+//		System.out.println("uToJS is " +uToJS.toString());
+//
+//		//create a new gson to sendback to frontend				
+//		Gson outputgson = new Gson();
+//		String gson2JS = outputgson.toJson(uToJS);
+//		//String JSONEmployeeus = gson.toJson(ouById);
+////			if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
+////			Give a response body with a JSON string 
+////			ctx.result(InputStream) oallUsers.get());	
+//		int roleNum = uToJS.getUser_role_id();
+//		String role2go = Integer.toString(uToJS.getUser_role_id());
+//		System.out.println("role2go is " + role2go);
+//		ctx.result(role2go);
+//		//ctx.result(gson2JS);
+// 		//ctx.json(uToJS);
+// 		//ctx.contentType("User");
+//		if (roleNum == 1) {
+//			ctx.status(201);
+//		} 
+//		
+//		if (roleNum == 2) {
+//			ctx.status(202);
+//		}
+//		
+//		//ctx.status(200);
+//		};
+//		
+//}
 
 //// 1.2 +++++++++++ send to frontend on login results
 //		public Handler loginResponseHandler = (ctx) -> {
@@ -105,7 +105,57 @@ import io.javalin.http.Handler;
 
 
 
-// +++++++ Registration Handler ++++++++++++++++++++++++++++++++++++++++++
+// +++++++ Registration Handler +++++++++++++220111+++++++++++++++++++++++++++++
+		
+//		public Handler regisHandler = (ctx) -> {
+//		//public Handler loginRequestHandler = (ctx) -> {
+//		AuthService as = new AuthService();
+//			User uToJS = new User();  // per authservice's login method	
+//		//		what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request
+////		GET requests will have empty request bodies, but POST requests, which send data, will have some data.
+////		//turn the body (data) of the POST request into a Java String
+//		String body = ctx.body();	
+////		Add the dependency into your pom.xml so it can import the Gson library		
+////		Use gson library to convert the java object to a JSON string
+////		create a new Gson object to make Java <-> JSON conversions
+//		Gson inputgson = new Gson();
+//			
+////		A login request via a LoginDTO is received below:
+////	//turn that JSON String into a UserLoginDTO object
+//		User newUser = inputgson.fromJson(body, User.class);
+//		//control flow to determine what happens in the event of successful/unsuccessful login
+//			//invoke the login() method of the AuthService using the username and password from the LoginDTO
+//		uToJS = as.register(newUser);
+//		
+//		System.out.println("uToJS is " +uToJS.toString());
+//
+//		//create a new gson to sendback to frontend				
+//		Gson outputgson = new Gson();
+//		String gson2JS = outputgson.toJson(uToJS);
+//		//String JSONEmployeeus = gson.toJson(ouById);
+////			if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
+////			Give a response body with a JSON string 
+////			ctx.result(InputStream) oallUsers.get());	
+//		int roleNum = uToJS.getUser_role_id();
+//		String role2go = Integer.toString(uToJS.getUser_role_id());
+//		System.out.println("role2go is " + role2go);
+//		ctx.result(role2go);
+//		//ctx.result(gson2JS);
+// 		//ctx.json(uToJS);
+// 		//ctx.contentType("User");
+//		if (roleNum == 1) {
+//			ctx.status(201);
+//		} 
+//		
+//		if (roleNum == 2) {
+//			ctx.status(202);
+//		}
+//		
+//		//ctx.status(200);
+//		};
+//		
+//}
+		
 			
 //		public Handler regisHandler = (ctx) -> {
 				//what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request

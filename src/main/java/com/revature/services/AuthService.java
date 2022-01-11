@@ -155,21 +155,12 @@ public class AuthService {
 //    	String un2ck = userToBeRegistered.getErs_username();
 //   // if  	
 //  // throw new  	UsernameNotUniqueException
-//    	
-//    	
-//    	
-//    	
-//    	
-//    	
-//    	
-//    	return null;
-//    }
-//
     User u2Ctx = new User();
 	LoginDAO ldao = new LoginDAO();
 	UserDAO udao = new UserDAO();
 	
 	String username = userToBeRegistered.getErs_username();
+	int roleid = userToBeRegistered.getUser_role_id();
 	int usersid = userToBeRegistered.getErs_users_id();
 	String email = userToBeRegistered.getUser_email();  	
 	  	
@@ -188,14 +179,23 @@ public class AuthService {
 		} else if (uef == true) {
 			throw new MyUserEmailNotUniqueException("User Email Not Unique");
 		} else {
-// insert a new user in			
+			// insert a new user in			
 				regisSuccess = udao.create(userToBeRegistered);
 				if (regisSuccess == true ) {
-			
-	    		return userToBeRegistered;	
+					User newU = new User();
+					Optional<User> onewU = Optional.ofNullable(newU);
+// not working		//	Optional<User> onewU =  new Optional<User>();
+					onewU = udao.getByUsername(username);
+					newU = onewU.get();
+					usersid = newU.getErs_users_id();
+					// gather info to send to frontend
+					u2Ctx.setUser_role_id(roleid);
+					u2Ctx.setErs_users_id(usersid);
+					
+					return u2Ctx;
 			
 	    		}
-	    		throw new RegistrationUnsuccessfulException("Registration Failed.")
+	    		throw new RegistrationUnsuccessfulException("Registration Failed.");
 			   }	
 		
 	} catch (UsernameNotUniqueException e) {
@@ -209,18 +209,23 @@ public class AuthService {
 	  catch (MyUserEmailNotUniqueException e) {
 		  e.getStackTrace();
 		  e.getLocalizedMessage();
-		  System.out.println("User Email Not Unique");
-	  }
+		  System.out.println("User Email Not Unique");}
 	  catch (RegistrationUnsuccessfulException e) {
-		e.getStackTrace();
-		e.getLocalizedMessage();
-		System.out.println(e.toString());
-		System.out.println("Username does not exit!");
+		  e.getStackTrace();
+		  e.getLocalizedMessage();
+		  System.out.println("Registration Failed.");
+	  
+	  }
+//	  catch (RegistrationUnsuccessfulException e) {
+//		e.getStackTrace();
+//		e.getLocalizedMessage();
+//		System.out.println(e.toString());
+//		System.out.println("Username does not exit!");
 		
-	}
-return null;
+	//}
+	return null;
     
-}
+    }
 
     
     
