@@ -41,6 +41,7 @@ public class JavalinDriver {
 //
 //		//handler ending in /login to send and input username/password to be validated
 		app.post("/login", ha.loginHandler);
+		//app.post("/login", ha.regisHandler);
 		//		++++++ First front posts a login request to server
 //		app.post("/login", ha.loginReqHandler);
 		

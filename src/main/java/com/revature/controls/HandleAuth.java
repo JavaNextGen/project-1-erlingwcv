@@ -43,7 +43,8 @@ import io.javalin.http.Handler;
 		uToJS = as.userLogin(lDTO);
 		
 		System.out.println("uToJS is " +uToJS.toString());
-		
+
+		//create a new gson to sendback to frontend				
 		Gson outputgson = new Gson();
 		String gson2JS = outputgson.toJson(uToJS);
 		//String JSONEmployeeus = gson.toJson(ouById);

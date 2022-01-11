@@ -20,9 +20,9 @@ public class LoginDAO {
 	//hardcoding username/password - which you WON'T do in P1
 	
 // 1 +++++++ Login Username Found method for "unique" or "found" answers =====================
-//   +++++++ if user found, return user_role_id as proof, as part of response to frontend	220110
 	// to be called by services like login, createUser or updateUser
 //	public boolean ers_usernameFound (String username) {
+//  +++++++ return user_role_id as found proof, as part of response to frontend	220110
 	public int ers_usernameFound (String username) {	
 		try(Connection conn = ConnectionFactory.getConnection()) {
     		// Initiate an empty ResultSet object that will store the results of our SQL query
@@ -101,9 +101,9 @@ public class LoginDAO {
     }
 	
 // 2 ++++++++ Login User Password Match-per-Username/Password Method ++++++++++++++++++++	
-// +++++++ if successs, return ers_users_id as proof, as part of response to frontend
-	// to be called by createUser or updateUser
+// to be called by createUser or updateUser
 	//public boolean ers_passwordMatch (String username, String password) {
+// +++++++ return ers_users_id as match proof, as part of response to frontend
 	public int ers_passwordMatch (String username, String password) {
 		
 		try(Connection conn = ConnectionFactory.getConnection()) {

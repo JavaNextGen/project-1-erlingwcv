@@ -55,7 +55,9 @@ public class AuthService {
 //    		to make the verification results more useful, the the data type changed
 //			from boolean to int    		
     		int unf = ldao.ers_usernameFound(username);
+    		System.out.println("current u2ctx userRoleId is " + unf);
     		int upm = ldao.ers_passwordMatch(username, password);
+    		System.out.println("current u2ctx userId is " + upm);
     		// verify whether username is found
     		//if (unf == false )	{
     		if (unf == 0 )	{	

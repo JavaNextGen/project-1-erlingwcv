@@ -173,9 +173,9 @@ async function loginFunction() {
     
 
     //return response.json();
-    //console.log(response.json());
+    console.log(response.json());
     //response as shonw in console: Promise { <state>: "fulfilled", <value>: 2 }
-    console.log(response.status);
+    //console.log(response.status);
     //control flow based on successful/unsuccessful login
     //if(response.status === 202) {
     //console.log(response.json());
@@ -183,8 +183,15 @@ async function loginFunction() {
     //let User =response.json().value ;
     //const User = response.json(); //Uncaught (in promise) TypeError: Response.json: Body has already been consumed
     if (response.statusText === "202" ) {
-        document.location("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/employee.html")
-    //if (User === "2") {
+        console.log(response.statusText);
+        console.log(response.status);
+   // window.open("finmgr.html", '_blank"').focus;
+    //  document.location("finmgr.html")
+        // window.open()
+        //window.location.href="finmgr.html"; // 220111 per Tyler
+        window.open("finmgr.html");  // do not put directory
+
+        //if (User === "2") {
     //    console.log(User);
    //if (response.json().value === 2 ) {
     //console.log(User.value);
@@ -193,18 +200,27 @@ async function loginFunction() {
         // erling: open the corresponding window for use
        // window.open(url, '_blank').focus();
  //    // hardcoding a window like user menu to open
-    window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/finmgr.html", '_blank"').focus;
+   
+
         } 
         
         if (response.status === 201) {
+            console.log(response.status);
+            console.log(response.statusText);
+
         // if (User === "1") {
         //    console.log(User);
         // if (User.value === 1 ) {
        // if(response.value === "1" ) {
       //  if (response === "1"){
   //      if (response.User.user_role_id === 1){
- //window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/emenu.html", '_blank"').focus;
-            document.location.href("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/employee.html")
+ //window.open("employee.html", '_blank"').focus;
+     //     document.open("employee.html")
+      //      window.location.href = "employee.html";
+      //window.location.href="employee.html"; // 220111 per Tyler
+      //window.open("employee.html");  // do not put directory
+            window.open("employee.html");
+       
             <!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
         }
 
@@ -213,6 +229,8 @@ async function loginFunction() {
         //document.getElementById("loginRow").innerText="Welcome to ERS!";
        
         if (response.status > 202) {
+            console.log(response.status);
+            console.log(response.statusText);
       //  if (User === "0") {
       //      console.log(User);
         //if (User.value === 0 ) {
