@@ -37,11 +37,11 @@ public class JavalinDriver {
 					}
 				).start(3000);
 //
-//
+//============== Login/Registration Driverrs
 //
 //		//handler ending in /login to send and input username/password to be validated
-		app.post("/login", ha.loginHandler);
-		//app.post("/login", ha.regisHandler);
+//		app.post("/login", ha.loginHandler);
+		app.post("/login", ha.regisHandler);
 		//		++++++ First front posts a login request to server
 //		app.post("/login", ha.loginReqHandler);
 		
@@ -52,6 +52,25 @@ public class JavalinDriver {
 		// let response = await fetch (url + "login", {
 	}
 //
+// ++++++++++++  Finance Manager Menu Drivers
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+// +++++++++++++ Employee Menu Drivers	
+	
+	
+	
+	
+	
+	
 }
 
 
@@ -59,7 +78,9 @@ public class JavalinDriver {
 
 
 
-
+// -------------------------------------------------------------------------------
+//  Below is a playground to be disregarded
+// -------------------------------------------------------------------------------
 
 //package com.revature;
 //

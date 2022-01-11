@@ -389,7 +389,7 @@ public class UserDAO {
      * Additional fields may be null.
      */
     
-    
+ // +++++++  For User Registration at Front End (web page)  220111 +++++++++++++++++++++++++   
     public boolean create(User userToBeRegistered) {
     	
     	RegistrationUnsuccessfulException noRegis = new RegistrationUnsuccessfulException();
@@ -443,7 +443,11 @@ public class UserDAO {
     	
         // return Optional.ofNullable(userToBeRegistered);
     }
-    
+
+}
+// -----------------------------------------------------------
+// ----------------------------------------------------------
+
 // ==== Menu E2 Employee User Update ====Done 12:32am 220104 =====================================================
     
 //    public User eupdate(User unupdated) {
@@ -526,5 +530,5 @@ public class UserDAO {
     
     
     
-}
+//}
 

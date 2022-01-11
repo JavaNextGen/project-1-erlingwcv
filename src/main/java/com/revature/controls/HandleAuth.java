@@ -76,55 +76,55 @@ import io.javalin.http.Handler;
 
 // ++2 of 2 methods +++++ Registration Handler +++++++++++++220111+++++++++++++++++++++++++++++
 		
-//		public Handler regisHandler = (ctx) -> {
+		public Handler regisHandler = (ctx) -> {
 //		//public Handler loginRequestHandler = (ctx) -> {
-//		AuthService as = new AuthService();
-//		User uToJS = new User();  // selective info packed for frontend after verification	
-//		//what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request
-//		//GET requests will have empty request bodies, but POST requests, which send data, will have some data.
-//		//turn the body (data) of the POST request into a Java String
-//		String body = ctx.body();	
-//		//Add the dependency into your pom.xml so it can import the Gson library		
-//		//Use gson library to convert the java object to a JSON string
-//		//create a new Gson object to make Java <-> JSON conversions
-//		Gson inputgson = new Gson();
-//			
-//		////A login request via a LoginDTO is received below:
-//		////turn that JSON String into a UserLoginDTO object
-//		User newUser = inputgson.fromJson(body, User.class);
-//		//control flow to determine what happens in the event of successful/unsuccessful verification
-//		//invoke register() method of the AuthService using the input from frontend
-//		uToJS = as.register(newUser);
-//		
-//		System.out.println("uToJS is " +uToJS.toString());
-//
-//		//create a new gson for some info to send back to frontend				
-//		Gson outputgson = new Gson();
-//		String gson2JS = outputgson.toJson(uToJS);
-//		////String JSONEmployeeus = gson.toJson(ouById);
-//		////if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
-//		////Give a response body with a JSON string 
-//		////ctx.result(InputStream) oallUsers.get());	
-//		int roleNum = uToJS.getUser_role_id();
-//		String role2go = Integer.toString(uToJS.getUser_role_id());
-//		System.out.println("role2go is " + role2go);
-//		ctx.result(role2go);  // dont know  how to pull info out at the frontend ???????????????
-//		//ctx.result(gson2JS); not working
-// 		//ctx.json(uToJS);  not working
-// 		//ctx.contentType("User"); not working
-//		// It appears that "status" is the only reliable vehicle to pass Role info to frontend
-//		if (roleNum == 1) {
-//			ctx.status(201);
-//		} 
-//		
-//		if (roleNum == 2) {
-//			ctx.status(202);
-//		}
-//		
-//		//ctx.status(200);
-//		};
-//		
-//}
+		AuthService as = new AuthService();
+		User uToJS = new User();  // selective info packed for frontend after verification	
+		//what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request
+		//GET requests will have empty request bodies, but POST requests, which send data, will have some data.
+		//turn the body (data) of the POST request into a Java String
+		String body = ctx.body();	
+		//Add the dependency into your pom.xml so it can import the Gson library		
+		//Use gson library to convert the java object to a JSON string
+		//create a new Gson object to make Java <-> JSON conversions
+		Gson inputgson = new Gson();
+			
+		////A login request via a LoginDTO is received below:
+		////turn that JSON String into a UserLoginDTO object
+		User newUser = inputgson.fromJson(body, User.class);
+		//control flow to determine what happens in the event of successful/unsuccessful verification
+		//invoke register() method of the AuthService using the input from frontend
+		uToJS = as.register(newUser);
+		
+		System.out.println("Registration uToJS is " +uToJS.toString());
+
+		//create a new gson for some info to send back to frontend				
+		Gson outputgson = new Gson();
+		String gson2JS = outputgson.toJson(uToJS);
+		////String JSONEmployeeus = gson.toJson(ouById);
+		////if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
+		////Give a response body with a JSON string 
+		////ctx.result(InputStream) oallUsers.get());	
+ 		int roleNum = uToJS.getUser_role_id();
+		String role2go = Integer.toString(uToJS.getUser_role_id());
+		System.out.println("role2go is " + role2go);
+		ctx.result(role2go);  // dont know  how to pull info out at the frontend ???????????????
+		//ctx.result(gson2JS); not working
+ 		//ctx.json(uToJS);  not working
+ 		//ctx.contentType("User"); not working
+		// It appears that "status" is the only reliable vehicle to pass Role info to frontend
+		if (roleNum == 1) {
+			ctx.status(201);
+		} 
+		
+		if (roleNum == 2) {
+			ctx.status(202);
+		}
+		
+		//ctx.status(200);
+		};
+		
+}
 		
 			
 //-------------------------------------------------------------
