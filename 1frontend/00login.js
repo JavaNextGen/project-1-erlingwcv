@@ -166,7 +166,7 @@ async function loginFunction() {
     });
 
     //console.log(response.status); //userful for debug :)
-    //console.log(response);
+    console.log(response);
     //control flow based on successful/unsuccessful login
     //if(response.status === 202) {
 
@@ -188,6 +188,9 @@ async function loginFunction() {
         //document.getElementById("loginRow").innerText="Welcome to ERS!";
         
         if (response.user_role_id === 0) {
+        // window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/00finmgr.html", '_blank"').focus;
+       
+        
         document.getElementById("loginRow").innerText="Login failed! Refresh the page";
     }
 

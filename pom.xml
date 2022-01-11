@@ -51,6 +51,16 @@
     		<version>2.8.9</version>
 			</dependency>
 		
+		<!-- build.gradle:
+		implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.4'
+		Find the latest version here:
+		https://search.maven.org/search?q=g%3Acom.fasterxml.jackson.core+AND+a%3Ajackson-databind
+		- 220110 WHEN TESTING P1 LOGIN -->
+		<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
+    		<version>2.12.4</version>
+		</dependency>
 		
 		<!--  coming with Javalin or Postman 211229 -->
 		<dependency>

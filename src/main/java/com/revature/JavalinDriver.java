@@ -4,7 +4,7 @@ package com.revature;
 import java.sql.Connection;
 import java.sql.SQLException;
 //
-//import com.revature.controls.HandleAuth;
+import com.revature.controls.HandleAuth;
 ////import com.revature.controllers.EmployeeController;
 ////import com.revature.models.Menu;
 import com.revature.util.ConnectionFactory;
@@ -19,7 +19,7 @@ public class JavalinDriver {
 //		
 //		//instantiating controller objects to use their method
 //		//EmployeeController ec = new EmployeeController();
-//		HandleAuth ha = new HandleAuth();
+		HandleAuth ha = new HandleAuth();
 //		
 //		
 //		//Testing Database Connectivity - just testing whether our Connection (from ConnectionFactory) is successful
@@ -29,18 +29,19 @@ public class JavalinDriver {
 			System.out.println("Connection failed");
 			e.printStackTrace();
 		}
+
+		// to get port ready for front end
+		Javalin app = Javalin.create(
+					config -> {
+						config.enableCorsForAllOrigins(); // allows the server to process JS requests from anywhere
+					}
+				).start(3000);
 //
-//		// to get port ready for front end
-//		Javalin app = Javalin.create(
-//					config -> {
-//						config.enableCorsForAllOrigins(); // allows the server to process JS requests from anywhere
-//					}
-//				).start(3000);
 //
 //
-//
-//		//handler ending in /login to send and inputted username/password to be validated
-//		++++++ First front posts a login request to server
+//		//handler ending in /login to send and input username/password to be validated
+		app.post("/login", ha.loginHandler);
+		//		++++++ First front posts a login request to server
 //		app.post("/login", ha.loginReqHandler);
 		
 //     +++++ Then frontend gets a login feedback from server+++++++++++++++++++++++++++++++++++++
