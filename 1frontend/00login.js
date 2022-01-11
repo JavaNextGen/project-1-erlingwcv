@@ -163,21 +163,46 @@ async function loginFunction() {
         credentials: "include"
         //this last line will ensure that the cookie is captured (so that we can have a user session)
         //future fetches will also require this "include" value to send the cookie back
+        // headers :{
+        //     'Content-type':'User/json'
+        // }
+        // return response.json();
     });
 
     //console.log(response.status); //userful for debug :)
-    console.log(response);
+    
+
+    //return response.json();
+    //console.log(response.json());
+    //response as shonw in console: Promise { <state>: "fulfilled", <value>: 2 }
+    console.log(response.status);
     //control flow based on successful/unsuccessful login
     //if(response.status === 202) {
-
-        if(response.user_role_id === 2) {
+    //console.log(response.json());
+    //console.log(JSON.stringify(response).value);
+    //let User =response.json().value ;
+    //const User = response.json(); //Uncaught (in promise) TypeError: Response.json: Body has already been consumed
+    if (response.statusText === "202" ) {
+        document.location("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/employee.html")
+    //if (User === "2") {
+    //    console.log(User);
+   //if (response.json().value === 2 ) {
+    //console.log(User.value);
+    // if(response.value === "2" ) {
+    //if(response === "2" ) {
         // erling: open the corresponding window for use
        // window.open(url, '_blank').focus();
  //    // hardcoding a window like user menu to open
-    window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/00finmgr.html", '_blank"').focus;
+    window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/finmgr.html", '_blank"').focus;
         } 
         
-        if (response.user_role_id === 1){
+        if (response.status === 201) {
+        // if (User === "1") {
+        //    console.log(User);
+        // if (User.value === 1 ) {
+       // if(response.value === "1" ) {
+      //  if (response === "1"){
+  //      if (response.User.user_role_id === 1){
  //window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/emenu.html", '_blank"').focus;
             document.location.href("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/employee.html")
             <!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
@@ -186,8 +211,13 @@ async function loginFunction() {
 
         //wipe our login row and welcome the user 
         //document.getElementById("loginRow").innerText="Welcome to ERS!";
-        
-        if (response.user_role_id === 0) {
+       
+        if (response.status > 202) {
+      //  if (User === "0") {
+      //      console.log(User);
+        //if (User.value === 0 ) {
+        //if(response.value === "0" ) {
+        // if (response === "0") {
         // window.open("/Users/erlingwang/Documents/revature2/benMavenProj/project-1-erlingwcv/1frontend/00finmgr.html", '_blank"').focus;
        
         

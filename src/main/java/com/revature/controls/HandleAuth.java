@@ -41,17 +41,31 @@ import io.javalin.http.Handler;
 		//control flow to determine what happens in the event of successful/unsuccessful login
 			//invoke the login() method of the AuthService using the username and password from the LoginDTO
 		uToJS = as.userLogin(lDTO);
+		
+		System.out.println("uToJS is " +uToJS.toString());
+		
 		Gson outputgson = new Gson();
 		String gson2JS = outputgson.toJson(uToJS);
 		//String JSONEmployeeus = gson.toJson(ouById);
 //			if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
 //			Give a response body with a JSON string 
 //			ctx.result(InputStream) oallUsers.get());	
+		int roleNum = uToJS.getUser_role_id();
+		String role2go = Integer.toString(uToJS.getUser_role_id());
+		System.out.println("role2go is " + role2go);
+		ctx.result(role2go);
+		//ctx.result(gson2JS);
+ 		//ctx.json(uToJS);
+ 		//ctx.contentType("User");
+		if (roleNum == 1) {
+			ctx.status(201);
+		} 
 		
-//		ctx.result(gson2JS);
- 		ctx.json(uToJS);
+		if (roleNum == 2) {
+			ctx.status(202);
+		}
 		
-		ctx.status(200);
+		//ctx.status(200);
 		};
 		
 }
