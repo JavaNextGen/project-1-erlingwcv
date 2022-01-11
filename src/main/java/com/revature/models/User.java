@@ -119,6 +119,22 @@ public class User extends AbstractUser {
     	this.user_role_id = user_role_id;
 	}
 
+    
+ // Constructor for login password verification 
+    public User(int ers_users_id, String user_password) {
+        super();
+        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
+//        this.ers_username = ers_username;   // it was missing and 211231 userbyid result was null
+        this.ers_password = ers_password;
+//        this.user_first_name = user_f_name;
+//        this.user_last_name = user_l_name;
+//       this.user_email = u_email;
+    //    this.user_role_id = user_role_id;  // User itself cannot change the role
+        //this.user_role = u_role;
+    }
+    
+    
+    
 	@Override
 	public String toString() {
 		return "User [ers_username=" + ers_username + ", user_first_name=" + user_first_name + ", user_last_name="

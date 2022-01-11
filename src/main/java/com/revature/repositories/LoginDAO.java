@@ -116,7 +116,7 @@ public class LoginDAO {
      		//String sql = "SELECT * FROM ers_users WHERE ers_username = ?";
     		
     		String sql = " SELECT \n"
-    				+ "ers_users_id \n"
+    				+ "ers_users_id, \n"
     				+ "ers_password \n"
     				+ "FROM ers_users\n"
     				//+ "LEFT JOIN ers_user_roles \n"
@@ -135,6 +135,7 @@ public class LoginDAO {
     		// The Statement object has a method that takes Strings to execute as a SQL query
     		//rs = statement.executeQuery(sql);
     		rs = ps.executeQuery(); // sql already included in ps on line 33
+    		System.out.println(rs);
     		
     		// All the above makes a call to our database. Now we need to store the data in an ArrayList.
     		

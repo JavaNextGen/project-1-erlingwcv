@@ -151,7 +151,7 @@ async function loginFunction() {
     }
     //This object will reflect our DTO in Java... This is the data we want to transfer!
 
-    console.log(userLogin)
+    //console.log(userLogin)
 
     //fetch request to the server
     //remember the second parameter fetch can take? It's essentially for configuring our fetch request
@@ -166,7 +166,7 @@ async function loginFunction() {
     });
 
     //console.log(response.status); //userful for debug :)
-    console.log(response);
+    //console.log(response);
     //control flow based on successful/unsuccessful login
     //if(response.status === 202) {
 

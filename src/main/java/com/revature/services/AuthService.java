@@ -38,7 +38,8 @@ public class AuthService {
     */
 	
 	
-// 1 =============== whether to approve login and send user info for the next step 	
+// 1 =============== whether to approve login and send user info for the next step 
+	
     public User userLogin(LoginDTO logindto) {
     	User u2Ctx = new User();
     	LoginDAO ldao = new LoginDAO();
@@ -74,7 +75,7 @@ public class AuthService {
     		
     	    		// If userID is greater than 0, DB has records for the user
     	    		//if (uid > 0 ) {
-    			
+    				//System.out.println(u2Ctx.toString());  // it did not show up in console
     	    		return u2Ctx;	
     			
     	    		//}
