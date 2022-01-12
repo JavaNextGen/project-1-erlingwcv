@@ -100,8 +100,8 @@ import io.javalin.http.Handler;
 		//Use gson library to convert the java object to a JSON string
 		//create a new Gson object to make Java <-> JSON conversions
 		Gson user1gson = new Gson();
-		UserNRole user1 = user1gson.fromJson(body, UserNRole.class);
-		System.out.println("Registration user1 is " +user1.toString());
+		User user1 = user1gson.fromJson(body, User.class);
+		System.out.println("Registration user1 is " +user1.toString());  // 220112 user toString added password
 		String username = user1.getErs_username();
 		String userpassword = user1.getErs_password();
 		String useremail = user1.getUser_email();

@@ -389,14 +389,18 @@ public class UserDAO {
         	// To check whether email address is unique
         	// see AuthService's register method
      		
-    		String sql = "INSERT INTO ers_users \n"
+    		//String sql = "INSERT INTO ers_users \n"
+    		String sql = "INSERT INTO rev1p211206.ers_users \n"
     				+ "(ers_username, \n"    //1 unique, not null
     				+ "ers_password, \n"      //2   not null
     				+ "user_email, \n"        // 3 unique, not null, 
-    				+ "user_role_id), \n"      // 4  // line 422 error due to comma missing at line 407
+    				//+ "user_role_id), \n"      // 4  //220112 line 422 error due to comma missing at line 407
+    				//               error syntax ","  near line 416      
+    				+ "user_role_id, \n"
     				+ "user_last_name, \n"    // 5		
     				+ "user_first_name) \n"   // 6  no comma, but with parenthesis closing
-    				+ "VALUES (?,?,?,?,?,?)";  //
+    				+ "VALUES (?,?,?,?,?,?) \n" 
+    				;//            
     		// insert by fields only, not by SQL stmt
     		PreparedStatement ps = conn.prepareStatement(sql);
     		    		
@@ -409,8 +413,8 @@ public class UserDAO {
     		ps.setString(6, userToBeRegistered.getUser_first_name());
     	  
     		// executeUpdate, not execute query    		
-    		ps.executeUpdate();  // 
-    	
+    		ps.executeUpdate();  //  220112 error syntax "," 
+    		//ps.execute();  
    		
     		
     		System.out.println("User Registration Successful! --userDAO");		// shown after closed and opened after the above correction 211229
