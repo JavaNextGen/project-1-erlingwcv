@@ -29,12 +29,28 @@ public class UserService {
 	
 	UserDAO uDAO = new UserDAO();
 	FMuserViews uView = new FMuserViews();
-	/**
-	 *     Should retrieve a User with the corresponding username or an empty optional if there is no match.
-     */
 	
-	// Done getbyUserName 211231 ================================================================
+	
+//===== +++++++ Convert Role from String to int +++++++from Javalin to DB++++++++++++++++++++
+		public int userRoleStringToId(String role) {
+			switch (role) {
+			case "EMPLOYEE":
+				return 1;
+			case "FINANCE_MANAGER":
+				return 2;
+			default:
+				return 1;
+			}	
+		}
 
+	
+	
+//=====fin mgr == getbyUserName 211231 done ================================================================
+		/**
+		 *     Should retrieve a User with the corresponding username or an empty optional if there is no match.
+	     */
+
+		
 //	public Optional<User> getByUsername(String username) {
 //		
 //		return uDAO.getByUsername(username);
@@ -42,7 +58,7 @@ public class UserService {
 //		//return Optional.empty();
 //	}
 	
-// ===== finance manager to get all users  ============================================
+// ===== fin manager to get all users  ============================================
 	// Done getAllUsers 211231
 //	public Optional<List<User>> getAllUsers() {
 //		

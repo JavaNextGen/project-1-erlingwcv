@@ -146,8 +146,19 @@ public class AuthService {
      *
      * Note: userToBeRegistered will have an id=0, additional fields may be null.
      * After registration, the id will be a positive integer.
+     * 
      */
     
+    
+    /**
+     * <ul>
+       *     <li>Should throw an exception if the creation is unsuccessful.</li> ++++ if UserDAO insert return is false
+     *     <li>Should return a User object with an updated ID.</li> +++++++ It comes from UserDAO GetByUsername
+     * </ul>
+     *
+     * Note: The userToBeRegistered will have an id=0, and username and password will not be null.
+     * Additional fields may be null.
+     */
         
     public User register(User userToBeRegistered) {
 // actions include
@@ -163,7 +174,9 @@ public class AuthService {
 	LoginDAO ldao = new LoginDAO();
 	UserDAO udao = new UserDAO();
 	
-	String username = userToBeRegistered.getErs_username();
+	// Display what is received about the new user
+	String username = userToBeRegistered.getErs_username();  // use it get user id afer insert by calling GetByUsername 
+	String password = userToBeRegistered.getErs_password();
 	int roleid = userToBeRegistered.getUser_role_id();
 	int usersid = userToBeRegistered.getErs_users_id();
 	String email = userToBeRegistered.getUser_email();  	

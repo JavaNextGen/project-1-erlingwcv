@@ -19,18 +19,6 @@ public class UserDAO {
 
 	
 	
-// +++++++ Convert Role from String to int +++++++from Javalin to DB++++++++++++++++++++
-	public int userRoleStringToId(String role) {
-		switch (role) {
-		case "EMPLOYEE":
-			return 1;
-		case "FINANCE_MANAGER":
-			return 2;
-		default:
-			return 1;
-		}	
-	}
-	
 //+++++++++    Username check Unique method +++++++++++++++++++++++
 	// to be called by createUser or updateUser
 	public boolean usernameUnique (String username) {
@@ -377,10 +365,13 @@ public class UserDAO {
    	
 // ====  Menu E1 Done 211231 ==========Create New User ==========================  
 
-    
+  
     /**
      * <ul>
      *     <li>Should Insert a new User record into the DB with the provided information.</li>
+
+// ++++++ The requirements below will be included in AuthService's user regis service ++++++++++++++++
+     *
      *     <li>Should throw an exception if the creation is unsuccessful.</li>
      *     <li>Should return a User object with an updated ID.</li>
      * </ul>
@@ -389,7 +380,8 @@ public class UserDAO {
      * Additional fields may be null.
      */
     
- // +++++++  For User Registration at Front End (web page)  220111 +++++++++++++++++++++++++   
+ // +++++++  For User Registration at Front End (web page)  220111 +++++++++++++++++++++++++
+ // +++++ output is whether the insert is successful   
     public boolean create(User userToBeRegistered) {
     	
     	RegistrationUnsuccessfulException noRegis = new RegistrationUnsuccessfulException();
@@ -415,40 +407,21 @@ public class UserDAO {
     		ps.setString(1, userToBeRegistered.getErs_username());  // required entry: username
     		ps.setString(2, userToBeRegistered.getErs_password());  // required entry: password
     		ps.setString(3, userToBeRegistered.getUser_email());   // required entry: email
-    		// convert role info to int
-//    		String strRole = userToBeRegistered.getUser_role().name();
-//    		System.out.println("Regis received a Role of " + strRole);
-//    		
-//    		//String numRole;
-//    		int intRole;
-//    		switch (strRole) {
-//    		case "EMPLOYEE" :
-//    			//numRole = "1";
-//    			intRole = 1;
-//    		case "FINANCE_MANAGER" :
-//    			//numRole = "2";
-//    			intRole = 2;
-//    			default: 
-//    				//numRole = "1";
-//    			intRole =1;
-//    		}
-//    		//int intRole = Integer.getInteger(strRole);  // not working
-//    		ps.setInt(4, intRole);     // required entry: role id
-//    		
-    		ps.setString(4, userToBeRegistered.getUser_role().name());
+     		ps.setInt(4, userToBeRegistered.getUser_role_id());
     		ps.setString(5, userToBeRegistered.getUser_last_name());
     		ps.setString(6, userToBeRegistered.getUser_first_name());
     	  
     		// executeUpdate, not execute query    		
     		ps.executeUpdate();  // 
    		
-  		
+    		
     		System.out.println("User Registration Successful! --userDAO");		// shown after closed and opened after the above correction 211229
     		return true;
     		
     		} catch(SQLException e) {
     			System.out.println("User registration has failed. --userDAO");
     			e.printStackTrace();
+    			e.getLocalizedMessage();
     			
     		}
  	
