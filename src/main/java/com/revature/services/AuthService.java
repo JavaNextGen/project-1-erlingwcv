@@ -150,7 +150,11 @@ public class AuthService {
     
         
     public User register(User userToBeRegistered) {
-//
+// actions include
+//    	1. convert Role to int
+//	   	2. various verifications 
+//      3. Insert to DB
+//    	4. Get user_role_id and ers_users_id and pack them as a thin user to Regis Auth controller 
 //    	
 //    	String un2ck = userToBeRegistered.getErs_username();
 //   // if  	

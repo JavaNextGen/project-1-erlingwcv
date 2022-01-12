@@ -416,19 +416,26 @@ public class UserDAO {
     		ps.setString(2, userToBeRegistered.getErs_password());  // required entry: password
     		ps.setString(3, userToBeRegistered.getUser_email());   // required entry: email
     		// convert role info to int
-    		String strRole = userToBeRegistered.getUser_role().toString();
-    		String numRole;
-    		switch (strRole) {
-    		case "EMPLOYEE" :
-    			numRole = "1";
-    		case "FINANCE_MANAGER" :
-    			numRole = "2";
-    			default: numRole = "1";
-    		}
-    		int intRole = Integer.getInteger(strRole);
-    		ps.setInt(4, intRole);     // required entry: role id
-    		System.out.println("Regis received a Role of " + strRole);
-    		
+//    		String strRole = userToBeRegistered.getUser_role().name();
+//    		System.out.println("Regis received a Role of " + strRole);
+//    		
+//    		//String numRole;
+//    		int intRole;
+//    		switch (strRole) {
+//    		case "EMPLOYEE" :
+//    			//numRole = "1";
+//    			intRole = 1;
+//    		case "FINANCE_MANAGER" :
+//    			//numRole = "2";
+//    			intRole = 2;
+//    			default: 
+//    				//numRole = "1";
+//    			intRole =1;
+//    		}
+//    		//int intRole = Integer.getInteger(strRole);  // not working
+//    		ps.setInt(4, intRole);     // required entry: role id
+//    		
+    		ps.setString(4, userToBeRegistered.getUser_role().name());
     		ps.setString(5, userToBeRegistered.getUser_last_name());
     		ps.setString(6, userToBeRegistered.getUser_first_name());
     	  
