@@ -69,7 +69,7 @@ public class AuthService {
     			
     		//} else if ((unf == true) && (upm == true)) {
     		} else if ((unf >0) && (upm >0)) {
-    			//Optional<User> ou2Ctx = udao.getByUsername(username);
+    			//Optional<User> ou2Ctx = udao.username4Auth(username);
     				u2Ctx.setUser_role_id(unf);
     				u2Ctx.setErs_users_id(upm);
 //    				int uid = u2Ctx.getErs_users_id();   		
@@ -202,7 +202,7 @@ public class AuthService {
 					User newU = new User();
 					Optional<User> onewU = Optional.ofNullable(newU);
 // not working		//	Optional<User> onewU =  new Optional<User>();
-					onewU = udao.getByUsername(username);
+					onewU = udao.username4Auth(username);
 					newU = onewU.get();
 					usersid = newU.getErs_users_id();
 					// gather info to send to frontend

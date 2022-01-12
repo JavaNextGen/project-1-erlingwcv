@@ -69,11 +69,9 @@ public class UserDAO {
     return false;
     		
     }
-// ++++++++++++ Login Username Check Existence or Null+++++220110++++++++++++++	
 	
-//public Optional<User> usernameNull (String username) {
 //	public Optional<User> getByUsername(String username) { // username should be unique in DB
-	public Optional<User> username4Login (String username) {
+	public Optional<User> username4Auth (String username) {
 		
 		try(Connection conn = ConnectionFactory.getConnection()) {
     		// Initiate an empty ResultSet object that will store the results of our SQL query
@@ -83,10 +81,12 @@ public class UserDAO {
     		
     		String sql = " SELECT \n"
     				+ "ers_username,\n"
-    				+ "user_first_name, \n"
-    				+ "user_last_name, \n"
+    				+ "ers_password, \n"
+    				+ "user_role_id, \n"
     				+ "user_email, \n"
-    				+ "user_role_id\n"
+ 	   				+ "user_last_name, \n"
+    				+ "user_first_name, \n"
+    				+ "ers_users_id \n"
     				+ "FROM ers_users\n"
     				//+ "LEFT JOIN ers_user_roles \n"
     				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
@@ -117,13 +117,14 @@ public class UserDAO {
     			// use the all args constructor to create a new User object from each returned row from the DB
     			User u = new User(
     				// we want to use rs.get from each column in the record
-    				//	rs.getInt("ers_user_id"),		// DB use only?
+
     					rs.getString("ers_username"),  // 211231 says Null. why?
-    					rs.getString("user_first_name"),
-    					rs.getString("user_last_name"),
-    				//	rs.getString("ers_password"), // confidential?
+        				rs.getString("ers_password"), // confidential?
+    					rs.getInt("user_role_id"),
     					rs.getString("user_email"),
-    					rs.getInt("user_role_id")
+    					rs.getString("user_last_name"),
+    					rs.getString("user_first_name"),
+        				rs.getInt("ers_users_id")		// DB use only?
     					);
     			// populate the ArrayList with each new User object
     			//userList.add(u); // u is the new User object we created above
@@ -208,7 +209,7 @@ public class UserDAO {
 	/**
      * Should retrieve a User from the DB with the corresponding username or an empty optional if there is no match.
      */
-	
+// +++++++++++++++++ The User Info is for Fin Mgr without User's password+ers_users_id	
 // ==="dao method udm7: uc06 (user constructor)" Menu M7 required  Done 211231 ========Get User by Username =============================================
 	
     public Optional<User> getByUsername(String username) { // username should be unique in DB
@@ -223,11 +224,10 @@ public class UserDAO {
     		
     		String sql = " SELECT \n"
     				+ "ers_username,\n"
-    				+ "user_first_name, \n"
-    				+ "user_last_name, \n"
-    				+ "user_email, \n"
-    				+ "user_role_id, \n"
-    				+ "ers_users_id \n"           // this is to match a User constructor
+       				+ "user_email, \n"
+       				+ "user_role_id, \n"  
+       				+ "user_last_name, \n"
+    				+ "user_first_name \n"
     				+ "FROM ers_users\n"
     				//+ "LEFT JOIN ers_user_roles \n"
     				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
@@ -260,12 +260,10 @@ public class UserDAO {
     				// we want to use rs.get from each column in the record
     				//	rs.getInt("ers_user_id"),		// DB use only?
     					rs.getString("ers_username"),  // 211231 says Null. why?
-    					rs.getString("user_first_name"),
+    	   				rs.getString("user_email"),
+    					rs.getInt("user_role_id"), 
     					rs.getString("user_last_name"),
-    				//	rs.getString("ers_password"), // confidential?
-    					rs.getString("user_email"),
-    					rs.getInt("user_role_id"),
-    					rs.getInt("ers_users_id")
+    					rs.getString("user_first_name")
     					);
     			// populate the ArrayList with each new User object
     			//userList.add(u); // u is the new User object we created above
@@ -288,7 +286,7 @@ public class UserDAO {
         return Optional.empty();
         
     }
-    
+// 220112 +++++++++ For presentation use, user info without password and ers_users_id     
 // ===== Menu =M9 done 211231================Get All Users====================================================    
  	//public Optional<User> getAllDBUsers() {
     public Optional<List<User>> getAllUsers() {
@@ -301,10 +299,10 @@ public class UserDAO {
         		//String sql = "SELECT * FROM ers_users";
         		String sql = " SELECT \n"
         				+ "ers_username,\n"
-        				+ "user_first_name, \n"
+          				+ "user_email, \n"
+        				+ "user_role_id, \n"
         				+ "user_last_name, \n"
-        				+ "user_email, \n"
-        				+ "user_role_id\n"
+        				+ "user_first_name \n"
         				+ "FROM ers_users\n";
         				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n";
         			      		
@@ -334,11 +332,10 @@ public class UserDAO {
         				// we want to use rs.get fro each column in the record
         				//	rs.getInt("ers_user_id"),		// DB use only
         					rs.getString("ers_username"),  // confidential
-        					rs.getString("user_first_name"),
+        					rs.getString("user_email"),            
+        					rs.getInt("user_role_id"),
         					rs.getString("user_last_name"),
-        				//	rs.getString("ers_password"), // confidential
-        					rs.getString("user_email"),
-        					rs.getInt("user_role_id")
+        					rs.getString("user_first_name")
         					);
         			// populate the ArrayList with each new User object
         			userList.add(u); // u is the new User object we created above
@@ -398,8 +395,8 @@ public class UserDAO {
     				+ "user_email, \n"        // 3 unique, not null, 
     				+ "user_role_id), \n"      // 4  // line 422 error due to comma missing at line 407
     				+ "user_last_name, \n"    // 5		
-    				+ "user_first_name, \n"   // 6 
-    				+ "VALUES (?,?,?,?,?,?)";
+    				+ "user_first_name) \n"   // 6  no comma, but with parenthesis closing
+    				+ "VALUES (?,?,?,?,?,?)";  //
     		// insert by fields only, not by SQL stmt
     		PreparedStatement ps = conn.prepareStatement(sql);
     		    		

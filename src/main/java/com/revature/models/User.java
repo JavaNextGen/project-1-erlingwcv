@@ -41,116 +41,116 @@ public class User extends AbstractUser {
         super(id, username, password, role);
     }
     
-//03 ++++++    
+//03 ++++++   user1 user registration or update from FrontEnd 
    // user id included for DB table ers_users (Role role to convert into user_role_id later)
-    public User(int id, String username, String password, String user_f_name, String user_l_name, String u_email,  Role role) {
-        super(id, username, password, role);
-        //this.ers_users_id = id;
-        //this.ers_username = username;
-        //this.ers_password = password;
-        this.user_first_name = user_f_name;
-        this.user_last_name = user_l_name;
+    public User(String username, String password, String u_email, Role role, String user_l_name, String user_f_name) {
+    	this.ers_username = username;
+        this.ers_password = password;
         this.user_email = u_email;
-        //this.user_role = role;        
+        this.user_role = role;  
+        this.user_last_name = user_l_name;           
+    	this.user_first_name = user_f_name;
     }
     
-//04 ++++
+//04 ++++  user2 in user registration or via UserDAO insert 
     // all args MINUS ers_users_id: we have the ability later to add a user, whose ers_user_id is auto-generated!
     // User(String, String, String, String, int)
-    public User(String username, String password, String user_f_name, String user_l_name, String u_email,  Role u_role) {
-        super(username, password, u_role);
+    public User(String username, String password, String u_email,  int u_role_id, String user_l_name, String user_f_name) {
+        //super(username, password, u_role);  // 220112 for regis Insert user1 missing password
         
         this.ers_username = username;
         this.ers_password = password;
-        this.user_first_name = user_f_name;
-        this.user_last_name = user_l_name;
         this.user_email = u_email;
-        this.user_role = u_role;
+        this.user_role_id = u_role_id;
+        this.user_last_name = user_l_name;
+        this.user_first_name = user_f_name;
+              
     }
  
-//05 ++++     
-    // constructor for Finance Manager to use to see All users
+//05 ++++  user presentation format 1: no password ++++++++     
+    // constructor for (Finance Manager)  get All users or getUserByusername
     // User(String, String, String, String, int)  
-    public User(String username, String user_f_name, String user_l_name, String u_email,  int user_role_id) {
-        super();
+    public User(String username, String u_email,  int user_role_id, String user_l_name, String user_f_name, int ers_users_id) {
+        //super();
         this.ers_username = username;   // it was missing and 211231 userbyid result was null
-        this.user_first_name = user_f_name;
-        this.user_last_name = user_l_name;
         this.user_email = u_email;
         this.user_role_id = user_role_id;
-        //this.ers_users_id = ers_users_id;
+        this.user_last_name = user_l_name;
+        this.user_first_name = user_f_name;
+        this.ers_users_id = ers_users_id;
         //this.user_role = u_role;
     }
 
- //06 ++++     dao method udm7
+ //06 ++++ user presentation format 2: no password, no ers_users_id 
+ //++++ dao method udm7 ++++++ 220112 UserDAO insert not using it
     // constructor for Finance Manager to use to see select username by users
-    // User(String, String, String, String, int, int)  // Auth used it 220111
-    public User(String username, String user_f_name, String user_l_name, String u_email,  int user_role_id, int ers_users_id) {
-        super();
-        this.ers_username = username;   // it was missing and 211231 userbyid result was null
-        this.user_first_name = user_f_name;
-        this.user_last_name = user_l_name;
-        this.user_email = u_email;
-        this.user_role_id = user_role_id;
-        this.ers_users_id = ers_users_id;
-        //this.user_role = u_role;
+    // User(String, String, String, String, int, int)  // Auth used it @220111  add password item @220112 
+    public User(String username, String u_email, int user_role_id, String user_l_name, String user_f_name) {
+//        super();
+      this.ers_username = username;   // it was missing and 211231 userbyid result was null
+//        this.ers_password = password;   // 220112 error when trying regis 
+      this.user_email = u_email;
+      this.user_role_id = user_role_id;
+//    //this.user_role = u_role;
+      this.user_last_name = user_l_name;
+      this.user_first_name = user_f_name;
     }   
     
- //07 ++++++   
-    // Constructor for employee self update
-    public User(int ers_users_id, String ers_username, String ers_password, String user_f_name, String user_l_name, String u_email) {
-        super();
-        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
+// //07 ++++++ DB to user owner for menu directing   
+//    // Constructor
+    public User(String ers_username, String ers_password, int user_role_id, String u_email, String user_l_name, String user_f_name, int ers_users_id) {
+//        super();
         this.ers_username = ers_username;   // it was missing and 211231 userbyid result was null
         this.ers_password = ers_password;
-        this.user_first_name = user_f_name;
-        this.user_last_name = user_l_name;
         this.user_email = u_email;
-    //    this.user_role_id = user_role_id;  // User itself cannot change the role
-        //this.user_role = u_role;
+        this.user_role_id = user_role_id;  // User itself cannot change the role
+        this.user_last_name = user_l_name;
+        this.user_first_name = user_f_name;
+        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
+//        //this.user_role = u_role;
     }
     
  //08 +++++   
-    // Constructor for employee self update email only, inlcuding the first and last name
-    public User(int ers_users_id, String user_f_name, String user_l_name, String u_email) {
-        super();
-        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
-//        this.ers_username = ers_username;   // it was missing and 211231 userbyid result was null
-//        this.ers_password = ers_password;
-        this.user_first_name = user_f_name;
-        this.user_last_name = user_l_name;
-        this.user_email = u_email;
-    //    this.user_role_id = user_role_id;  // User itself cannot change the role
-        //this.user_role = u_role;
-    }
-    
-    
-    
-//09 +++++++    
-    // our User objects can be printed out (without user_id and password) -- returns a String describing the object
-    // Constructor for passing successful user login to JS
-    public User(int ers_users_id, String user_first_name, String user_last_name, int user_role_id) {
-		// TODO Auto-generated constructor stub
-    	
-    	this.ers_users_id = ers_users_id;
-    	this.user_first_name = user_first_name;
-    	this.user_last_name = user_last_name;
-    	this.user_role_id = user_role_id;
-	}
-
- // 10 ++++++++   
- // Constructor for login password verification 
-    public User(int ers_users_id, String user_password) {
-        super();
-        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
-//        this.ers_username = ers_username;   // it was missing and 211231 userbyid result was null
-        this.ers_password = ers_password;
+//    // Constructor for employee self update email only, inlcuding the first and last name
+//    public User(int ers_users_id, String user_f_name, String user_l_name, String u_email) {
+//        super();
+//        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
+////        this.ers_username = ers_username;   // it was missing and 211231 userbyid result was null
+////        this.ers_password = ers_password;
 //        this.user_first_name = user_f_name;
 //        this.user_last_name = user_l_name;
-//       this.user_email = u_email;
-    //    this.user_role_id = user_role_id;  // User itself cannot change the role
-        //this.user_role = u_role;
-    }
+//        this.user_email = u_email;
+//    //    this.user_role_id = user_role_id;  // User itself cannot change the role
+//        //this.user_role = u_role;
+//    }
+    
+    
+    
+////09 +++++++    
+//    // our User objects can be printed out (without user_id and password) -- returns a String describing the object
+//    // Constructor for passing successful user login to JS
+//    public User(int ers_users_id, String user_first_name, String user_last_name, int user_role_id) {
+//		// TODO Auto-generated constructor stub
+//    	
+//    	this.ers_users_id = ers_users_id;
+//    	this.user_first_name = user_first_name;
+//    	this.user_last_name = user_last_name;
+//    	this.user_role_id = user_role_id;
+//	}
+
+ // 10 ++++++++   
+// // Constructor for login password verification 
+//    public User(int ers_users_id, String user_password) {
+////        super();
+//        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
+////        this.ers_username = ers_username;   // it was missing and 211231 userbyid result was null
+//        this.ers_password = ers_password;
+////        this.user_first_name = user_f_name;
+////        this.user_last_name = user_l_name;
+////       this.user_email = u_email;
+//    //    this.user_role_id = user_role_id;  // User itself cannot change the role
+//        //this.user_role = u_role;
+//    }
     
     
     
