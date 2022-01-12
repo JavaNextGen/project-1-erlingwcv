@@ -152,6 +152,7 @@ public class LoginDAO {
         			return ers_users_idFound;
         			// return true;
         			}  else {
+        			
         			throw new MyPasswordNoMatchException("Password No Match");		
         			}
         	}
@@ -209,28 +210,28 @@ public class LoginDAO {
     		//Create an empty ArrayList to be filled with the data from the database
     		// since username is unique, just need a user object to take the sql results
     		//List<User> userList = new ArrayList<>();
-    		while(rs.next()) {
+    			while(rs.next()) {
         		////String  rsResult = rs.getString("ers_username");
         		////int ers_users_idFound = rs.getInt("ers_users_id");
         		////String erspasswordFound = rs.getString("ers_password");
     	   		
-        		String  rsMail = rs.getString("user_email");
-        		if (rsMail.equalsIgnoreCase(regis_email)== true) {
-        			return true;			
-        		}  else {
-        			throw new MyEmailNotFoundException("Email Address Not Found");		
-        			}
+	        		String  rsMail = rs.getString("user_email");
+	        		if (rsMail.equalsIgnoreCase(regis_email)== true) {
+	        			return true;			
+	        		}  else {
+	        			throw new MyEmailNotFoundException("Email Address Not Found");		
+	        		}
        		
     				////if (erspasswordFound.equals(password) ) {
         			////return ers_users_idFound;
         			//// return true;
         			////}  else {
         			////throw new MyPasswordNoMatchException("Password No Match");		
-        			////}
+        		}
     		} catch (MyEmailNotFoundException e) {
     				e.printStackTrace();
     				e.getLocalizedMessage();
-    				System.out.println("Email Address Not Found.")
+    				System.out.println("Email Address Not Found.");
     		} catch (SQLException e) {
     			// TODO Auto-generated catch block
     				System.out.println("Somethiong went wrong trying to verify email!");

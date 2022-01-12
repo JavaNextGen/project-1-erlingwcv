@@ -393,7 +393,7 @@ public class UserDAO {
     public boolean create(User userToBeRegistered) {
     	
     	RegistrationUnsuccessfulException noRegis = new RegistrationUnsuccessfulException();
-    	UserDAO roleconvert = new UserDAO();
+    	//UserDAO roleconvert = new UserDAO();
     	
     	try(Connection conn  = ConnectionFactory.getConnection()) {
     		// To check whether username is unique
@@ -404,17 +404,31 @@ public class UserDAO {
     				+ "(ers_username, \n"    //1 unique, not null
     				+ "ers_password, \n"      //2   not null
     				+ "user_email, \n"        // 3 unique, not null, 
-    				+ "user_role_id) \n"      // 4
+    				+ "user_role_id), \n"      // 4  // line 422 error due to comma missing at line 407
     				+ "user_last_name, \n"    // 5		
     				+ "user_first_name, \n"   // 6 
     				+ "VALUES (?,?,?,?,?,?)";
     		// insert by fields only, not by SQL stmt
     		PreparedStatement ps = conn.prepareStatement(sql);
+    		    		
    		// parameter for reach question mark per order above 
     		ps.setString(1, userToBeRegistered.getErs_username());  // required entry: username
     		ps.setString(2, userToBeRegistered.getErs_password());  // required entry: password
     		ps.setString(3, userToBeRegistered.getUser_email());   // required entry: email
-    		ps.setInt(4, roleconvert.userRoleStringToId(userToBeRegistered.getUser_role().toString()));     // required entry: role id
+    		// convert role info to int
+    		String strRole = userToBeRegistered.getUser_role().toString();
+    		String numRole;
+    		switch (strRole) {
+    		case "EMPLOYEE" :
+    			numRole = "1";
+    		case "FINANCE_MANAGER" :
+    			numRole = "2";
+    			default: numRole = "1";
+    		}
+    		int intRole = Integer.getInteger(strRole);
+    		ps.setInt(4, intRole);     // required entry: role id
+    		System.out.println("Regis received a Role of " + strRole);
+    		
     		ps.setString(5, userToBeRegistered.getUser_last_name());
     		ps.setString(6, userToBeRegistered.getUser_first_name());
     	  
