@@ -1,6 +1,7 @@
 package com.revature.controls;
 
 import com.revature.models.User;
+import com.revature.models.UserNRole;
 import com.revature.services.AuthService;
 import com.revature.services.UserService;
 
@@ -99,7 +100,7 @@ import io.javalin.http.Handler;
 		//Use gson library to convert the java object to a JSON string
 		//create a new Gson object to make Java <-> JSON conversions
 		Gson user1gson = new Gson();
-		User user1 = user1gson.fromJson(body, User.class);
+		UserNRole user1 = user1gson.fromJson(body, UserNRole.class);
 		System.out.println("Registration user1 is " +user1.toString());
 		String username = user1.getErs_username();
 		String userpassword = user1.getErs_password();

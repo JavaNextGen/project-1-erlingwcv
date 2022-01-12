@@ -2,11 +2,12 @@ package com.revature.models;
 
 public class UserNRole{
 	private String ers_username;
+	private String ers_password;
 	private String user_email; 
 	private String user_role;
 	private String user_last_name;
 	private String user_first_name;
-	private int ers_users_id;
+	//private int ers_users_id;
 	
 	
 // No Args Constructor	
@@ -14,16 +15,18 @@ public class UserNRole{
 		super();
 		//this.user_role = user_role;
 		}
-	
+
+// 221022 password added due to regis user1 missing password	
 // Fin Mgr View Constructor
-	public UserNRole(String ers_username, String user_email, String user_role, String user_last_name,
-			String user_first_name, int ers_users_id) {
+	public UserNRole(String ers_username, String password,  String user_email, String user_role, String user_last_name,
+			String user_first_name) {
 		this.ers_username = ers_username;
+		this.ers_password = password;
 		this.user_email = user_email;
 		this.user_role = user_role;
 		this.user_last_name = user_last_name;
 		this.user_first_name = user_first_name;
-		this.ers_users_id = ers_users_id;
+		//this.ers_users_id = ers_users_id;
 		
 		}
 	
@@ -47,6 +50,14 @@ public class UserNRole{
 		return user_email;
 	}
 
+	public String getErs_password() {
+		return ers_password;
+	}
+
+	public void setErs_password(String ers_password) {
+		this.ers_password = ers_password;
+	}
+
 	public void setUser_email(String user_email) {
 		this.user_email = user_email;
 	}
@@ -67,13 +78,13 @@ public class UserNRole{
 		this.user_first_name = user_first_name;
 	}
 
-	public int getErs_users_id() {
-		return ers_users_id;
-	}
-
-	public void setErs_users_id(int ers_users_id) {
-		this.ers_users_id = ers_users_id;
-	}
+//	public int getErs_users_id() {
+//		return ers_users_id;
+//	}
+//
+//	public void setErs_users_id(int ers_users_id) {
+//		this.ers_users_id = ers_users_id;
+//	}
 
 	public String getUser_role() {
 		return user_role;

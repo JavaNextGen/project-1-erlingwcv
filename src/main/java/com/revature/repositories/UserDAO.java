@@ -410,6 +410,7 @@ public class UserDAO {
     	  
     		// executeUpdate, not execute query    		
     		ps.executeUpdate();  // 
+    	
    		
     		
     		System.out.println("User Registration Successful! --userDAO");		// shown after closed and opened after the above correction 211229

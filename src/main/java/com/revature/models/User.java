@@ -67,12 +67,13 @@ public class User extends AbstractUser {
               
     }
  
-//05 ++++  user presentation format 1: no password ++++++++     
+//05 ++++  user presentation format 1: no password ++++++++ 220122 add password in    
     // constructor for (Finance Manager)  get All users or getUserByusername
     // User(String, String, String, String, int)  
-    public User(String username, String u_email,  int user_role_id, String user_l_name, String user_f_name, int ers_users_id) {
+    public User(String username, String password, String u_email,  int user_role_id, String user_l_name, String user_f_name, int ers_users_id) {
         //super();
-        this.ers_username = username;   // it was missing and 211231 userbyid result was null
+        this.ers_username = username; 
+        this.ers_password = password;// it was missing and 211231 userbyid result was null
         this.user_email = u_email;
         this.user_role_id = user_role_id;
         this.user_last_name = user_l_name;
@@ -81,14 +82,14 @@ public class User extends AbstractUser {
         //this.user_role = u_role;
     }
 
- //06 ++++ user presentation format 2: no password, no ers_users_id 
+ //06 ++++ user presentation format 2: no password, no ers_users_id   // 220122 user1 no password. restored. after fix toString
  //++++ dao method udm7 ++++++ 220112 UserDAO insert not using it
     // constructor for Finance Manager to use to see select username by users
     // User(String, String, String, String, int, int)  // Auth used it @220111  add password item @220112 
     public User(String username, String u_email, int user_role_id, String user_l_name, String user_f_name) {
 //        super();
       this.ers_username = username;   // it was missing and 211231 userbyid result was null
-//        this.ers_password = password;   // 220112 error when trying regis 
+//      this.ers_password = password;   // 220112 error when trying regis 
       this.user_email = u_email;
       this.user_role_id = user_role_id;
 //    //this.user_role = u_role;
@@ -153,22 +154,32 @@ public class User extends AbstractUser {
 //    }
     
     
-    
-	@Override
-	public String toString() {
-		return "User [ers_username=" + ers_username + ", user_first_name=" + user_first_name + ", user_last_name="
-				+ user_last_name + ", user_email=" + user_email + ", user_role_id=" + user_role_id + "]";
-	}
+// ++++++++++ 220112 password missing here, so regis user1 has no password    
+//	@Override
+//	public String toString() {
+//		return "User [ers_username=" + ers_username + ", user_first_name=" + user_first_name + ", user_last_name="
+//				+ user_last_name + ", user_email=" + user_email + ", user_role_id=" + user_role_id + "]";
+//	}
     
     
     // Getters and setters so we can access and change the private variables up above
     
     
+  
+// ++++++++++ 220112 add password back in toString    
+    @Override
+	public String toString() {
+		return "User [ers_users_id=" + ers_users_id + ", ers_username=" + ers_username + ", ers_password="
+				+ ers_password + ", user_first_name=" + user_first_name + ", user_last_name=" + user_last_name
+				+ ", user_email=" + user_email + ", user_role=" + user_role + ", user_role_id=" + user_role_id + "]";
+	}
+
     public int getErs_users_id() {
     	return ers_users_id;
     }
     
-    public void setErs_users_id(int ers_users_id) {
+    
+	public void setErs_users_id(int ers_users_id) {
     	this.ers_users_id = ers_users_id;
     }
     
