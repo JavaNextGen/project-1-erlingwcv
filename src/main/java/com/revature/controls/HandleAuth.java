@@ -1,10 +1,12 @@
-//package com.revature.controls;
-//
-//import com.revature.models.User;
-//import com.revature.services.AuthService;
-//import com.google.gson.Gson;
-//import com.revature.models.LoginDTO;
-//import io.javalin.http.Handler;
+package com.revature.controls;
+
+import com.revature.models.User;
+import com.revature.services.AuthService;
+import com.revature.services.UserService;
+
+import com.google.gson.Gson;
+import com.revature.models.LoginDTO;
+import io.javalin.http.Handler;
 
 //0. JS LoginDTO to be used to for DB search by username
 // 1. a fat user info to be pulled from DB to verify password and email
@@ -12,7 +14,7 @@
 // 2.1 choose the right menu for the user
 // 2.2 and greet the user with their name
 
-//	public class HandleAuth {
+	public class HandleAuth {
 	//package //com.revature.controllers;  // stopped using the name after crash
 	//public class AuthController {
 
@@ -22,6 +24,14 @@
 // 		1.2 user info (except for ers_users_id) for verification
 // 1.2 +++++++++++ verification actions
 // 1.3 ++++++++++ send selective data via POST to frontend
+		
+		User user1 = new User();  // from client input
+		User user2 = new User();     // user2 to feed into auth svc        
+		User user3 = new User();   // received from auth svc (verification) with selective info for JS frontend
+		int user3userroleid; // info sent to JS front end (available from Step 2, to show next menu)
+		int user3ersusersid; // info sent to JS front end (available from Step 3, to show user identity)
+		AuthService as = new AuthService();
+		UserService us = new UserService();
 		
 // ++1 of 2 methods++++++++++ User Login Handler ++++++++++++++++++++++++++++++++++++++			
 //		public Handler loginHandler = (ctx) -> {
@@ -74,88 +84,93 @@
 //}
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//// ++2 of 2 methods +++++ Registration Handler +++++++++++++220111+++++++++++++++++++++++++++++
+// ++2 of 2 methods +++++ Registration Handler +++++++++++++220111+++++++++++++++++++++++++++++
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//		
-//		public Handler regisHandler = (ctx) -> {
-////		//public Handler loginRequestHandler = (ctx) -> {
-//		User user1 = new User();  // from client input
-//		User user2 = new User();     // user2 to feed into auth svc        
-//		User user3 = new User();   // received from auth svc (verification) with selective info for JS frontend
-//		int user3userroleid; // info sent to JS front end (available from Step 2, to show next menu)
-//		int user3ersusersid; // info sent to JS front end (available from Step 3, to show user identity)
 		
-//      +++++++ Step 1 to make User1++++ 	make User1 out of user web input (Client) 	
-//		//what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request
-//		//GET requests will have empty request bodies, but POST requests, which send data, will have some data.
-//		//turn the body (data) of the POST request into a Java String
-//		String body = ctx.body();	
-//		//Add the dependency into your pom.xml so it can import the Gson library		
-//		//Use gson library to convert the java object to a JSON string
-//		//create a new Gson object to make Java <-> JSON conversions
-//		Gson user1gson = new Gson();
-//		User user1 = user1gson.fromJson(body, User.class);
-//		System.out.println("Registration User1 is " +User1.toString());
-//		username = user1.get;
-//		userpasword = user1.get;
-//		useremail = user1.get;
-//		userrole = user1.get;
-//		userlname = user1.get;
-//		userfname = user1.get;
+		public Handler regisHandler = (ctx) -> {
+		//public Handler loginRequestHandler = (ctx) -> {
 		
-//		
-//		//+++++++++Step 2 to make User2+++++for UserDAO+++++++++++++ Replace Role with user_role_id, into UserDAO format
-//		//to make User2 ready for authsvc register method
-//		Role user1Role = user1.getRole;
-//		call usersvc int userRoleStringToId(String role) method to convert it into role id
-//		userrolid = user4userroleid 
-//		
-//		user2.set username
-//		user2.set userpasword
-//		user2.set useremail
-//		user2.set userroleid
-//		user2.set userlname
-//		user2.set userfname 
-//		
-//		//		System.out.println("Registration User2 is " +User2.toString());
+		//+++++++ Step 1 to make User1++++ 	make User1 out of user web input (Client) 	
+		//what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request
+		//GET requests will have empty request bodies, but POST requests, which send data, will have some data.
+		//turn the body (data) of the POST request into a Java String
+		String body = ctx.body();	
+		//Add the dependency into your pom.xml so it can import the Gson library		
+		//Use gson library to convert the java object to a JSON string
+		//create a new Gson object to make Java <-> JSON conversions
+		Gson user1gson = new Gson();
+		User user1 = user1gson.fromJson(body, User.class);
+		System.out.println("Registration user1 is " +user1.toString());
+		String username = user1.getErs_username();
+		String userpassword = user1.getErs_password();
+		String useremail = user1.getUser_email();
+		String user1role = user1.getUser_role().name();
+		String userLname = user1.getUser_last_name();
+		String userFname = user1.getUser_first_name();
 		
-//      ++++++++++Step 3 to make User3+++++++and send it to JS+++++++++++++++++++++++++++++++++++++		
-//		+++++++++ ++++ 3.1 call svc user regis method on User2, to collect DB insert verifications and status		
-//   	//		//control flow to determine what happens in the event of successful/unsuccessful verification
-//		//invoke register() method of the AuthService using the input from User2
-//		// as.regiser() method is doing various verifications, DB insert verifications and insert status report
-//		User3 = as.register(user2);
+		
+		//+++++++++Step 2 to make User2+++++for UserDAO+++++++++++++ Replace Role with user_role_id, into UserDAO format
+		//to make User2 ready for authsvc register method
+		
+		//call usersvc int userRoleStringToId(String role) method to convert it into role id
+		user3userroleid = us.userRoleStringToId(user1role);
+		
+		//User user2 = new User();     // user2 to feed into auth svc
+//		User user2 = new User(
+//				username, 
+//				userpassword,
+//				useremail,
+//				user3userroleid,
+//				userLname,
+//				userFname);
 //				
-//		System.out.println("Registration User3 is " +User3.toString());
-//		
-//      ++++++++ ++++ 3.2 to pack User3 into JSON for front end +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 		
-//		//create a new gson for some info to send back to frontend				
-//		Gson user3gson = new Gson();
-//		String user3JS = outputgson.toJson(user3);
-//		////String JSONEmployeeus = gson.toJson(ouById);
-//		////if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
-//		////Give a response body with a JSON string 
-//		////ctx.result(InputStream) oallUsers.get());	
-// 		int user3userroleid
-//		String roleMenu = Integer.toString(user3userroleid);
-//		System.out.println("roleMenu is " + roleMenu);
-//		ctx.result(user3.json());  // dont know  how to pull info out at the frontend ???????????????
-//		//ctx.result(gson2JS); not working
-// 		//ctx.json(uToJS);  not working
-// 		//ctx.contentType("User"); not working
-//		// It appears that "status" is the only reliable vehicle to pass Role info to frontend
-//		if (user3userroleid == 1) {
-//			ctx.status(201);
-//		} 
-//		
-//		if (user3userroleid == 2) {
-//			ctx.status(202);
-//		}
-//		
-//		//ctx.status(200);
-//		};
-//		
-//}
+		
+		user2.setErs_username(username);
+		user2.setErs_password(userpassword);
+		user2.setUser_email(useremail);
+		user2.setUser_role_id(user3userroleid);
+		user2.setUser_last_name(userLname);
+		user2.setUser_first_name(userFname); 
+		
+		System.out.println("Registration user2 is " +user2.toString());
+		
+      //++++++++++Step 3 to make User3+++++++and send it to JS+++++++++++++++++++++++++++++++++++++		
+		//+++++++++ ++++ 3.1 call svc user regis method on User2, to collect DB insert verifications and status		
+		////control flow to determine what happens in the event of successful/unsuccessful verification
+		//invoke register() method of the AuthService using the input from User2
+		// as.regiser() method is doing various verifications, DB insert verifications and insert status report
+		user3 = as.register(user2);
+				
+		System.out.println("Registration user3 is " +user3.toString());
+		
+		//++++++++ ++++ 3.2 to pack User3 into JSON for front end +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 		
+		////create a new gson for some info to send back to frontend				
+		Gson user3gson = new Gson();
+		String user3JS = user3gson.toJson(user3);
+		////String JSONEmployeeus = gson.toJson(ouById);
+		////if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
+		////Give a response body with a JSON string 
+		////ctx.result(InputStream) oallUsers.get());	
+		// text to put in ctx.status
+		String roleMenu = Integer.toString(user3userroleid);
+		System.out.println("roleMenu is " + roleMenu);
+		ctx.result(user3JS);  // dont know  how to pull info out at the frontend ???????????????
+		//ctx.result(gson2JS); not working
+ 		//ctx.json(uToJS);  not working
+ 		//ctx.contentType("User"); not working
+		// It appears that "status" is the only reliable vehicle to pass Role info to frontend
+		if (user3userroleid == 1) {
+			ctx.status(201);
+		} 
+		
+		if (user3userroleid == 2) {
+			ctx.status(202);
+		}
+		
+		//ctx.status(200);
+		};
+		
+}
 		
 			
 //-------------------------------------------------------------
