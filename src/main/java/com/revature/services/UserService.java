@@ -59,60 +59,75 @@ public class UserService {
 //////	    	4. Get user_role_id and ers_users_id and pack them as a thin user to Regis Auth controller 
 //////	    	
 ////   // if  	
-//	////  // throw new  	UsernameNotUniqueException
-	    User user2 = new User();
+//	////  // throw new  	UsernameNotUniqueException.
+	    User user2 = new User(); // to find userId by username4Auth
+	    User user3 = new User();  // assembled to send back to controller
 		LoginDAO ldao = new LoginDAO();
 		UserDAO udao = new UserDAO();
 	
-//		// Display what is received about the new user
+//		// Display what is received about the user1 from Client
 		String username = userToBeUpdated.getErs_username();  // use it get user id afer insert by calling GetByUsername 
 		String password = userToBeUpdated.getErs_password();
-		int roleid = userToBeUpdated.getUser_role_id();
+		//int roleid = userToBeUpdated.getUser_role_id();
 		String email = userToBeUpdated.getUser_email(); 
 		String lname = userToBeUpdated.getUser_last_name();
 		String fname = userToBeUpdated.getUser_first_name();
-		int usersid = userToBeUpdated.getErs_users_id();
-	//	
-		user2.setErs_users_id(usersid);
+		// find the userId by getbyusername
+		Optional<User> ouser2 = udao.username4Auth(username);
+		user2 = ouser2.get();
+		int usersid = user2.getErs_users_id();
+		int roleid = user2.getUser_role_id();
+		
 		user2.setErs_username(username);
 		user2.setErs_password(password);
 		user2.setUser_email(email);
-		user2.setUser_role_id(roleid);   
+		//user2.setUser_role_id(roleid);   // user_role_id no change
 		user2.setUser_last_name(lname);
 		user2.setUser_first_name(fname);
-		System.out.println("user2 toString" + user2.toString());
-		  	
+		//user2.setErs_users_id(usersid); ers_users_id no change
+		System.out.println("selfUpdate user2 toString" + user2.toString());
+		
+//		User afterU = new User();
+//		Optional<User> onewU = Optional.ofNullable(newU);
+////// not working		//	Optional<User> onewU =  new Optional<User>();
+//		onewU = udao.username4Auth(username);
+
+		
+		
+		
 		boolean updateSuccess;
 		try {
 			int unf = ldao.ers_usernameFound(username);
 			boolean uef = ldao.user_emailFound(email);
-			// verify whether username is found
-			if (unf > 0 )	{
+			// provide ers_users_id, if found by username
+			if (unf > 0 && unf != usersid)	{
 				
 				throw new UsernameNotUniqueException("Username Not Unique.");
 			// verify whether password is matched	
 //			} else if (usersid != 0 ) {
 //				throw new NewUserHasNonZeroIdException("New User Has Non-Zero ID");
 //				
-			} else if (uef == true) {
+			} else if (uef == true && unf != usersid) {
 				throw new MyUserEmailNotUniqueException("User Email Not Unique");
 			} else {
 //				// self update the user in session			
 //+++++++++++++++	// regisSuccess = udao.updateSelf(userToBeUpdated);
-					updateSuccess = udao.updateSelf(user2);
-					   System.out.println("self updateSuccess? "+updateSuccess);  // 220113
+					updateSuccess = udao.updateSelf(user3);
+					   System.out.println("selfUpdate user2 Success? "+updateSuccess);  // 220113
 					if (updateSuccess == true ) {
-						User newU = new User();
-						Optional<User> onewU = Optional.ofNullable(newU);
-	//// not working		//	Optional<User> onewU =  new Optional<User>();
-						onewU = udao.username4Auth(username);
-						newU = onewU.get();
-						usersid = newU.getErs_users_id();
-						// gather info to send to frontend
-						newU.setUser_role_id(roleid);
-						newU.setErs_users_id(usersid);
 						
-						return newU;
+//						User afterU = new User();
+//						Optional<User> onewU = Optional.ofNullable(newU);
+//	//// not working		//	Optional<User> onewU =  new Optional<User>();
+//						onewU = udao.username4Auth(username);
+//						newU = onewU.get();
+//						usersid = newU.getErs_users_id();
+//						// gather info to send to frontend
+						user3.setUser_role_id(roleid);
+						user3.setErs_users_id(usersid);
+						
+						
+						return user3;
 				
 					}
 		    		throw new RegistrationUnsuccessfulException("User Self Update Failed.");

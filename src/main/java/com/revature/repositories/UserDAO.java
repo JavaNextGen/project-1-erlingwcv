@@ -71,6 +71,8 @@ public class UserDAO {
     }
 	
 //	public Optional<User> getByUsername(String username) { // username should be unique in DB
+// if found, return the user found per username	
+	
 	public Optional<User> username4Auth (String username) {
 		
 		try(Connection conn = ConnectionFactory.getConnection()) {
@@ -390,7 +392,7 @@ public class UserDAO {
         	// see AuthService's register method
      		
     		//String sql = "INSERT INTO ers_users \n"
-    		String sql = "INSERT INTO rev1p211206.ers_users \n"
+    		String sql = "INSERT INTO ers_users \n"
     				+ "(ers_username, \n"    //1 unique, not null
     				+ "ers_password, \n"      //2   not null
     				+ "user_email, \n"        // 3 unique, not null, 
