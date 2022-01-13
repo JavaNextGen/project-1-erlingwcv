@@ -26,20 +26,31 @@ import io.javalin.http.Handler;
 // 1.2 +++++++++++ verification actions
 // 1.3 ++++++++++ send selective data via POST to frontend
 		
+		//loginUser1 (LoginDTO is used per Ben) feed with Json body from client input
+		// 	loginUser1 to feed into auth svc userlogin method 
+		User login2 = new User();  // user 2 received from auth svc (verification)        
+		User login3 = new User();	//	User loginUser3 = new User();  //  with selective info for JS frontend
+
+		// for user regis 
+//		user1 feed with Json body from client input
+		User user2 = new User();     // user2 to feed into auth svc        
+		User user3 = new User();   // received from auth svc (verification) with selective info for JS frontend
+
+		AuthService asl = new AuthService();
+		UserService usl = new UserService();
+		
+		AuthService as = new AuthService();
+		UserService us = new UserService();
 		
 		
 // ++1 of 2 methods++++++++++ User Login Handler ++++++++++++++++++++++++++++++++++++++			
 		public Handler loginHandler = (ctx) -> {
 		
-		//	user1 (LoginDTO is used per Ben) feed with Json body from client input
-		// 	user1 to feed into auth svc userlogin method 
-		// User user2  // user 2 received from auth svc (verification)        
-		//	User user3 = new User();  //  with selective info for JS frontend
-			int user3userroleid; // info sent to JS front end (available from Step 2, to show next menu)
-			int user3ersusersid; // info sent to JS front end (available from Step 3, to show user identity)
+			int login3userroleid; // info sent to JS front end (available from Step 2, to show next menu)
+			int login3ersusersid; // info sent to JS front end (available from Step 3, to show user identity)
 			
-			AuthService asl = new AuthService();
-			UserService usl = new UserService();
+//			AuthService asl = new AuthService();
+//			UserService usl = new UserService();
 			
 		//public Handler loginRequestHandler = (ctx) -> {
 		//	User uToJS = new User();  // per authservice's login method	
@@ -59,31 +70,33 @@ import io.javalin.http.Handler;
 			//invoke the login() method of the AuthService using the username and password from the LoginDTO
 //			uToJS = asl.userLogin(lDTO);
 //			System.out.println("uToJS is " +uToJS.toString());
-			User user2 = asl.userLogin(lDTO);
+			login2 = asl.userLogin(lDTO);
 			System.out.println("login user2 is " +user2.toString());
 		// take out only the user_role_id and and ers_users_id, to be packed into user3 for the front end
-			user3userroleid = user2.getUser_role_id();
-			String user3rolenum = Integer.toString(user2.getUser_role_id());
+			login3userroleid = login2.getUser_role_id();
+			String user3rolenum = Integer.toString(login2.getUser_role_id());
 			System.out.println("login role2go is " + user3rolenum);
-			user3ersusersid = user2.getErs_users_id();
+			login3ersusersid = login2.getErs_users_id();
 		// user3 was not able to be functional	after User user3 = new User();		
+			login3.setUser_role_id(login3userroleid);
+			login3.setErs_users_id(login3ersusersid);
 			
 		//create a new gson to sendback to frontend				
-		//	Gson outputgson = new Gson();
-		//	String gson2JS = outputgson.toJson(user2);
+			Gson outputgson = new Gson();
+			String gson2JS = outputgson.toJson(login3);
 		//String JSONEmployeeus = gson.toJson(ouById);
 			////			if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
 			////			Give a response body with a JSON string 
 			////			ctx.result(InputStream) oallUsers.get());	
-			ctx.result(user2.toString());   // dont know  how to pull info out at the frontend ???????????????
+			ctx.result(login3.toString());   // dont know  how to pull info out at the frontend ???????????????
 			//ctx.result(gson2JS);
 			//ctx.json(uToJS);
 			//ctx.contentType("User");
-			if (user3userroleid == 1) {
+			if (login3userroleid == 1) {
 				ctx.status(201); 			// signal for Role
 			} 
 		
-			if (user3userroleid == 2) {
+			if (login3userroleid == 2) {
 				ctx.status(202);			// signal for Role
 			}
 		
@@ -99,13 +112,9 @@ import io.javalin.http.Handler;
 		public Handler regisHandler = (ctx) -> {
 		//public Handler loginRequestHandler = (ctx) -> {
 		
-		//	user1 feed with Json body from client input
-			User user2 = new User();     // user2 to feed into auth svc        
-			User user3 = new User();   // received from auth svc (verification) with selective info for JS frontend
 			int user3userroleid; // info sent to JS front end (available from Step 2, to show next menu)
 			int user3ersusersid; // info sent to JS front end (available from Step 3, to show user identity)
-			AuthService as = new AuthService();
-			UserService us = new UserService();	
+			
 			
 		//+++++++ Step 1 to make User1++++ 	make User1 out of user web input (Client) 	
 		//what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request
