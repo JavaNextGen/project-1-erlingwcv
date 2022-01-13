@@ -257,7 +257,105 @@ public class AuthService {
     
     }
 
+// +++++++++  User Self Update  ++++++ 220113 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
+//  public User register(User userToBeRegistered) {
+////actions include
+////  	1. convert Role to int
+////	   	2. various verifications 
+////    3. Insert to DB
+////  	4. Get user_role_id and ers_users_id and pack them as a thin user to Regis Auth controller 
+////  	
+////  	String un2ck = userToBeRegistered.getErs_username();
+//// // if  	
+////// throw new  	UsernameNotUniqueException
+//  User user2 = new User();
+//	LoginDAO ldao = new LoginDAO();
+//	UserDAO udao = new UserDAO();
+//	
+//	// Display what is received about the new user
+//	String username = userToBeRegistered.getErs_username();  // use it get user id afer insert by calling GetByUsername 
+//	String password = userToBeRegistered.getErs_password();
+//	System.out.println("regis password is " + password);
+//	int roleid = userToBeRegistered.getUser_role_id();
+//	int usersid = userToBeRegistered.getErs_users_id();
+//	String email = userToBeRegistered.getUser_email(); 
+//	String lname = userToBeRegistered.getUser_last_name();
+//	String fname = userToBeRegistered.getUser_first_name();
+//	
+//	user2.setErs_username(username);
+//	user2.setErs_password(password);
+//	user2.setUser_email(email);
+//	user2.setUser_role_id(roleid);
+//	user2.setUser_last_name(lname);
+//	user2.setUser_first_name(fname);
+//	System.out.println("user2 why password missing?" + user2.toString());
+//	  	
+//	boolean regisSuccess;
+//	try {
+//		int unf = ldao.ers_usernameFound(username);
+//		boolean uef = ldao.user_emailFound(email);
+//		// verify whether username is found
+//		if (unf > 0 )	{
+//			
+//			throw new UsernameNotUniqueException("Username Not Unique.");
+//		// verify whether password is matched	
+//		} else if (usersid != 0 ) {
+//			throw new NewUserHasNonZeroIdException("New User Has Non-Zero ID");
+//			
+//		} else if (uef == true) {
+//			throw new MyUserEmailNotUniqueException("User Email Not Unique");
+//		} else {
+//			// insert a new user in			
+//				//regisSuccess = udao.create(userToBeRegistered);
+//				regisSuccess = udao.create(user2);
+//				// 220112 System.out.println(regisSuccess);
+//				if (regisSuccess == true ) {
+//					User newU = new User();
+//					Optional<User> onewU = Optional.ofNullable(newU);
+////not working		//	Optional<User> onewU =  new Optional<User>();
+//					onewU = udao.username4Auth(username);
+//					newU = onewU.get();
+//					usersid = newU.getErs_users_id();
+//					// gather info to send to frontend
+//					newU.setUser_role_id(roleid);
+//					newU.setErs_users_id(usersid);
+//					
+//					return newU;
+//			
+//	    		}
+//	    		throw new RegistrationUnsuccessfulException("Registration Failed.");
+//			   }	
+//		
+//	} catch (UsernameNotUniqueException e) {
+//		e.getStackTrace();
+//		e.getLocalizedMessage();
+//		System.out.println("User Does Not Exist.");}
+//	  catch (NewUserHasNonZeroIdException e) {
+//		e.getStackTrace();
+//		e.getLocalizedMessage();
+//		System.out.println("The Passwords Do Not Match."); }
+//	  catch (MyUserEmailNotUniqueException e) {
+//		  e.getStackTrace();
+//		  e.getLocalizedMessage();
+//		  System.out.println("User Email Not Unique");}
+//	  catch (RegistrationUnsuccessfulException e) {
+//		  e.getStackTrace();
+//		  e.getLocalizedMessage();
+//		  System.out.println("Registration Failed.");
+//	  
+//	  }
+////	  catch (RegistrationUnsuccessfulException e) {
+////		e.getStackTrace();
+////		e.getLocalizedMessage();
+////		System.out.println(e.toString());
+////		System.out.println("Username does not exit!");
+//		
+//	//}
+//	return null;
+//  
+//  }
+
     
     /**
      * This is an example method signature for retrieving the currently logged-in user.

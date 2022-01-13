@@ -440,8 +440,90 @@ public class UserDAO {
         // return Optional.ofNullable(userToBeRegistered);
     }
 
+
+
+// ++++++++ User Self Update method @UserDAO +++++++++++++ 220113
+
+    public boolean updateSelf(User userToBeUpdated) {
+	
+    	RegistrationUnsuccessfulException noRegis = new RegistrationUnsuccessfulException();
+    	//UserDAO roleconvert = new UserDAO();
+	
+    	try(Connection conn  = ConnectionFactory.getConnection()) {
+		// To check whether username is unique
+    	// To check whether email address is unique
+    	// see AuthService's register method
+ 		
+		//String sql = "INSERT INTO ers_users \n"
+//		String sql = "INSERT INTO rev1p211206.ers_users \n"
+//				+ "(ers_username, \n"    //1 unique, not null
+//				+ "ers_password, \n"      //2   not null
+//				+ "user_email, \n"        // 3 unique, not null, 
+//				//+ "user_role_id), \n"      // 4  //220112 line 422 error due to comma missing at line 407
+//				//               error syntax ","  near line 416      
+//				+ "user_role_id, \n"
+//				+ "user_last_name, \n"    // 5		
+//				+ "user_first_name) \n"   // 6  no comma, but with parenthesis closing
+//				+ "VALUES (?,?,?,?,?,?) \n" 
+//				;//            
+
+    		String sql = "UPDATE ers_users \n"
+    				+ "SET ers_username = ?, \n"    //1 unique, not null
+    				+ "ers_password = ?, \n"      //2   not null
+    				+ "user_email = ?, \n"        // 3 unique, not null, 
+    				+ "user_last_name = ?, \n"    // 4		
+    				+ "user_first_name = ? \n"   // 5  no comma, but with parenthesis closing
+    				+ "WHERE ers_users_id = ?"   // 6 ers_users_id cannot be changed
+    				;//            
+		
+		
+    		PreparedStatement ps = conn.prepareStatement(sql);
+		    		
+		// parameter for reach question mark per order above 
+				ps.setString(1, userToBeUpdated.getErs_username());  // required entry: username
+				ps.setString(2, userToBeUpdated.getErs_password());  // required entry: password
+				ps.setString(3, userToBeUpdated.getUser_email());   // required entry: email
+		// 		ps.setInt(4, userToBeRegistered.getUser_role_id());
+				ps.setString(4, userToBeUpdated.getUser_last_name());
+				ps.setString(5, userToBeUpdated.getUser_first_name());
+				ps.setInt(6, userToBeUpdated.getErs_users_id());  
+			  
+				// executeUpdate, not execute query    		
+				ps.executeUpdate();  //  220112 error syntax "," 
+				//ps.execute();  
+				
+		
+			System.out.println("User Self Update Successful! --userDAO");		// shown after closed and opened after the above correction 211229
+			return true;
+			
+			} catch(SQLException e) {
+				System.out.println("User self update has failed. --userDAO");
+				e.printStackTrace();
+				e.getLocalizedMessage();
+				
+			}
+	
+			if (Optional.ofNullable(userToBeUpdated) == null) {
+				// 220101
+				return false;
+				// noRegis("User registration not completed. Please try again.");
+			}
+		
+		
+		//noRegis.printStackTrace();
+		return false;
+	
+    // return Optional.ofNullable(userToBeRegistered);
+    }
+
+    
+// ++++++++ Block ending for UserDAO    
 }
+
+
+
 // -----------------------------------------------------------
+//  Below is playground 
 // ----------------------------------------------------------
 
 // ==== Menu E2 Employee User Update ====Done 12:32am 220104 =====================================================

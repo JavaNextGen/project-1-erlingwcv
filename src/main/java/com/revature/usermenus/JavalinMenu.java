@@ -13,7 +13,7 @@ import io.javalin.Javalin;
 
 
 
-// Erling: 220108 12pm crashed: it appears due to live paste on pages with CTX 
+// Erling: 220108 12pm crashed: it appears due to live paste on pages with CTX. Dependency refilled.
 // Erling: 220101 It appears that Javalin caused Building errors at least 2
 
 // Start 12/15/2021
@@ -26,6 +26,73 @@ import io.javalin.Javalin;
 
 public class JavalinMenu {
 
+// +++++++ modified on 220112 Wed	
+// ++++++++ simplified 3-menu system
+// +++++++++ 1. login/registration 2. one for manager, 3. one for employee  +++++++++++++++++++
+	
+// ++++++++ Except for login menu, Each menu has 2 parts
+// ++++++++ Top part is reimbursement, Bottom part is user info
+	
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Outline Fin Manager Menu 	(numbered for HLML & JS file names)
+// 1+ol button row
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// 2+ol+++++++++ input fields row
+// 3+ol+++++++++ header row
+// 4+ol +++++++++ display row
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+
+// Manager mReimb	===========
+// mr21process   		01. Process Reimbursements"); // TBD required	
+// mr24create         	02. Create self Reimbursement</li>  // same as employee
+// mr23update         	03. Update self Reimbursement by reimb id</li>  // same as employee
+
+	
+// mr01getbystatus		04. Get Reimbursements by Status"); // required WIP
+// mr02getbyusername  	05.	Get Reimbursements by Username </li>  // fin mgr only
+// mr03getbyauthor		06.	Get Reimbursements by Author</li>   // fin mgr only
+// mr04getbyresolverid	07.	Get Reimbursements by Resolver_id</li> // fin mgr only
+// mr22getall			08. Get All Reimbursements</li>          // fin mgr only
+	
+
+// Manager mUser  =============	
+// mu32update			11. Update User Information");  //TBD  (including self)
+// mu11getbyusername	12. Get Users by Username");			// 211231 required
+// mu12getbyemail		13. Get Users by Email");		// TBD					
+// mu31getall			14. Get All Users");             // done 211231
+
+
+		
+
+// employee.html+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Outline Employee Menu 	(numbered for HLML & JS file names)
+// 1+ol button row
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// 2+ol+++++++++ input fields row
+// 3+ol+++++++++ header row
+// 4+ol +++++++++ display row
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+	
+	// eReimb =========	
+//	er01review    		21. Review self All Reimbursement Entries");
+//	er02create			m2. Create self New Reimbursement Entry"); // same as fin manager
+//	er03update			m3. Update self Unprocessed Reimbursements (by Reimb id)"); // same as fin manager
+
+		
+	
+	// eUser ===========	
+//	eu11update 			31. Update self User Information");
+
+
+	
+	
+	
+	
+	
+
+// ---------------------------------------------------------------------------------	
+// -----  below is playground ---------------------------------------------------------
+	
 // Fin Manager Menu 	(numbered for HLML & JS file names)
 // Manager mReimb	===========
 // mr01getbystatus		01. Get Reimbursements by Status"); // required WIP
@@ -44,7 +111,7 @@ public class JavalinMenu {
 	
 // mu31getall			31. Get All Users");             // done 211231
 // mu32update			32. Update User Information");  //TBD
-// mu33create			33. Create User Information");  //TBD
+// mu33create			33. Create User Information");  //TBD (in Login/Registration menu)
 	
 
 
@@ -59,7 +126,7 @@ public class JavalinMenu {
 	
 	// eUser ===========	
 //	eu11update 			11. Update User Information");
-//	eu12create			12.	Create User 220101");
+//	eu12create			12.	Create User 220101"); // (in Login/Registration menu)
 
 	
 	

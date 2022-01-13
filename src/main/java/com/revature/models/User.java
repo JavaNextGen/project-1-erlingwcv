@@ -111,19 +111,17 @@ public class User extends AbstractUser {
 //        //this.user_role = u_role;
     }
     
- //08 +++++   
-//    // Constructor for employee self update email only, inlcuding the first and last name
-//    public User(int ers_users_id, String user_f_name, String user_l_name, String u_email) {
-//        super();
-//        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
-////        this.ers_username = ers_username;   // it was missing and 211231 userbyid result was null
-////        this.ers_password = ers_password;
-//        this.user_first_name = user_f_name;
-//        this.user_last_name = user_l_name;
-//        this.user_email = u_email;
-//    //    this.user_role_id = user_role_id;  // User itself cannot change the role
-//        //this.user_role = u_role;
-//    }
+ //08 +++++ User Self Update, by ers_users_id, excluding user_role_id   ++++status: WIP++220113++++++++++++++
+//    // Constructor for user self update user info only
+    public User(int ers_users_id, String ers_username, String ers_password, String u_email, String user_l_name, String user_f_name) {
+        //super();
+        this.ers_users_id = ers_users_id; // used as user identifier, user itself cannnot change it
+        this.ers_username = ers_username;   // it was missing and 211231 userbyid result was null
+        this.ers_password = ers_password;
+        this.user_email = u_email;
+    	this.user_last_name = user_l_name;
+        this.user_first_name = user_f_name;
+    }
     
     
     

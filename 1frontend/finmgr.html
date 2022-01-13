@@ -21,6 +21,71 @@
 
 			<!-- <div>
 			<!-- Entry Elements Here -->
+			<div id="diver_create"> Part 1 -Reimbursement Operations</div>
+			<br>
+			</br>
+			<div>
+				<input id="urid" placeholder="Reimb ID" class=" input col-sm-1"/>
+				<select id="mrstatus" placeholder="Select Reimb Status" class = "select col-sm-1">
+					<option value = "PENDING">PENDING</option>  
+					<option value = "APPROVED">APPROVED</option> 
+					<opiton value = "DENIED">DENIED</option>
+				</select>
+				<!-- <input id="erstatus" placeholder = "Status" class=" input col-sm-1"/> -->
+				<input id="erauthor" placeholder="Author" class=" input col-sm-1"/>
+				<input id="erresolver" placeholder="Resolver" class=" input col-sm-1"/>
+				<input id="eramount" placeholder = "Amount" class=" input col-sm-1"/>
+				<input id="erdesc" placeholder="Description" class=" input col-sm-2"/>
+				<select id="mrtype" placeholder="Select Type" class="select col-sm-1">
+					<option value = "LODGING">LODGING</option>  
+					<option value = "TRAVEL">TRAVEL</option> 
+					<opiton value = "FOOD">FOOD</option>
+					<opiton value = "OTHER">OTHER</option>
+				</select>
+					<!-- <option value = "Employee">EMPLOYEE</option>
+					<option value = "Finance Manager">FINANCE_MANAGER</option> -->
+				 
+				<input id="ursubmitted" placeholder="Submitted on" class=" input col-sm-4"/>	
+				<input id="mrprocessed" placeholder="Processed on" class=" input col-sm-1"/>
+				
+				<br>
+				<!-- actions just by clicking-->
+				</br>
+				<!-- reimb related: -->
+				<button id="mcreateButton" class="btn btn-primary">Create Reimb</button>
+				<button id="mupdateButton" class="btn btn-primary">Update Reimb</button>
+				<button id="mrusernameButton" class="btn btn-primary col-sm-3">Get by Username</button>
+
+			</div>
+			<!-- We want to display(table) all of the requested  information when it comes back from the server -->
+			<div id="table-row" class="row">
+				<table id="mreimbTable" class="table table-hover table-bordered table-dark">
+					<thead>
+						<tr>
+							<th>Reimb ID</th>
+							<th>Status</th>			
+							<th>Author</th>			
+							<th>Resolver</th>
+							<th>Amount</th>
+							<th>Desc</th>
+							<th>Type</th>
+							<th>Submitted</th>
+							<th>Processed</th> 
+						</tr>
+					</thead>
+					<tbody id="mreimbBody">
+						<!--We'll leave this blank: it will be filled by our JS when data comes in-->
+					</tbody>
+				</table>
+			</div> 
+ 
+			
+			<br>
+		
+			
+			
+		</div> 
+	
 			<h3>Please click the button below to select your search!</h3>
 			<div id="mchoiceRow" class="row">
 				<!-- Reimb related with entry before click: -->
@@ -47,6 +112,22 @@
 				<button id="muemailButton" class="btn btn-primary col-sm-3">Get User by Email Address</button>
 			</div> 
 
+			<h3>Part 1 -Process reimbursments by reimb ID</h3>
+			<div id="divmr_process">
+				<button id="mupdateButton" class="btn btn-primary">Update Reimb</button>
+							<input >Reimb ID</th>
+							<th>Status</th>			
+							<th>Author</th>			
+							<th>Resolver</th>
+							<th>Amount</th>
+							<th>Desc</th>
+							<th>Type</th>
+							<th>Submitted</th>
+							<th>Processed</th>
+
+			</div>
+
+			<div id="divmr_display">Part 2 -Display Reimbursements</div>
 
 
 			<br>
@@ -71,7 +152,7 @@
 						<!--We'll leave this blank: it will be filled by our JS when data comes in-->
 					</tbody>
 				</table>
-			</div> 
+			 
  
 			<br>
 			<!-- actions just by clicking-->
@@ -80,9 +161,15 @@
 			<button id="mprocessButton" class="btn btn-primary">Process Reimb</button>
 			<button id="mgetreimbButton" class="btn btn-primary">Get All Reimb</button>
 			<button id="mcreateButton" class="btn btn-primary">Create Reimb</button>
-			<button id="mupdateButton" class="btn btn-primary">Update Reimb</button>
+			
 
+			</div >
 			<br>
+			<h3> Part 3 -User Display </h3>
+			<div id="divmu_display">
+
+
+			</div>
 			<!-- user related: -->
 			</br>
 			<button id="mgetuserButton" class="btn btn-primary">Get All Users</button>
@@ -92,6 +179,6 @@
 
 	</div>
 
-		<script src="00finmgr.js"></script>
+		<script src="finmgr.js"></script>
 	</body>
 </html>
