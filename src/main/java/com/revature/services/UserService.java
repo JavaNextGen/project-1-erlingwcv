@@ -3,6 +3,7 @@ package com.revature.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.revature.exceptions.MyAccountUnauthorizedException;
 import com.revature.exceptions.MyUserEmailNotUniqueException;
 import com.revature.exceptions.RegistrationUnsuccessfulException;
 import com.revature.exceptions.UsernameNotUniqueException;
@@ -72,7 +73,9 @@ public class UserService {
 		String email = userToBeUpdated.getUser_email(); 
 		String lname = userToBeUpdated.getUser_last_name();
 		String fname = userToBeUpdated.getUser_first_name();
-		// find the userId by getbyusername
+		
+		int sessionUserid = userToBeUpdated.getErs_users_id();
+		// confirm the session by verifying it with the userId by getbyusername
 		Optional<User> ouser2 = udao.username4Auth(username);
 		user2 = ouser2.get();
 		int usersid = user2.getErs_users_id();
@@ -100,6 +103,11 @@ public class UserService {
 			int unf = ldao.ers_usernameFound(username);
 			boolean uef = ldao.user_emailFound(email);
 			// provide ers_users_id, if found by username
+			if (sessionUserid != usersid) {
+				
+				throw new MyAccountUnauthorizedException("Unauthorized Session!");
+			}
+			
 			if (unf > 0 && unf != usersid)	{
 				
 				throw new UsernameNotUniqueException("Username Not Unique.");
@@ -133,7 +141,12 @@ public class UserService {
 		    		throw new RegistrationUnsuccessfulException("User Self Update Failed.");
 				   }	
 			
-		} catch (UsernameNotUniqueException e) {
+		} catch (MyAccountUnauthorizedException e) {
+			e.getStackTrace();
+			e.getLocalizedMessage();
+			System.out.println("user self Update failed: Account Access Unauthorized.");
+		}
+			catch (UsernameNotUniqueException e) {
 			e.getStackTrace();
 			e.getLocalizedMessage();
 			System.out.println("User Does Not Exist.");}
@@ -165,6 +178,8 @@ public class UserService {
 		
 		
 	
+
+
 //+++++++ fin mgr == getbyUserName 211231 done +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		/**
 		 *     Should retrieve a User with the corresponding username or an empty optional if there is no match.
