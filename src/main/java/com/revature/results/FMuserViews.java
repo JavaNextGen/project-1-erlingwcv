@@ -74,8 +74,8 @@ public class FMuserViews {
 						rs.getString("user_email"),
 						rs.getString("user_role"),
 						rs.getString("user_last_name"),
-						rs.getString("user_first_name"),
-						rs.getInt("ers_users_id")
+						rs.getString("user_first_name")
+					//	rs.getInt("ers_users_id")
 		//			//	rs.getString("ers_password"), // confidential
 	
 

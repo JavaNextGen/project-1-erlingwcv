@@ -18,10 +18,10 @@ public class UserNRole{
 
 // 221022 password added due to regis user1 missing password	
 // Fin Mgr View Constructor
-	public UserNRole(String ers_username, String password,  String user_email, String user_role, String user_last_name,
+	public UserNRole(String ers_username, String user_email, String user_role, String user_last_name,
 			String user_first_name) {
 		this.ers_username = ers_username;
-		this.ers_password = password;
+	//	this.ers_password = password;   // 220113 not to disclose at presentation?
 		this.user_email = user_email;
 		this.user_role = user_role;
 		this.user_last_name = user_last_name;

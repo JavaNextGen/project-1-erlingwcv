@@ -43,7 +43,7 @@ public class AuthService {
     public User userLogin(LoginDTO logindto) {
     	User u2Ctx = new User();
     	LoginDAO ldao = new LoginDAO();
-    	//UserDAO udao = new UserDAO();   // not needed if just return a slim user with role_id & user_id
+    	UserDAO udao = new UserDAO();   // needed to return the verified user back to controller
     	
     	String username = logindto.getErs_username();
     	String password = logindto.getErs_password();
@@ -69,9 +69,10 @@ public class AuthService {
     			
     		//} else if ((unf == true) && (upm == true)) {
     		} else if ((unf >0) && (upm >0)) {
-    			//Optional<User> ou2Ctx = udao.username4Auth(username);
-    				u2Ctx.setUser_role_id(unf);
-    				u2Ctx.setErs_users_id(upm);
+    			Optional<User> ou2Ctx = udao.username4Auth(username);
+    			u2Ctx = ou2Ctx.get();
+    				//u2Ctx.setUser_role_id(unf);
+    				//u2Ctx.setErs_users_id(upm);
 //    				int uid = u2Ctx.getErs_users_id();   		
 //    	    		int urid = u2Ctx.getUser_role_id(); 
     		
