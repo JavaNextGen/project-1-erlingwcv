@@ -56,25 +56,27 @@ async function userSelfUpdateFunction() {
  
     //control flow based on successful/unsuccessful login
     //if(response.status === 202) {
-        if(response.status === 202) {
+        if(response.status === 200) {
         // erling: open the corresponding window for use
        // window.open(url, '_blank').focus();
  //    // hardcoding a window like user menu to open
-    window.open("finmgr.html", '_blank"').focus;
+            alert("userSelfUpdate Success!");
+    //window.open("finmgr.html", '_blank"').focus;
         };
         
-        if (response.status === 201){
- window.open("employee.html", '_blank"').focus;
+//         if (response.status === 201){
+//  window.open("employee.html", '_blank"').focus;
   
-            <!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
-        }
+//             <!--https://www.w3schools.com/bootstrap/bootstrap_ref_css_buttons.asp-->
+//         }
  
  
         //wipe our login row and welcome the user 
         //document.getElementById("loginRow").innerText="Welcome to ERS!";
         
      if (response.status > 202) {
-        document.getElementById("loginRow").innerText="Registration failed! Refresh the page";
+         alert("User Self Update Failed");
+        document.getElementById("loginRow").innerText="Self Update failed! Refresh the page";
     }
  
  

@@ -50,9 +50,10 @@ public class UserService {
 	
 //220113 ++++++++  User Self Update User Info by ers_users_id ++++++++as Manager or as Employ ++++++++++++++++++++++++++		
 
-	    public User selfUpdate(User userToBeUpdated, int SessionUserId, int SessionRoleId) {
-//// actions include
-//////	    	1. make sure ers_users_id and user_role_id correct
+	    public User selfUpdate(User userToBeUpdated) {
+	    //public User selfUpdate(User userToBeUpdated, int SessionUserId, int SessionRoleId) { // assume verified
+	    	//// actions include
+//////	    	1. assume (next version to make sure) ers_users_id and user_role_id correct
 //////		   	2. various verifications like registration
 //////	      3. Insert to DB
 //////	    	4. Get user_role_id and ers_users_id and pack them as a thin user to Regis Auth controller 
@@ -66,12 +67,11 @@ public class UserService {
 //		// Display what is received about the new user
 		String username = userToBeUpdated.getErs_username();  // use it get user id afer insert by calling GetByUsername 
 		String password = userToBeUpdated.getErs_password();
-		System.out.println("selfupdates password is " + password);
-		int roleid = SessionRoleId;  // cannot be changed by user in session
-		int usersid = SessionUserId;  // cannot be changed by user in session
+		int roleid = userToBeUpdated.getUser_role_id();
 		String email = userToBeUpdated.getUser_email(); 
 		String lname = userToBeUpdated.getUser_last_name();
 		String fname = userToBeUpdated.getUser_first_name();
+		int usersid = userToBeUpdated.getErs_users_id();
 	//	
 		user2.setErs_users_id(usersid);
 		user2.setErs_username(username);

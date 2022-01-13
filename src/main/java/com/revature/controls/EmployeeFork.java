@@ -35,12 +35,9 @@ public class EmployeeFork {
 	AuthService as = new AuthService();
 	UserService us = new UserService();
 	
-////++1 of 2 methods++++++++++ User Login Handler ++++++++++++++++++++++++++++++++++++++			
-
-// +++++++ ++++++ Employee Self User Update ++++++++++++ 220113	
-////+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-////++2 of 2 methods +++++ Registration Handler +++++++++++++220111+++++++++++++++++++++++++++++
-////++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// +++++++ ++++++ Employee Self User Update ++++++++++++ 220113	 +++based on regisHandler
 //		
 public Handler userSelfUpdateHandler = (ctx) -> {
 //	    // based on public Handler regisHandler = (ctx) -> {
@@ -70,64 +67,53 @@ public Handler userSelfUpdateHandler = (ctx) -> {
 //		//to make User2 ready for authsvc register method
 //		
 //		//call usersvc int userRoleStringToId(String role) method to convert it into role id
-//		user3userroleid = us.userRoleStringToId(user1role);
-//		
-//		//User user2 = new User();     // user2 to feed into auth svc
-////		User user2 = new User(
-////				username, 
-////				userpassword,
-////				useremail,
-////				user3userroleid,
-////				userLname,
-////				userFname);
-////				
-//		
-//		user2.setErs_username(username);
-//		user2.setErs_password(userpassword);
-//		user2.setUser_email(useremail);
-//		user2.setUser_role_id(user3userroleid);
-//		user2.setUser_last_name(userLname);
-//		user2.setUser_first_name(userFname); 
-//		
-//		System.out.println("Registration user2 is " +user2.toString());
-//		
-//     //++++++++++Step 3 to make User3+++++++and send it to JS+++++++++++++++++++++++++++++++++++++		
-//		//+++++++++ ++++ 3.1 call svc user regis method on User2, to collect DB insert verifications and status		
-//		////control flow to determine what happens in the event of successful/unsuccessful verification
-//		//invoke register() method of the AuthService using the input from User2
-//		// as.regiser() method is doing various verifications, DB insert verifications and insert status report
-//		user3 = as.register(user2);
-//				
-//		System.out.println("Registration user3 is " +user3.toString());
-//		
-//		//++++++++ ++++ 3.2 to pack User3 into JSON for front end +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 		
-//		////create a new gson for some info to send back to frontend				
-//		Gson user3gson = new Gson();
-//		String user3JS = user3gson.toJson(user3);
+		user3userroleid = us.userRoleStringToId(user1role);
+		
+//		//User user2 = new User();     // user2 to feed into user svc: selfUpdate() method
+		user2.setErs_username(username);
+		user2.setErs_password(userpassword);
+		user2.setUser_email(useremail);
+		user2.setUser_role_id(user3userroleid);
+		user2.setUser_last_name(userLname);
+		user2.setUser_first_name(userFname); 
+		user2.setErs_users_id(ersusersid);
+		
+		System.out.println("Registration user2 is " +user2.toString());
+		
+     //++++++++++Step 3 to make User3+++++++and send it to JS+++++++++++++++++++++++++++++++++++++		
+		//+++++++++ ++++ 3.1 call svc user regis method on User2, to collect DB insert verifications and status		
+		////control flow to determine what happens in the event of successful/unsuccessful verification
+		//invoke UserService.selfUpdate() using the input from User2
+		// us.selfUpdate() method is doing various verifications, DB insert verifications and insert status report
+		user3 = us.selfUpdate(user2);
+					
+		System.out.println("User Self Update ser3 is " +user3.toString());
+		
+		//++++++++ ++++ 3.2 to pack User3 into JSON for front end +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 		
+		////create a new gson for some info to send back to frontend				
+		Gson user3gson = new Gson();
+		String user3JS = user3gson.toJson(user3);
 //		////String JSONEmployeeus = gson.toJson(ouById);
 //		////if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
 //		////Give a response body with a JSON string 
 //		////ctx.result(InputStream) oallUsers.get());	
 //		// text to put in ctx.status
-//		String roleMenu = Integer.toString(user3userroleid);
-//		System.out.println("roleMenu is " + roleMenu);
-//		ctx.result(user3JS);  // dont know  how to pull info out at the frontend ???????????????
-//		//ctx.result(gson2JS); not working
-//		//ctx.json(uToJS);  not working
-//		//ctx.contentType("User"); not working
-//		// It appears that "status" is the only reliable vehicle to pass Role info to frontend
-//		if (user3userroleid == 1) {
-//			ctx.status(201);
-//		} 
-//		
-//		if (user3userroleid == 2) {
-//			ctx.status(202);
-//		}
-//		
-//		//ctx.status(200);
-//		};
-//		
-//}
+		String roleMenu = Integer.toString(user3userroleid);
+		System.out.println("roleMenu is " + roleMenu);
+		ctx.result(user3JS);  // dont know  how to pull info out at the frontend ???????????????
+		//ctx.result(gson2JS); not working
+		//ctx.json(uToJS);  not working
+		//ctx.contentType("User"); not working
+		// It appears that "status" is the only reliable vehicle to pass Role info to frontend
+		if (user3userroleid > 0) {   // when user found
+			ctx.status(200);           // show action success
+		} 
+		
+		
+		//ctx.status(200);
+		};
+		
+
 
 	
 }		

@@ -52,7 +52,7 @@ public class JavalinDriver {
 		
 		// Now the hander is from JS at login.html?
 		// let response = await fetch (url + "login", {
-	}
+//	}
 //
 // ++++++++++++  Finance Manager Menu Drivers
 	
@@ -66,15 +66,16 @@ public class JavalinDriver {
 	
 	
 	
-// +++++++++++++ Employee Menu Drivers	
+// +++220113++++++++++ Employee Menu Drivers	
+// ++++++++++++++++++++User Self Update handler ++++++++++++++++++++++++++++++++++++++++++++++++++++		
 	
-//	app.post("/employee", emenu.userSelfUpdateHandler);	
+	app.post("/employee", emenu.userSelfUpdateHandler);	
 	
 	
 	
 	
+	}
 }
-
 
 
 

@@ -67,7 +67,7 @@ public class User extends AbstractUser {
               
     }
  
-//05 ++++  user presentation format 1: no password ++++++++ 220122 add password in    
+//05 ++++  for user self update ++++++++ 220122 add password in    
     // constructor for (Finance Manager)  get All users or getUserByusername
     // User(String, String, String, String, int)  
     public User(String username, String password, String u_email,  int user_role_id, String user_l_name, String user_f_name, int ers_users_id) {
