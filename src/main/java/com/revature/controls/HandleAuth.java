@@ -26,19 +26,23 @@ import io.javalin.http.Handler;
 // 1.2 +++++++++++ verification actions
 // 1.3 ++++++++++ send selective data via POST to frontend
 		
-		User user1 = new User();  // feed received from client input
-		User user2 = new User();     // user2 to feed into auth svc        
-		User user3 = new User();   // received from auth svc (verification) with selective info for JS frontend
-		int user3userroleid; // info sent to JS front end (available from Step 2, to show next menu)
-		int user3ersusersid; // info sent to JS front end (available from Step 3, to show user identity)
-		AuthService as = new AuthService();
-		UserService us = new UserService();
+		
 		
 // ++1 of 2 methods++++++++++ User Login Handler ++++++++++++++++++++++++++++++++++++++			
 		public Handler loginHandler = (ctx) -> {
+		
+		//	user1 (LoginDTO is used per Ben) feed with Json body from client input
+		// 	user1 to feed into auth svc userlogin method 
+		// User user2  // user 2 received from auth svc (verification)        
+		//	User user3 = new User();  //  with selective info for JS frontend
+			int user3userroleid; // info sent to JS front end (available from Step 2, to show next menu)
+			int user3ersusersid; // info sent to JS front end (available from Step 3, to show user identity)
+			
+			AuthService asl = new AuthService();
+			UserService usl = new UserService();
+			
 		//public Handler loginRequestHandler = (ctx) -> {
-			AuthService as = new AuthService();
-			User uToJS = new User();  // per authservice's login method	
+		//	User uToJS = new User();  // per authservice's login method	
 		//		what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request
 		//		GET requests will have empty request bodies, but POST requests, which send data, will have some data.
 		//turn the body (data) of the POST request into a Java String
@@ -53,30 +57,34 @@ import io.javalin.http.Handler;
 			LoginDTO lDTO = inputgson.fromJson(body, LoginDTO.class);
 		//control flow to determine what happens in the event of successful/unsuccessful login
 			//invoke the login() method of the AuthService using the username and password from the LoginDTO
-			uToJS = as.userLogin(lDTO);
-		
-			System.out.println("uToJS is " +uToJS.toString());
-
+//			uToJS = asl.userLogin(lDTO);
+//			System.out.println("uToJS is " +uToJS.toString());
+			User user2 = asl.userLogin(lDTO);
+			System.out.println("login user2 is " +user2.toString());
+		// take out only the user_role_id and and ers_users_id, to be packed into user3 for the front end
+			user3userroleid = user2.getUser_role_id();
+			String user3rolenum = Integer.toString(user2.getUser_role_id());
+			System.out.println("login role2go is " + user3rolenum);
+			user3ersusersid = user2.getErs_users_id();
+		// user3 was not able to be functional	after User user3 = new User();		
+			
 		//create a new gson to sendback to frontend				
-			Gson outputgson = new Gson();
-			String gson2JS = outputgson.toJson(uToJS);
+		//	Gson outputgson = new Gson();
+		//	String gson2JS = outputgson.toJson(user2);
 		//String JSONEmployeeus = gson.toJson(ouById);
 			////			if(as.login(LDTO.getUsername(), LDTO.getPassword())) {
 			////			Give a response body with a JSON string 
 			////			ctx.result(InputStream) oallUsers.get());	
-			int roleNum = uToJS.getUser_role_id();
-			String role2go = Integer.toString(uToJS.getUser_role_id());
-			System.out.println("role2go is " + role2go);
-			ctx.result(role2go);   // dont know  how to pull info out at the frontend ???????????????
+			ctx.result(user2.toString());   // dont know  how to pull info out at the frontend ???????????????
 			//ctx.result(gson2JS);
 			//ctx.json(uToJS);
 			//ctx.contentType("User");
-			if (roleNum == 1) {
-				ctx.status(201);
+			if (user3userroleid == 1) {
+				ctx.status(201); 			// signal for Role
 			} 
 		
-			if (roleNum == 2) {
-				ctx.status(202);
+			if (user3userroleid == 2) {
+				ctx.status(202);			// signal for Role
 			}
 		
 			//ctx.status(200);
@@ -91,6 +99,14 @@ import io.javalin.http.Handler;
 		public Handler regisHandler = (ctx) -> {
 		//public Handler loginRequestHandler = (ctx) -> {
 		
+		//	user1 feed with Json body from client input
+			User user2 = new User();     // user2 to feed into auth svc        
+			User user3 = new User();   // received from auth svc (verification) with selective info for JS frontend
+			int user3userroleid; // info sent to JS front end (available from Step 2, to show next menu)
+			int user3ersusersid; // info sent to JS front end (available from Step 3, to show user identity)
+			AuthService as = new AuthService();
+			UserService us = new UserService();	
+			
 		//+++++++ Step 1 to make User1++++ 	make User1 out of user web input (Client) 	
 		//what's the request body? (which we get from ctx.body) it's the data that gets sent in with a request
 		//GET requests will have empty request bodies, but POST requests, which send data, will have some data.
@@ -101,7 +117,7 @@ import io.javalin.http.Handler;
 		//create a new Gson object to make Java <-> JSON conversions
 		Gson user1gson = new Gson();
 		User user1 = user1gson.fromJson(body, User.class);
-		System.out.println("Registration user1 is " +user1.toString());  // 220112 user toString added password
+		System.out.println("Regis user1 is " +user1.toString());  // 220112 user toString added password
 		String username = user1.getErs_username();
 		String userpassword = user1.getErs_password();
 		String useremail = user1.getUser_email();
@@ -123,7 +139,7 @@ import io.javalin.http.Handler;
 		user2.setUser_last_name(userLname);
 		user2.setUser_first_name(userFname); 
 		
-		System.out.println("Registration user2 is " +user2.toString());
+		System.out.println("Regis user2 is " +user2.toString());
 		
       //++++++++++Step 3 to make User3+++++++and send it to JS+++++++++++++++++++++++++++++++++++++		
 		//+++++++++ ++++ 3.1 call svc user regis method on User2, to collect DB insert verifications and status		
@@ -132,7 +148,7 @@ import io.javalin.http.Handler;
 		// as.regiser() method is doing various verifications, DB insert verifications and insert status report
 		user3 = as.register(user2);
 				
-		System.out.println("Registration user3 is " +user3.toString());
+		System.out.println("Regis user3 is " +user3.toString());
 		
 		//++++++++ ++++ 3.2 to pack User3 into JSON for front end +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 		
 		////create a new gson for some info to send back to frontend				
