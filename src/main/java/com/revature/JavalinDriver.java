@@ -3,6 +3,8 @@ package com.revature;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import com.revature.controls.EmployeeFork;
 //
 import com.revature.controls.HandleAuth;
 ////import com.revature.controllers.EmployeeController;
@@ -20,7 +22,7 @@ public class JavalinDriver {
 //		//instantiating controller objects to use their method
 //		//EmployeeController ec = new EmployeeController();
 		HandleAuth ha = new HandleAuth();
-//		
+		EmployeeFork emenu = new EmployeeFork();
 //		
 //		//Testing Database Connectivity - just testing whether our Connection (from ConnectionFactory) is successful
 		try(Connection conn = ConnectionFactory.getConnection()){
@@ -66,7 +68,7 @@ public class JavalinDriver {
 	
 // +++++++++++++ Employee Menu Drivers	
 	
-	
+//	app.post("/employee", emenu.userSelfUpdateHandler);	
 	
 	
 	

@@ -19,12 +19,21 @@
 <div class="container">
 			<!--put User In Session Info Here for Seecurity Check-->
 		<div>
-			<table id = "user id and role">
+			<table id = "user in Session">
 				<label>User Identity in Sesseion: </label>
 				<br>
-				<label>User ID: </label> <input id="currentuserid" placeholder ="User In Session " class="input col-sm-1"/>
+				<label>Session User ID: </label> <input id="sessionUserId" placeholder ="ers_users_id" class="input col-sm-2"/>
+				<!-- <button id="sessionUseridButton" class="btn btn-primary col-sm-4">Confirm User ID</button> -->
 				<br>
-				<label>User Role: </label> <input id="currentrole" placeholder = "Role in Session" class="input col-sm-1"/>
+				<label>Session User Role: </label>
+				<select id="sessionRole" placeholder="User Role to Select" class = "select col-sm-2"/>
+						<option value = "EMPLOYEE">Employee</option>  
+						<option value = "FINANCE_MANAGER">Finance Manager</option> 
+						<!-- <option value = "Employee">EMPLOYEE</option>
+						<option value = "Finance Manager">FINANCE_MANAGER</option> -->
+				</select>
+				
+				<!-- <label>User Role ID: </label> <input id="sessionRoleId" placeholder = "user_role_id" class="input col-sm-2"/> -->
 
 			</table>
 
@@ -142,7 +151,7 @@
 				<!-- <input id="nrole" placeholder="User Role" class = "input col-sm-1"/>  employee cannt change -->
 				<input id="nlname" placeholder="Last Name" class=" input col-sm-1"/>
 				<input id="nfname" placeholder="First Name" class=" input col-sm-1"/>
-				<button id="regisButton" class="btn btn-primary col-sm-1">Sumbit User Update</button>
+				<button id="uselfUpdateButton" class="btn btn-primary col-sm-1">Sumbit User Self Update</button>
 				<!-- user related: -->
 				<!-- part 2 start below: employee user personal update-->
 				<!-- </br>

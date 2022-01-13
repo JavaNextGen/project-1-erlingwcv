@@ -16,12 +16,28 @@
 	<body>
 		<!--We need a div called container to hold all of our bootstrap styling-->
 		<div class="container">
+				<!--put User In Session Info Here for Seecurity Check-->
+		<div>
+			<table id = "user in Session">
+				<label>User Identity in Sesseion: </label>
+				<br>
+				<label>User ID: </label> <input id="currentuserid" placeholder ="ers_users_id" class="input col-sm-2"/>
+				<br>
+				<label>User Role: </label> <input id="currentrole" placeholder = "user_role_id" class="input col-sm-2"/>
+
+			</table>
+
+		</div>
+
 
 		<h3>Welcome to ERS Finance Manager Menu</h3>
 
 			<!-- <div>
+				
 			<!-- Entry Elements Here -->
-			<div id="diver_create"> Part 1 -Reimbursement Operations</div>
+				<h3> Part 1: Reimbursement Information Options</h3>
+
+			<div id="diver_create"> Reimb Create perations</div>
 			<br>
 			</br>
 			<div>
@@ -52,9 +68,9 @@
 				<!-- actions just by clicking-->
 				</br>
 				<!-- reimb related: -->
-				<button id="mcreateButton" class="btn btn-primary">Create Reimb</button>
-				<button id="mupdateButton" class="btn btn-primary">Update Reimb</button>
-				<button id="mrusernameButton" class="btn btn-primary col-sm-3">Get by Username</button>
+				<button id="mcreateButton" class="btn btn-primary">Create Self Reimb</button>
+				<button id="mupdateButton" class="btn btn-primary">Update Self Reimb</button>
+				<!-- <button id="mrusernameButton" class="btn btn-primary col-sm-3">Get by Username</button> -->
 
 			</div>
 			<!-- We want to display(table) all of the requested  information when it comes back from the server -->
@@ -90,28 +106,18 @@
 			<div id="mchoiceRow" class="row">
 				<!-- Reimb related with entry before click: -->
 				<!-- <input id="status" placeholder="Status" class="input col-sm-3"/> -->
-				<button id="mrstatusButton" class="btn btn-primary col-sm-3">Get by Status</button>
+				<button id="mrstatusButton" class="btn btn-primary col-sm-1">Get by Status</button>
 				<!-- <input id="username" placeholder="Username" class="input col-sm-3"/> -->
-				<button id="mrusernameButton" class="btn btn-primary col-sm-3">Get by Username</button>
+				<button id="mrusernameButton" class="btn btn-primary col-sm-1">Get by Username</button>
 				<!-- <input id="author" placeholder="Author" class="input col-sm-3"/> -->
-				<button id="mrauthorButton" class="btn btn-primary col-sm-3">Get by Author</button>
+				<button id="mrauthorButton" class="btn btn-primary col-sm-1">Get by Author</button>
 				<!-- <input id="resolverid" placeholder="Resolver ID" class="input col-sm-3"/> -->
-				<button id="mrresolveridButton" class="btn btn-primary col-sm-3">Get by Resolver ID</button>
+				<button id="mrresolveridButton" class="btn btn-primary col-sm-1">Get by Resolver ID</button>
 				<!-- default type is text -->
 				<!-- <input type="text"> -->
-								
-			<br></br>
+			</div>					
+			<!-- <br></br>
 				
-				<input id="managerid" placeholder="Manager User ID" />
-				<button id="loginButton" class="btn btn-info  ">Manager in session</button>
-			<br><br/>
-				<!-- User related with entry before click:-->
-				<button id="muusernameButton" class="btn btn-primary col-sm-3"> Get User by Username</button>
-				<!--<p>Check out <a href="https://www.freecodecamp.org/">freeCodeCamp</a>.</p>-->
-				<!-- <input id="resolverid" placeholder="Resolver ID" class="input col-sm-3"/> -->
-				<button id="muemailButton" class="btn btn-primary col-sm-3">Get User by Email Address</button>
-			</div> 
-
 			<h3>Part 1 -Process reimbursments by reimb ID</h3>
 			<div id="divmr_process">
 				<button id="mupdateButton" class="btn btn-primary">Update Reimb</button>
@@ -165,7 +171,7 @@
 
 			</div >
 			<br>
-			<h3> Part 3 -User Display </h3>
+			<h3> Part 2 -User Information Opitons </h3>
 			<div id="divmu_display">
 
 
@@ -173,8 +179,41 @@
 			<!-- user related: -->
 			</br>
 			<button id="mgetuserButton" class="btn btn-primary">Get All Users</button>
-			<button id="mcreateuButton" class="btn btn-primary">Create User</button>
+			<!-- <button id="mcreateuButton" class="btn btn-primary">Create User</button> -->
 			<button id="mupdateuButton" class="btn btn-primary">Update User</button>
+
+
+			<!-- User related with entry before click:-->
+			<button id="muusernameButton" class="btn btn-primary col-sm-3"> Get User by Username</button>
+			<!--<p>Check out <a href="https://www.freecodecamp.org/">freeCodeCamp</a>.</p>-->
+			<!-- <input id="resolverid" placeholder="Resolver ID" class="input col-sm-3"/> -->
+			<button id="muemailButton" class="btn btn-primary col-sm-3">Get User by Email Address</button>
+			<br>
+			<br>
+			<!-- part 2 start below: employee user personal update-->
+				<!-- </br>
+				<button id="mupdateuButton" class="btn btn-primary">Update User</button> -->
+				<br></br>
+				<br>
+				<table id="mreimbTable" class="table table-hover table-bordered table-dark">
+				<thead>
+					<tr>
+						<th class = "thead col-sm-1"">Username</th>
+						<th class = "thead col-sm-1"">Password</th>			
+						<th class = "thead col-sm-2"">Email</th>			
+						<th class = "thead col-sm-1"">User Role</th>
+						<th class = "thead col-sm-1"">Last Name</th>
+						<th class = "thead col-sm-1"">First Name</th>
+						 
+					</tr>
+				</thead>
+				<tbody id="mreimbBody">
+					<!--We'll leave this blank: it will be filled by our JS when data comes in-->
+				</tbody>
+			</table>
+
+
+
 		</div> 
 
 	</div>

@@ -48,7 +48,7 @@ public class UserService {
 		}
 
 	
-//++++++++  Update User Info by ers_users_id 220113 ++++++++as Manager or as Employ ++++++++++++++++++++++++++		
+//220113 ++++++++  User Self Update User Info by ers_users_id ++++++++as Manager or as Employ ++++++++++++++++++++++++++		
 
 	    public User selfUpdate(User userToBeUpdated, int SessionUserId, int SessionRoleId) {
 //// actions include

@@ -247,8 +247,9 @@ public class LoginDAO {
 // ++++status: wip 220113+++++++++ Login Session Identity Match by ers_users_id and user_role_id
 	// 2 ++++++++ Login User Password Match-per-Username/Password Method ++++++++++++++++++++	
 	// to be called by createUser or updateUser
-		//public boolean ers_passwordMatch (String username, String password) {
-	// +++++++ return ers_users_id as match proof, as part of response to frontend
+// // based on	//public boolean ers_passwordMatch (String username, String password) {
+	// +++++++ return result ers_users_id, status "User Logged In" as match proof, as part of response to frontend
+	
 //	public int ersusersidNuserroleidMatch (int userid, int roleid) {
 //			
 //			try(Connection conn = ConnectionFactory.getConnection()) {
@@ -266,7 +267,7 @@ public class LoginDAO {
 //	    				+ "FROM ers_users\n"
 //	    				//+ "LEFT JOIN ers_user_roles \n"
 //	    				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
-//	    				+ "WHERE ers_users_id = ?";
+//	    				+ "WHERE ers_users_id = ? AND user_role_id =? ";
 //
 //	    		// schema name to be included. otherwise JDBC do not see the table
 //	    		// Put the SQL query into a Statement object (The Connection object has a method for this)
@@ -274,7 +275,9 @@ public class LoginDAO {
 //	    		// This time should use PreparedStatement to prevent SQL injection
 //	    		PreparedStatement ps = conn.prepareStatement(sql);
 //	    		// put the email parameter in the PreparedStatement to complete the SQL
-//	    		ps.setString(1, username); // 1st question mark in SQL, its variable
+//	    		/////ps.setString(1, username); // 1st question mark in SQL, its variable
+//				ps.setInt(1, userid);
+//				ps.setInt(2, roleid);
 //	    		
 //	    		// Execute the query, by putting the results into our ResultSet object
 //	    		// The Statement object has a method that takes Strings to execute as a SQL query
