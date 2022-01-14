@@ -202,7 +202,7 @@ public class UserService {
 	     */
 // +++++++++Only Required ++++++++++++++220114++++++++++++++++++++++++++++++++++++++++
 	    
-	public Optional<UserNRole> getByUsername(String username) {
+	public Optional<UserNRole> getByUsername(String username) throws MyUserNotExistingException {
 		
 		// actions include
 //		1. check if User is null
@@ -220,41 +220,34 @@ public class UserService {
 		UserNRole unr2 = new UserNRole(); // to pass to manager controller after converting role id to Role
 											// wrapped in Optional.OfNullible
 				
-		try {
-			// Step 1: call UserDAO to get the o-user from DB
-			Optional<User> ouser1 = udao.getByUsername(username);
-			User user1 = ouser1.get();
-									
-			// Display what is received about the new user
-			String username = user1.getErs_username();  // use it get user id afer insert by calling GetByUsername 
-			String password = user1.getErs_password();
-			int roleid = user1.getUser_role_id();
-			String email = user1.getUser_email(); 
-			String lname = user1.getUser_last_name();
-			String fname = user1.getUser_first_name();
-			int usersid = user1.getErs_users_id();
-			
-			String userrole = us.roleidToRoleString(roleid);
-			
-			unr2.setErs_username(username);
-			//unr2.setErs_password(password);  // confidential
-			unr2.setUser_email(email);
-			unr2.setUser_role(userrole);
-			unr2.setUser_last_name(lname);
-			unr2.setUser_first_name(fname);
-			
-			return Optional.ofNullable(unr2) ;
-			
-		} catch (MyUserNotExistingException e) {
-			// the user is null
-			//throw new MyUserNotExistingException("User Not Found by the Username");
-			e.printStackTrace();
-			e.getLocalizedMessage();
-			System.out.println("User Not Found by the Username -UserService");
+		// Step 1: call UserDAO to get the o-user from DB
+		//Optional<User> ouser1 = udao.getByUsername(username);  // did not work 220114
+		Optional<User> ouser1 = udao.username4Auth(username);
+		User user1 = ouser1.get();
+								
+		// Display what is received about the new user
+		//String username = user1.getErs_username();  // use it get user id afer insert by calling GetByUsername 
+		System.out.println("us username " +username);
+		String password = user1.getErs_password();
+		System.out.println("us password "+ password);
+		int roleid = user1.getUser_role_id();
+		String email = user1.getUser_email(); 
+		String lname = user1.getUser_last_name();
+		String fname = user1.getUser_first_name();
+		int usersid = user1.getErs_users_id();
+		
+		String userrole = us.roleidToRoleString(roleid);
+		
+		unr2.setErs_username(username);
+		//unr2.setErs_password(password);  // confidential
+		unr2.setUser_email(email);
+		unr2.setUser_role(userrole);
+		unr2.setUser_last_name(lname);
+		unr2.setUser_first_name(fname);
+		
+		return Optional.ofNullable(unr2) ;
 	
-		}
-	
-		return Optional.empty();
+		//return Optional.empty();
 	}
 	
 // ===== fin manager to get all users  ============================================

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
-	<head>
+<html lang="en">
+<head>
+		<meta charset="utf-8"/>
 		<title>ERS Fin Mgr Main Menu</title>
 		<!-- This is a link to a bootstrap stylesheet, which will basically set a premade style for your page -->
 		<link
@@ -181,7 +182,7 @@
 			<!-- <button id="mcreateuButton" class="btn btn-primary">Create User</button> -->
 			<button id="mupdateuButton" class="btn btn-primary">Update User</button>
 
-			<input id="nusername" placeholder="Username" class=" input col-sm-1"/>
+			<input id="username" placeholder="Username" class=" input col-sm-1"/>
 				<input id="npassword" type="password" placeholder = "Password" class=" input col-sm-1"/>
 				<input id="nemail" placeholder="Email Address" class=" input col-sm-2"/>
 				<!-- <input id="nrole" placeholder="User Role" class = "input col-sm-1"/>  employee cannt change -->
@@ -191,7 +192,9 @@
 				<br>
 
 			<!-- User related with entry before click:-->
-			<button id="muusernameButton" class="btn btn-primary col-sm-1"> Get User by Username</button>
+			<label id ="actionResult">Kind Reiminder</label>
+			<br>
+			<button id="uusernameButton" class="btn btn-primary col-sm-1"> Get User by Username</button>
 			<!--<p>Check out <a href="https://www.freecodecamp.org/">freeCodeCamp</a>.</p>-->
 			<!-- <input id="resolverid" placeholder="Resolver ID" class="input col-sm-3"/> -->
 			<button id="muemailButton" class="btn btn-primary col-sm-1">Get User by Email Address</button>
@@ -204,7 +207,7 @@
 				<br></br>
 
 				<br>
-				<table id="mreimbTable" class="table table-hover table-bordered table-dark">
+				<table id="muserTable" class="table table-hover table-bordered table-dark">
 				<thead>
 					<tr>
 						<th class = "thead col-sm-1">Username</th>
@@ -224,7 +227,7 @@
 						
 					</tr>
 				</thead>
-				<tbody id="mreimbBody">
+				<tbody id="muserBody">
 					<!--We'll leave this blank: it will be filled by our JS when data comes in-->
 				</tbody>
 			</table>

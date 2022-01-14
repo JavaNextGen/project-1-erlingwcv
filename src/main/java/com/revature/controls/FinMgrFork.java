@@ -48,28 +48,35 @@ public class FinMgrFork {
 				if(ctx.req.getSession() != null) { //if the session exist
 					// Phase  1: send username info to UserService
 					String body = ctx.body();
+					System.out.println("body is "+body);
 					//int e_id = Integer.parseInt(ctx.pathParam(body));
 					 //int e_id = Integer.parseInt(ctx.pathParam("e_id"));
 					//Optional obody = Optional.ofNullable(body);
 					//ChallengeEmployee employeeById = ces.getChallengeEmployeeById(e_id);						
 					// Add the dependency into your pom.xml so it can import the Gson library
-					//Gson inputgson = new Gson();
-					//User user1 = gson.fromJson(body, User.class); //turn that JSON String into a LoginDTO object
+					Gson inputgson = new Gson();
+					User user1 = inputgson.fromJson(body, User.class); //turn that JSON String into a LoginDTO object
+					String user1string = user1.toString();
+					System.out.println("uGetByUsername user1 from web "+user1string);
 					////LoginDTO lDTO = inputgson.fromJson(body, LoginDTO.class);
 					////control flow to determine what happens in the event of successful/unsuccessful login
 					////invoke the login() method of the AuthService using the username and password from the LoginDTO
-					Optional<UserNRole> ounr2 = us.getByUsername(body);
+					String username = user1.getUsername();
+					System.out.println("username from body is "+username);
+					
+					// Stage 2: send output to Ctx
+					Optional<UserNRole> ounr2 = us.getByUsername(username);
 					////System.out.println("uToJS is " +uToJS.toString());
 					//login2 = asl.userLogin(lDTO);
 					//System.out.println("login user2 is " +user2.toString());
-					
 					UserNRole unr2 = ounr2.get();
-					// Stage 2: send output to Ctx
+					
 					Gson outputgson = new Gson();
 					// Use gson library to convert the java object to a JSON string
 					//String JSONEmployeeus = gson.toJson(ouById);
 					//String JSONuById = gson.toJson(ouById.get());
-					String JSONoutput =outputgson.toJson(unr2.toString());
+					//String JSONoutput =outputgson.toJson(unr2.toString()); // did  not work 220114
+					String JSONoutput =outputgson.toJson(unr2);
 					// Give a response body with a JSON string 
 					//ctx.result(JSONEmployees);
 					ctx.result(JSONoutput);

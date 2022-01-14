@@ -272,13 +272,14 @@ public class UserDAO {
     			userbyid = u;
     			
     			//Optional<User> userbyid = Optional.ofNullable(u);
+    			return Optional.ofNullable(userbyid);
     		}
     		
     		// when there are no more results in rs, the while loop will break
     		// then return the populated ArrayList of Users
     		//return userbyid; // error msg: cannot be resolved to a variable
     		//return Optional.of(userbyid);
-    		return Optional.ofNullable(userbyid);
+    		//return Optional.ofNullable(userbyid);
     				
     	} catch (SQLException e) {
     		System.out.println("Somethiong went wrong selecting users by username!");

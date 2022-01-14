@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.revature.controls.EmployeeFork;
+import com.revature.controls.FinMgrFork;
 //
 import com.revature.controls.HandleAuth;
 ////import com.revature.controllers.EmployeeController;
@@ -23,6 +24,7 @@ public class JavalinDriver {
 //		//EmployeeController ec = new EmployeeController();
 		HandleAuth ha = new HandleAuth();
 		EmployeeFork emenu = new EmployeeFork();
+		FinMgrFork mmenu = new FinMgrFork();
 //		
 //		//Testing Database Connectivity - just testing whether our Connection (from ConnectionFactory) is successful
 		try(Connection conn = ConnectionFactory.getConnection()){
@@ -55,7 +57,9 @@ public class JavalinDriver {
 //	}
 //
 // ++++++++++++  Finance Manager Menu Drivers
-	
+// get user by username
+		
+    app.post("finmgr/userbyusername", mmenu.uGetByUsernameHandler);
 	
 	
 	
