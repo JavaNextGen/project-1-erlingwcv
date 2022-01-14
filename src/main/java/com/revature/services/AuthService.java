@@ -50,52 +50,58 @@ public class AuthService {
     	  	
     	  	
     	try {
-//    		boolean unf = ldao.ers_usernameFound(username);
-//    		boolean upm = ldao.ers_passwordMatch(username, password);
-//    		to make the verification results more useful, the the data type changed
-//			from boolean to int    		
-    		int unf = ldao.ers_usernameFound(username);
-    		System.out.println("current u2ctx userRoleId is " + unf);
-    		int upm = ldao.ers_passwordMatch(username, password);
-    		System.out.println("current u2ctx userId is " + upm);
-    		// verify whether username is found
-    		//if (unf == false )	{
-    		if (unf == 0 )	{	
-    			throw new MyUserNotExistingException("User Does Not Exist.");
-    		// verify whether password is matched	
-    		//} else if (upm == false ) {
-    		} else if (upm == 0 ) {	
-    			throw new MyPasswordNoMatchException("The Passwords Do Not Match");
-    			
-    		//} else if ((unf == true) && (upm == true)) {
-    		} else if ((unf >0) && (upm >0)) {
-    			Optional<User> ou2Ctx = udao.username4Auth(username);
-    			u2Ctx = ou2Ctx.get();
-    				//u2Ctx.setUser_role_id(unf);
-    				//u2Ctx.setErs_users_id(upm);
-//    				int uid = u2Ctx.getErs_users_id();   		
-//    	    		int urid = u2Ctx.getUser_role_id(); 
-    		
-    	    		// If userID is greater than 0, DB has records for the user
-    	    		//if (uid > 0 ) {
-    				//System.out.println(u2Ctx.toString());  // it did not show up in console
-    	    		return u2Ctx;	
-    			
-    	    		//}
-    	    		
-    			   }	
-    		
-    	} catch (MyUserNotExistingException e) {
-    		e.getStackTrace();
-    		System.out.println("User Does Not Exist.");}
-    	  catch (MyPasswordNoMatchException e) {
-    		e.getStackTrace();
-    		System.out.println("The Passwords Do Not Match."); }
-    	  catch (RegistrationUnsuccessfulException e) {
-    		e.getStackTrace();
-    		System.out.println(e.toString());
-    		System.out.println("Username does not exit!");
-    		
+    		Optional<User> ou = ldao.getUserByUsername(username);
+    		if (ou.isPresent()) {
+      				User user2 = ou.get();
+      				int unf = user2.getErs_users_id();
+		    		//boolean unf = ldao.ers_usernameFound(username);
+     				//boolean upm = ldao.ers_passwordMatch(username, password);
+     				//to make the verification results more useful, the the data type changed
+     				//from boolean to int    		
+		    		//int unf = ldao.ers_usernameFound(username);
+		    		System.out.println("current u2ctx userRoleId is " + unf);
+		    		int upm = ldao.ers_passwordMatch(username, password);
+		    		System.out.println("current u2ctx userId is " + upm);
+		    		// verify whether username is found
+		    		//if (unf == false )	{
+		    		if (unf == 0 )	{	
+		    			throw new MyUserNotExistingException("User Does Not Exist.");
+		    		// verify whether password is matched	
+		    		//} else if (upm == false ) {
+		    		} else if (upm == 0 ) {	
+		    			throw new MyPasswordNoMatchException("The Passwords Do Not Match");
+		    		} else {
+		    			return user2;
+		    			
+		    		//} else if ((unf == true) && (upm == true)) {
+//		    		} else if ((unf >0) && (upm >0)) {
+//		    			Optional<User> ou2Ctx = udao.username4Auth(username);
+//		    			u2Ctx = ou2Ctx.get();
+//		    				//u2Ctx.setUser_role_id(unf);
+//		    				//u2Ctx.setErs_users_id(upm);
+//		    				//int uid = u2Ctx.getErs_users_id();   		
+//		    	    		//int urid = u2Ctx.getUser_role_id(); 
+//		    		
+//		    	    		// If userID is greater than 0, DB has records for the user
+//		    	    		//if (uid > 0 ) {
+//		    				//System.out.println(u2Ctx.toString());  // it did not show up in console
+//		    	    		return u2Ctx;	
+//		    			
+		    	    		//}
+		    	    		
+		    			   }	
+    				}
+		    	} catch (MyUserNotExistingException e) {
+		    		e.getStackTrace();
+		    		System.out.println("User Does Not Exist.");}
+		    	  catch (MyPasswordNoMatchException e) {
+		    		e.getStackTrace();
+		    		System.out.println("The Passwords Do Not Match."); }
+		    	  catch (RegistrationUnsuccessfulException e) {
+		    		e.getStackTrace();
+		    		System.out.println(e.toString());
+		    		System.out.println("Username does not exit!");
+		    		
     	}
     return null;
         

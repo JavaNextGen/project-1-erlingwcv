@@ -97,7 +97,7 @@ public class User extends AbstractUser {
       this.user_first_name = user_f_name;
     }   
     
-// //07 ++++++ DB to user owner for menu directing   
+// //07 ++++++ DB to user owner for login menu directing   
 //    // Constructor
     public User(String ers_username, String ers_password, int user_role_id, String u_email, String user_l_name, String user_f_name, int ers_users_id) {
 //        super();

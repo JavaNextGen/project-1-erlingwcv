@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import com.revature.exceptions.MyEmailNotFoundException;
 import com.revature.exceptions.MyPasswordNoMatchException;
@@ -187,9 +188,99 @@ public class LoginDAO {
 	     return false;
 	    		
 	    }
-		
-		
-	// 1 +++NOT for DB update ++++ Login Username Found method for "unique" or "found" answers =====================
+
+// +++++++++++ NOT for DB Update: Optional GetUserByUsername
+
+	
+//	++++++Used when DB update is not involved++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	public Optional<User> getUserByUsername (String username) {	
+		try(Connection conn = ConnectionFactory.getConnection()) {
+    		// Initiate an empty ResultSet object that will store the results of our SQL query
+    		ResultSet rs = null;
+    		
+    		// Write a query that we want to send to the database, and assign it to a String
+    		// String sql = "SELECT * FROM rev1p211206.ers_users WHERE ers_username = username;"; // SQL stmt not taken as concatenated strings
+    		// String sql = "SELECT * FROM rev1p211206.ers_users WHERE ers_username = ?";
+     		//String sql = "SELECT * FROM ers_users WHERE ers_username = ?";
+    		
+    		String sql = " SELECT \n"
+    				+ "(ers_username, \n"   // it was missing and 211231 userbyid result was null
+    				+ "ers_password, \n"
+    				+ "user_email, \n"
+            		+ "user_role_id, \n" // User itself cannot change the role
+            		+ "user_last_name, \n"
+            		+ "user_first_name, \n"
+            		+ "ers_users_id) \n"
+    				+ "FROM ers_users\n"
+    				//+ "LEFT JOIN ers_user_roles \n"
+    				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
+    				+ "WHERE ers_username = ?";
+
+    		// schema name to be included. otherwise JDBC do not see the table
+    		// Put the SQL query into a Statement object (The Connection object has a method for this)
+    		// Statement statement = conn.createStatement();
+    		// This time should use PreparedStatement to prevent SQL injection
+    		PreparedStatement ps = conn.prepareStatement(sql);
+    		// put the username parameter in the PreparedStatement to complete the SQL
+    		ps.setString(1, username); // 1st question mark in SQL, its variable
+    		
+    		// Execute the query, by putting the results into our ResultSet object
+    		// The Statement object has a method that takes Strings to execute as a SQL query
+    		//rs = statement.executeQuery(sql);
+    		rs = ps.executeQuery(); // sql already included in ps on line 33
+    		
+    		// All the above makes a call to our database. Now we need to store the data in an ArrayList.
+    		
+    		//Create an empty ArrayList to be filled with the data from the database
+    		// since username is unique, just need a user object to take the sql results
+    		//List<User> userList = new ArrayList<>();
+    		while(rs.next()) {
+    			if(rs.wasNull()) {
+    				return null; // no user found per username
+    			} else {
+    				
+    			
+//		    		//String  rsResult = rs.getString("ers_username");
+//		    		int user_role_idFound = rs.getInt("user_role_id");
+//		    		if (user_role_idFound > 0) {
+//		    			return user_role_idFound;
+//		    			// return true;
+		    		   		
+//    		while(rs.next()) {
+//    			// use the all args constructor to create a new User object from each returned row from the DB
+    			User u = new User(
+    				// we want to use rs.get from each column in the record
+    					rs.getString("ers_username"),  // 211231 says Null. why? user not found per username provided
+        				rs.getString("ers_password"), // confidential?
+    					rs.getString("user_email"),
+    					rs.getInt("user_role_id"), 
+    					rs.getString("user_last_name"),
+    					rs.getString("user_first_name"),
+    					rs.getInt("ers_user_id")		// User constructor #07 220113 
+    					);
+//    			// populate the ArrayList with each new User object
+//    			//userList.add(u); // u is the new User object we created above
+//    			userbyid = u;
+//    			
+    			Optional<User> ou = Optional.ofNullable(u); // Optional User By Username
+    			return ou;
+				}
+     		}
+ 	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Somethiong went wrong trying to verify username!");
+			e.printStackTrace();
+		}		
+    return null;
+    // return 0;
+	//return false;
+    		
+    }
+
+	
+	
+	
+// 1 +++NOT for DB update ++++ Login Username Found method for "unique" or "found" answers =====================
 		// to be called by services like login, createUser or updateUser
 //		public boolean ers_usernameFound (String username) {
 	//  +++++++ return user_role_id as found proof, as part of response to frontend	220110
