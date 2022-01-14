@@ -44,7 +44,7 @@ async function registerFunction() {
    //fetch request to the server
    //remember the second parameter fetch can take? It's essentially for configuring our fetch request
    //fetch sends a GET by default, but this seconds parameter can change that and more!
-   let response = await fetch (url + "login", {
+   let response = await fetch (url + "regis", {
 
        method: "POST", //send a POST request (would be a GET if we didn't do this...)
        body: JSON.stringify(userRegis), //turn our user object into JSON

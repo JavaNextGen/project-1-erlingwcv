@@ -122,7 +122,8 @@ public class UserService {
 			} else {
 //				// self update the user in session			
 //+++++++++++++++	// regisSuccess = udao.updateSelf(userToBeUpdated);
-					updateSuccess = udao.updateSelf(user3);
+					//updateSuccess = udao.updateSelf(user3);
+					updateSuccess = udao.updateSelf(user2);   // typo, user2 not user3
 					   System.out.println("selfUpdate user2 Success? "+updateSuccess);  // 220113
 					if (updateSuccess == true ) {
 						

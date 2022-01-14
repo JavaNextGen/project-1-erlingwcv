@@ -50,10 +50,14 @@ public class AuthService {
     	  	
     	  	
     	try {
-    		Optional<User> ou = ldao.getUserByUsername(username);
-    		if (ou.isPresent()) {
-      				User user2 = ou.get();
-      				int unf = user2.getErs_users_id();
+    		//Optional<User> ou = ldao.getUserByUsername(username);
+    		//if (ou.isPresent()) {
+    		Optional<User> oudao = udao.username4Auth(username);
+    			if (oudao.isPresent()) {
+      				User loginUser2 = oudao.get();
+      				int unf = loginUser2.getErs_users_id();  
+      				System.out.println("Auth login user id is " + loginUser2.getErs_users_id());
+      				
 		    		//boolean unf = ldao.ers_usernameFound(username);
      				//boolean upm = ldao.ers_passwordMatch(username, password);
      				//to make the verification results more useful, the the data type changed
@@ -71,7 +75,7 @@ public class AuthService {
 		    		} else if (upm == 0 ) {	
 		    			throw new MyPasswordNoMatchException("The Passwords Do Not Match");
 		    		} else {
-		    			return user2;
+		    			return loginUser2;
 		    			
 		    		//} else if ((unf == true) && (upm == true)) {
 //		    		} else if ((unf >0) && (upm >0)) {

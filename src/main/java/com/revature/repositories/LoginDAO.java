@@ -153,7 +153,8 @@ public class LoginDAO {
 	    		//List<User> userList = new ArrayList<>();
 	    			while(rs.next()) {
 	    				if (rs.wasNull()) {   // when the result is null: no duplicate email found
-	    					return false;
+	    					throw new MyEmailNotFoundException("Email Not Existing at user update");
+	    				//	return false; // unreadable code 220113
 	    				} else {
 	    					
 	    				////String  rsResult = rs.getString("ers_username");
@@ -174,9 +175,10 @@ public class LoginDAO {
 	        			////throw new MyPasswordNoMatchException("Password No Match");		
 	        		}
 	    		} catch (MyEmailNotFoundException e) {
-	    				e.printStackTrace();
-	    				e.getLocalizedMessage();
-	    				System.out.println("Email Address Not Found.");
+	    				return false;
+	    				//e.printStackTrace();  // unreadable code after "return"
+	    				//e.getLocalizedMessage();
+	    				//System.out.println("Email Address Not Existing at update.");
 	    		} catch (SQLException e) {
 	    			// TODO Auto-generated catch block
 	    				System.out.println("Somethiong went wrong trying to verify email!");
@@ -228,16 +230,16 @@ public class LoginDAO {
     		// The Statement object has a method that takes Strings to execute as a SQL query
     		//rs = statement.executeQuery(sql);
     		rs = ps.executeQuery(); // sql already included in ps on line 33
-    		
+    		System.out.println("LDAO -Get User by username: "+ rs.toString());
     		// All the above makes a call to our database. Now we need to store the data in an ArrayList.
     		
     		//Create an empty ArrayList to be filled with the data from the database
     		// since username is unique, just need a user object to take the sql results
     		//List<User> userList = new ArrayList<>();
     		while(rs.next()) {
-    			if(rs.wasNull()) {
-    				return null; // no user found per username
-    			} else {
+//    			if(rs.wasNull()) {
+//    				return null; // no user found per username
+//    			} else {
     				
     			
 //		    		//String  rsResult = rs.getString("ers_username");
@@ -248,7 +250,7 @@ public class LoginDAO {
 		    		   		
 //    		while(rs.next()) {
 //    			// use the all args constructor to create a new User object from each returned row from the DB
-    			User u = new User(
+    				User u = new User(
     				// we want to use rs.get from each column in the record
     					rs.getString("ers_username"),  // 211231 says Null. why? user not found per username provided
         				rs.getString("ers_password"), // confidential?
@@ -256,7 +258,7 @@ public class LoginDAO {
     					rs.getInt("user_role_id"), 
     					rs.getString("user_last_name"),
     					rs.getString("user_first_name"),
-    					rs.getInt("ers_user_id")		// User constructor #07 220113 
+    					rs.getInt("ers_users_id")		// User constructor #07 220113 
     					);
 //    			// populate the ArrayList with each new User object
 //    			//userList.add(u); // u is the new User object we created above
@@ -264,7 +266,7 @@ public class LoginDAO {
 //    			
     			Optional<User> ou = Optional.ofNullable(u); // Optional User By Username
     			return ou;
-				}
+				//}
      		}
  	} catch (SQLException e) {
 			// TODO Auto-generated catch block
