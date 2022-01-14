@@ -79,7 +79,9 @@ public class UserService {
 		Optional<User> ouser2 = udao.username4Auth(username);
 		user2 = ouser2.get();
 		int usersid = user2.getErs_users_id();
+		System.out.println("uselfUpdate usersidFound " + usersid);
 		int roleid = user2.getUser_role_id();
+		String priorEmail = user2.getUser_email();
 		
 		user2.setErs_username(username);
 		user2.setErs_password(password);
@@ -100,23 +102,23 @@ public class UserService {
 		
 		boolean updateSuccess;
 		try {
-			int unf = ldao.ers_usernameFound(username);
-			boolean uef = ldao.user_emailFound(email);
+			int unf = ldao.ers_usernameFound4dbUpdate(username, sessionUserid); // among all records EXCLUDING user in session
+			boolean uef = ldao.user_emailFound4dbUpdate(email, sessionUserid);  // among all records EXCLUDING user in session
 			// provide ers_users_id, if found by username
 			if (sessionUserid != usersid) {
 				
 				throw new MyAccountUnauthorizedException("Unauthorized Session!");
 			}
 			
-			if (unf > 0 && unf != usersid)	{
+			if (unf > 0)	{
 				
-				throw new UsernameNotUniqueException("Username Not Unique.");
+				throw new UsernameNotUniqueException("Username to Update Not Unique.");
 			// verify whether password is matched	
 //			} else if (usersid != 0 ) {
 //				throw new NewUserHasNonZeroIdException("New User Has Non-Zero ID");
 //				
-			} else if (uef == true && unf != usersid) {
-				throw new MyUserEmailNotUniqueException("User Email Not Unique");
+			} else if (uef == true) {
+				throw new MyUserEmailNotUniqueException("User Email to Update Not Unique");
 			} else {
 //				// self update the user in session			
 //+++++++++++++++	// regisSuccess = udao.updateSelf(userToBeUpdated);

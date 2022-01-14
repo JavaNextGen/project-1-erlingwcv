@@ -20,11 +20,10 @@ public class LoginDAO {
 	
 	//hardcoding username/password - which you WON'T do in P1
 	
-// 1 +++++++ Login Username Found method for "unique" or "found" answers =====================
-	// to be called by services like login, createUser or updateUser
-//	public boolean ers_usernameFound (String username) {
-//  +++++++ return user_role_id as found proof, as part of response to frontend	220110
-	public int ers_usernameFound (String username) {	
+
+// ++For DB Update: 1 ++++ which user_role_id's Username Found ++++++++++++++++++++++++++++++++++++++++++++++++
+// ++++++++++ 220113 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+	public int ers_usernameFound4dbUpdate (String username, int users_id) {	
 		try(Connection conn = ConnectionFactory.getConnection()) {
     		// Initiate an empty ResultSet object that will store the results of our SQL query
     		ResultSet rs = null;
@@ -39,7 +38,7 @@ public class LoginDAO {
     				+ "FROM ers_users\n"
     				//+ "LEFT JOIN ers_user_roles \n"
     				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
-    				+ "WHERE ers_username = ?";
+    				+ "WHERE ers_username = ? AND ers_users_id != ? ";
 
     		// schema name to be included. otherwise JDBC do not see the table
     		// Put the SQL query into a Statement object (The Connection object has a method for this)
@@ -48,6 +47,7 @@ public class LoginDAO {
     		PreparedStatement ps = conn.prepareStatement(sql);
     		// put the username parameter in the PreparedStatement to complete the SQL
     		ps.setString(1, username); // 1st question mark in SQL, its variable
+    		ps.setInt(2,  users_id); // the user's prior user's username should be excluded for comparison
     		
     		// Execute the query, by putting the results into our ResultSet object
     		// The Statement object has a method that takes Strings to execute as a SQL query
@@ -63,7 +63,7 @@ public class LoginDAO {
     		//String  rsResult = rs.getString("ers_username");
     		int user_role_idFound = rs.getInt("user_role_id");
     		if (user_role_idFound > 0) {
-    			return user_role_idFound;
+    			return user_role_idFound;  // indicating the username is used by another user at least
     			// return true;
     		}
     		
@@ -96,11 +96,172 @@ public class LoginDAO {
 			System.out.println("Somethiong went wrong trying to verify username!");
 			e.printStackTrace();
 		}		
-    return 0;
+    return 0; // this username is available to use or not found
 	//return false;
     		
     }
 	
+
+//+++For DB Update: 2 ++++whether email +++++220113+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+		
+	public boolean user_emailFound4dbUpdate (String regis_email, int users_id) {
+			
+			try(Connection conn = ConnectionFactory.getConnection()) {
+	    		// Initiate an empty ResultSet object that will store the results of our SQL query
+	    		ResultSet rs = null;
+	    		
+	    		// Write a query that we want to send to the database, and assign it to a String
+	    		// String sql = "SELECT * FROM rev1p211206.ers_users WHERE ers_username = username;"; // SQL stmt not taken as concatenated strings
+	    		// String sql = "SELECT * FROM rev1p211206.ers_users WHERE ers_username = ?";
+	     		//String sql = "SELECT * FROM ers_users WHERE ers_username = ?";
+	    		
+	    		String sql = " SELECT \n"
+	    				+ "user_email \n"
+	    				+ "FROM ers_users\n"
+	    				//+ "LEFT JOIN ers_user_roles \n"
+	    				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
+	    				+ "WHERE user_email = ? AND ers_users_id != users_id";
+
+	    		// schema name to be included. otherwise JDBC do not see the table
+	    		// Put the SQL query into a Statement object (The Connection object has a method for this)
+	    		// Statement statement = conn.createStatement();
+	    		// This time should use PreparedStatement to prevent SQL injection
+	    		PreparedStatement ps = conn.prepareStatement(sql);
+	    		// put the username parameter in the PreparedStatement to complete the SQL
+	    		ps.setString(1, regis_email); // 1st question mark in SQL, its variable
+	    		ps.setInt(2, users_id); // check all records except for the user in question, since 
+	    		// its prior email was unique
+	    		
+	    		// Execute the query, by putting the results into our ResultSet object
+	    		// The Statement object has a method that takes Strings to execute as a SQL query
+	    		//rs = statement.executeQuery(sql);
+	    		rs = ps.executeQuery(); // sql already included in ps on line 33
+	    		
+	    		// All the above makes a call to our database. Now we need to store the data in an ArrayList.
+	    		
+	    		//Create an empty ArrayList to be filled with the data from the database
+	    		// since username is unique, just need a user object to take the sql results
+	    		//List<User> userList = new ArrayList<>();
+	    			while(rs.next()) {
+	        		////String  rsResult = rs.getString("ers_username");
+	        		////int ers_users_idFound = rs.getInt("ers_users_id");
+	        		////String erspasswordFound = rs.getString("ers_password");
+	    	   		
+		        		String  rsMail = rs.getString("user_email");
+		        		if (rsMail.equalsIgnoreCase(regis_email)== true) {
+		        			return true;			
+		        		}  else {
+		        			throw new MyEmailNotFoundException("Email Address Not Found");		
+		        		}
+	       		
+	    				////if (erspasswordFound.equals(password) ) {
+	        			////return ers_users_idFound;
+	        			//// return true;
+	        			////}  else {
+	        			////throw new MyPasswordNoMatchException("Password No Match");		
+	        		}
+	    		} catch (MyEmailNotFoundException e) {
+	    				e.printStackTrace();
+	    				e.getLocalizedMessage();
+	    				System.out.println("Email Address Not Found.");
+	    		} catch (SQLException e) {
+	    			// TODO Auto-generated catch block
+	    				System.out.println("Somethiong went wrong trying to verify email!");
+	    				e.printStackTrace();
+	    				e.getLocalizedMessage();
+	    		}
+	    				
+	    		
+	     return false;
+	    		
+	    }
+		
+		
+	// 1 +++NOT for DB update ++++ Login Username Found method for "unique" or "found" answers =====================
+		// to be called by services like login, createUser or updateUser
+//		public boolean ers_usernameFound (String username) {
+	//  +++++++ return user_role_id as found proof, as part of response to frontend	220110
+//		++++++Used when DB update is not involved++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		public int ers_usernameFound (String username) {	
+			try(Connection conn = ConnectionFactory.getConnection()) {
+	    		// Initiate an empty ResultSet object that will store the results of our SQL query
+	    		ResultSet rs = null;
+	    		
+	    		// Write a query that we want to send to the database, and assign it to a String
+	    		// String sql = "SELECT * FROM rev1p211206.ers_users WHERE ers_username = username;"; // SQL stmt not taken as concatenated strings
+	    		// String sql = "SELECT * FROM rev1p211206.ers_users WHERE ers_username = ?";
+	     		//String sql = "SELECT * FROM ers_users WHERE ers_username = ?";
+	    		
+	    		String sql = " SELECT \n"
+	    				+ "user_role_id \n"
+	    				+ "FROM ers_users\n"
+	    				//+ "LEFT JOIN ers_user_roles \n"
+	    				//+ "ON ers_users.user_role_id = ers_user_roles.ers_user_role_id\n"
+	    				+ "WHERE ers_username = ?";
+
+	    		// schema name to be included. otherwise JDBC do not see the table
+	    		// Put the SQL query into a Statement object (The Connection object has a method for this)
+	    		// Statement statement = conn.createStatement();
+	    		// This time should use PreparedStatement to prevent SQL injection
+	    		PreparedStatement ps = conn.prepareStatement(sql);
+	    		// put the username parameter in the PreparedStatement to complete the SQL
+	    		ps.setString(1, username); // 1st question mark in SQL, its variable
+	    		
+	    		// Execute the query, by putting the results into our ResultSet object
+	    		// The Statement object has a method that takes Strings to execute as a SQL query
+	    		//rs = statement.executeQuery(sql);
+	    		rs = ps.executeQuery(); // sql already included in ps on line 33
+	    		
+	    		// All the above makes a call to our database. Now we need to store the data in an ArrayList.
+	    		
+	    		//Create an empty ArrayList to be filled with the data from the database
+	    		// since username is unique, just need a user object to take the sql results
+	    		//List<User> userList = new ArrayList<>();
+	    		while(rs.next()) {
+	    		//String  rsResult = rs.getString("ers_username");
+	    		int user_role_idFound = rs.getInt("user_role_id");
+	    		if (user_role_idFound > 0) {
+	    			return user_role_idFound;
+	    			// return true;
+	    		}
+	    		
+	    		}
+//	    		while(rs.next()) {
+//	    			// use the all args constructor to create a new User object from each returned row from the DB
+//	    			User u = new User(
+//	    				// we want to use rs.get from each column in the record
+//	    				//	rs.getInt("ers_user_id"),		// DB use only?
+//	    					rs.getString("ers_username"),  // 211231 says Null. why?
+//	    					rs.getString("user_first_name"),
+//	    					rs.getString("user_last_name"),
+//	    				//	rs.getString("ers_password"), // confidential?
+//	    					rs.getString("user_email"),
+//	    					rs.getInt("user_role_id")
+//	    					);
+//	    			// populate the ArrayList with each new User object
+//	    			//userList.add(u); // u is the new User object we created above
+//	    			userbyid = u;
+//	    			
+//	    			//Optional<User> userbyid = Optional.ofNullable(u);
+//	    		}
+	    		
+	    		
+	    		
+	    		
+	    		     			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Somethiong went wrong trying to verify username!");
+				e.printStackTrace();
+			}		
+	    return 0;
+		//return false;
+	    		
+	    }
+	
+	
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 // 2 ++++++++ Login User Password Match-per-Username/Password Method ++++++++++++++++++++	
 // to be called by createUser or updateUser
 	//public boolean ers_passwordMatch (String username, String password) {
@@ -171,7 +332,8 @@ public class LoginDAO {
 
 	}
 
-
+// ++++++++For search when DB  update is NOT involved  220113++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// +++++++++++ check username uniqueness, excluding userInSession: where users id != sessionUserid
 // 3 ++++++++++++++ User Email Found Method for "unique" answers	+++++++++++++++++++++++++++++
 	
 	public boolean user_emailFound (String regis_email) {
@@ -243,6 +405,8 @@ public class LoginDAO {
      return false;
     		
     }
+	
+	
 	
 // ++++status: wip 220113+++++++++ Login Session Identity Match by ers_users_id and user_role_id
 	// 2 ++++++++ Login User Password Match-per-Username/Password Method ++++++++++++++++++++	
