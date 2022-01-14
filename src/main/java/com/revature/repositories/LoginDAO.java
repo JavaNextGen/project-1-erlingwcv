@@ -20,7 +20,7 @@ public class LoginDAO {
 	
 	//hardcoding username/password - which you WON'T do in P1
 	
-
+	
 // ++For DB Update: 1 ++++ which user_role_id's Username Found ++++++++++++++++++++++++++++++++++++++++++++++++
 // ++++++++++ 220113 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 	public int ers_usernameFound4dbUpdate (String username, int users_id) {	
@@ -59,14 +59,21 @@ public class LoginDAO {
     		//Create an empty ArrayList to be filled with the data from the database
     		// since username is unique, just need a user object to take the sql results
     		//List<User> userList = new ArrayList<>();
+    	
     		while(rs.next()) {
-    		//String  rsResult = rs.getString("ers_username");
-    		int user_role_idFound = rs.getInt("user_role_id");
-    		if (user_role_idFound > 0) {
-    			return user_role_idFound;  // indicating the username is used by another user at least
-    			// return true;
-    		}
-    		
+    			if(rs.wasNull()) {     // in case the result is null: no duplicate username found 220113
+    				
+    				return 0; // User with the username was not found
+    				
+    			} else {
+    			
+		    		//String  rsResult = rs.getString("ers_username");
+		    		int user_role_idFound = rs.getInt("user_role_id");
+		    		if (user_role_idFound > 0) {
+		    			return user_role_idFound;  // indicating the username is used by another user at least
+		    			// return true;
+		    		}
+    			}
     		}
 //    		while(rs.next()) {
 //    			// use the all args constructor to create a new User object from each returned row from the DB
@@ -144,18 +151,22 @@ public class LoginDAO {
 	    		// since username is unique, just need a user object to take the sql results
 	    		//List<User> userList = new ArrayList<>();
 	    			while(rs.next()) {
-	        		////String  rsResult = rs.getString("ers_username");
-	        		////int ers_users_idFound = rs.getInt("ers_users_id");
-	        		////String erspasswordFound = rs.getString("ers_password");
-	    	   		
-		        		String  rsMail = rs.getString("user_email");
-		        		if (rsMail.equalsIgnoreCase(regis_email)== true) {
-		        			return true;			
-		        		}  else {
-		        			throw new MyEmailNotFoundException("Email Address Not Found");		
-		        		}
-	       		
-	    				////if (erspasswordFound.equals(password) ) {
+	    				if (rs.wasNull()) {   // when the result is null: no duplicate email found
+	    					return false;
+	    				} else {
+	    					
+	    				////String  rsResult = rs.getString("ers_username");
+		        		////int ers_users_idFound = rs.getInt("ers_users_id");
+		        		////String erspasswordFound = rs.getString("ers_password");
+		    	   		
+			        		String  rsMail = rs.getString("user_email");
+			        		if (rsMail.equalsIgnoreCase(regis_email)== true) {
+			        			return true;			
+			        		}  else {
+			        			throw new MyEmailNotFoundException("Email Address Not Found");		
+			        		}
+	    				}
+		    				////if (erspasswordFound.equals(password) ) {
 	        			////return ers_users_idFound;
 	        			//// return true;
 	        			////}  else {
