@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.revature.exceptions.MyAccountUnauthorizedException;
 import com.revature.exceptions.MyUserEmailNotUniqueException;
+import com.revature.exceptions.MyUserNotExistingException;
 import com.revature.exceptions.RegistrationUnsuccessfulException;
 import com.revature.exceptions.UsernameNotUniqueException;
 import com.revature.models.User;
@@ -48,6 +49,18 @@ public class UserService {
 			}	
 		}
 
+//+++++Convert from int to String, (from User to UserNRole)+++220114+++++++++++++++++++++++++++++++++++++++++++++++++		
+		
+		public String roleidToRoleString(int role_id) {
+			switch (role_id) {
+			case 1:
+				return "EMPLOYEE";
+			case 2:
+				return "FINANCE_MANAGER";
+			default:
+				return "EMPLOYEE";
+			}	
+		}
 	
 //220113 ++++++++  User Self Update User Info by ers_users_id ++++++++as Manager or as Employ ++++++++++++++++++++++++++		
 
@@ -183,20 +196,66 @@ public class UserService {
 	
 
 
-//+++++++ fin mgr == getbyUserName 211231 done +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++ fin mgr Presentation == getbyUserName 211231 done +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		/**
 		 *     Should retrieve a User with the corresponding username or an empty optional if there is no match.
 	     */
-
+// +++++++++Only Required ++++++++++++++220114++++++++++++++++++++++++++++++++++++++++
+	    
+	public Optional<UserNRole> getByUsername(String username) {
 		
+		// actions include
+//		1. check if User is null
+//		2. if not, convert Role to int
+//	   	3. UserDAO get the ResultSet 
+//      4. pack needed info as an applicable thinnest user to GetUbyUsername  at FinMgrFork controller 
+//    	
+//    	String un2ck = userToBeRegistered.getErs_username();
+//   // if  	
+//  // throw new  	UsernameNotUniqueException
 		
-		
-//	public Optional<User> getByUsername(String username) {
-//		
-//		return uDAO.getByUsername(username);
-//		
-//		//return Optional.empty();
-//	}
+	    
+		UserDAO udao = new UserDAO();
+		UserService us = new UserService();
+		UserNRole unr2 = new UserNRole(); // to pass to manager controller after converting role id to Role
+											// wrapped in Optional.OfNullible
+				
+		try {
+			// Step 1: call UserDAO to get the o-user from DB
+			Optional<User> ouser1 = udao.getByUsername(username);
+			User user1 = ouser1.get();
+									
+			// Display what is received about the new user
+			String username = user1.getErs_username();  // use it get user id afer insert by calling GetByUsername 
+			String password = user1.getErs_password();
+			int roleid = user1.getUser_role_id();
+			String email = user1.getUser_email(); 
+			String lname = user1.getUser_last_name();
+			String fname = user1.getUser_first_name();
+			int usersid = user1.getErs_users_id();
+			
+			String userrole = us.roleidToRoleString(roleid);
+			
+			unr2.setErs_username(username);
+			//unr2.setErs_password(password);  // confidential
+			unr2.setUser_email(email);
+			unr2.setUser_role(userrole);
+			unr2.setUser_last_name(lname);
+			unr2.setUser_first_name(fname);
+			
+			return Optional.ofNullable(unr2) ;
+			
+		} catch (MyUserNotExistingException e) {
+			// the user is null
+			//throw new MyUserNotExistingException("User Not Found by the Username");
+			e.printStackTrace();
+			e.getLocalizedMessage();
+			System.out.println("User Not Found by the Username -UserService");
+	
+		}
+	
+		return Optional.empty();
+	}
 	
 // ===== fin manager to get all users  ============================================
 	// Done getAllUsers 211231

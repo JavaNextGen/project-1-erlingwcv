@@ -177,34 +177,51 @@
 
 			</div>
 			<!-- user related: -->
-			</br>
-			<button id="mgetuserButton" class="btn btn-primary">Get All Users</button>
+			
 			<!-- <button id="mcreateuButton" class="btn btn-primary">Create User</button> -->
 			<button id="mupdateuButton" class="btn btn-primary">Update User</button>
 
+			<input id="nusername" placeholder="Username" class=" input col-sm-1"/>
+				<input id="npassword" type="password" placeholder = "Password" class=" input col-sm-1"/>
+				<input id="nemail" placeholder="Email Address" class=" input col-sm-2"/>
+				<!-- <input id="nrole" placeholder="User Role" class = "input col-sm-1"/>  employee cannt change -->
+				<input id="nlname" placeholder="Last Name" class=" input col-sm-1"/>
+				<input id="nfname" placeholder="First Name" class=" input col-sm-1"/>
+				<button id="uselfUpdateButton" class="btn btn-primary col-sm-1">Sumbit User Self Update</button>
+				<br>
 
 			<!-- User related with entry before click:-->
-			<button id="muusernameButton" class="btn btn-primary col-sm-3"> Get User by Username</button>
+			<button id="muusernameButton" class="btn btn-primary col-sm-1"> Get User by Username</button>
 			<!--<p>Check out <a href="https://www.freecodecamp.org/">freeCodeCamp</a>.</p>-->
 			<!-- <input id="resolverid" placeholder="Resolver ID" class="input col-sm-3"/> -->
-			<button id="muemailButton" class="btn btn-primary col-sm-3">Get User by Email Address</button>
+			<button id="muemailButton" class="btn btn-primary col-sm-1">Get User by Email Address</button>
+			<button id="mgetuserButton" class="btn btn-primary">Get All Users</button>
 			<br>
 			<br>
 			<!-- part 2 start below: employee user personal update-->
 				<!-- </br>
 				<button id="mupdateuButton" class="btn btn-primary">Update User</button> -->
 				<br></br>
+
 				<br>
 				<table id="mreimbTable" class="table table-hover table-bordered table-dark">
 				<thead>
 					<tr>
-						<th class = "thead col-sm-1"">Username</th>
+						<th class = "thead col-sm-1">Username</th>
+						<!-- <th class = "thead col-sm-1">Password</th>			 -->
+						<th class = "thead col-sm-2">Email</th>			
+						<th class = "thead col-sm-1">User Role</th>
+						<th class = "thead col-sm-1">Last Name</th>
+						<th class = "thead col-sm-1">First Name</th>
+						
+						
+						<!-- <th class = "thead col-sm-1"">Username</th>     // double double quote?
 						<th class = "thead col-sm-1"">Password</th>			
-						<th class = "thead col-sm-2"">Email</th>			
+						<th class = "thead col-sm-2">Email</th>			
 						<th class = "thead col-sm-1"">User Role</th>
 						<th class = "thead col-sm-1"">Last Name</th>
-						<th class = "thead col-sm-1"">First Name</th>
-						 
+						<th class = "thead col-sm-1"">First Name</th> -->
+						
 					</tr>
 				</thead>
 				<tbody id="mreimbBody">

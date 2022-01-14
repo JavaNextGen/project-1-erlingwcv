@@ -30,11 +30,7 @@ public class UserNRole{
 		
 		}
 	
-	
-	
-	
-	
-	
+
 	
 	// getter and setter
 	

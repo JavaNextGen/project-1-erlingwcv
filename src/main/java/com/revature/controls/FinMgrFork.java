@@ -1,21 +1,19 @@
 package com.revature.controls;
+
 //package com.revature.websvc;
 //
 //import com.revature.results.FMuserViews;
 //import java.util.List;
-////import com.google.gson.Gson;
-////import com.revature.models.User;
-////import com.revature.models.UserNRole;
-//import com.revature.services.UserService;
-//import io.javalin.http.Handler;
-//
-//
-//public class FinMgrFork {
-	
-	//package com.revature.controllers;
+import com.google.gson.Gson;
+import com.revature.models.User;
+import com.revature.models.UserNRole;
+import com.revature.services.UserService;
+import io.javalin.http.Handler;
+
+//package com.revature.controllers;
 	//
 	//import java.util.List;
-	//import java.util.Optional;
+import java.util.Optional;
 	//
 	//import com.google.gson.Gson;
 	//import com.revature.models.User;
@@ -25,59 +23,65 @@ package com.revature.controls;
 	//import io.javalin.http.Handler;
 	//
 	//public class FinMgrController {
-	//	
-//			UserService us = new UserService();
-//			FMuserViews fmu = new FMuserViews();
-			
-//			
-////			TODO: CREATE A CONTROLLER FOR JAVALIN FOR EACH OF THE SERVICES REQUESTEDD
-//			
 	//
-//			// *****This layer is where we'll parse our JSON into Java objects and vice vera*****
-//			// Sits between the Javalin Front Controller and the Service Layer
-//			// We'll either be getting data from the service layer (which is our DAO)
-//			// OR sending data to the service layer (will probably return some response that it was successful)
-//	
+//
+public class FinMgrFork {
+	
+		
+		UserService us = new UserService();
+			//FMuserViews fmu = new FMuserViews();
+						
+		////TODO: CREATE A CONTROLLER FOR JAVALIN FOR EACH OF THE SERVICES REQUESTEDD
+	
+			// *****This layer is where we'll parse our JSON into Java objects and vice vera*****
+			// Sits between the Javalin Front Controller and the Service Layer
+			// We'll either be getting data from the service layer (which is our DAO)
+			// OR sending data to the service layer (will probably return some response that it was successful)
+	
 // ==== M get User by Username ==========
-//			// get user by username
-//			// get by ID via Javalin
-//			//public Handler getChallengeEmployeeByIdHandler = (ctx) -> {
-//			public Handler getByUsernameHandler = (ctx) -> {
-//				
-//				if(ctx.req.getSession() != null) { //if the session exist
-//					
-//					String body = ctx.body();
-//					//int e_id = Integer.parseInt(ctx.pathParam(body));
-//					 //int e_id = Integer.parseInt(ctx.pathParam("e_id"));
-//				
-//					
-//					//Optional obody = Optional.ofNullable(body);
-//									
-//					//ChallengeEmployee employeeById = ces.getChallengeEmployeeById(e_id);	
-//					Optional<User> ouById = us.getByUsername(body);	
-//					
-//					
-//					// Add the dependency into your pom.xml so it can import the Gson library
-//					Gson gson = new Gson();
-//					
-//					
-//					// Use gson library to convert the java object to a JSON string
-//					//String JSONEmployeeus = gson.toJson(ouById);
-//					String JSONuById = gson.toJson(ouById.get());
-//									
-//					// Give a response body with a JSON string 
-//					//ctx.result(JSONEmployees);
-//					ctx.result(JSONuById);
-//					ctx.status(200);
-//					
-	//
-//				} else {
-//					ctx.result("Oh no you failed to get the user!!!!");
-//					ctx.status(404);
-//				}
-//			};
-	//
-	//
+// +++++Manager ++Ctx ++User Info Presentation +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			// get user by username
+			// get username via Javalin
+			//public Handler getChallengeEmployeeByIdHandler = (ctx) -> {
+		public Handler uGetByUsernameHandler = (ctx) -> {
+				
+				if(ctx.req.getSession() != null) { //if the session exist
+					// Phase  1: send username info to UserService
+					String body = ctx.body();
+					//int e_id = Integer.parseInt(ctx.pathParam(body));
+					 //int e_id = Integer.parseInt(ctx.pathParam("e_id"));
+					//Optional obody = Optional.ofNullable(body);
+					//ChallengeEmployee employeeById = ces.getChallengeEmployeeById(e_id);						
+					// Add the dependency into your pom.xml so it can import the Gson library
+					//Gson inputgson = new Gson();
+					//User user1 = gson.fromJson(body, User.class); //turn that JSON String into a LoginDTO object
+					////LoginDTO lDTO = inputgson.fromJson(body, LoginDTO.class);
+					////control flow to determine what happens in the event of successful/unsuccessful login
+					////invoke the login() method of the AuthService using the username and password from the LoginDTO
+					Optional<UserNRole> ounr2 = us.getByUsername(body);
+					////System.out.println("uToJS is " +uToJS.toString());
+					//login2 = asl.userLogin(lDTO);
+					//System.out.println("login user2 is " +user2.toString());
+					
+					UserNRole unr2 = ounr2.get();
+					// Stage 2: send output to Ctx
+					Gson outputgson = new Gson();
+					// Use gson library to convert the java object to a JSON string
+					//String JSONEmployeeus = gson.toJson(ouById);
+					//String JSONuById = gson.toJson(ouById.get());
+					String JSONoutput =outputgson.toJson(unr2.toString());
+					// Give a response body with a JSON string 
+					//ctx.result(JSONEmployees);
+					ctx.result(JSONoutput);
+					ctx.status(200);
+					
+				} else {
+				//	ctx.result("Oh no you failed to get the user!!!!");
+					ctx.result("User By Username search failed.");
+					ctx.status(404);
+				}
+			};
+}
 
 			
 			
