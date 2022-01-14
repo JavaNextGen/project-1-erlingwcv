@@ -40,7 +40,8 @@ async function ugetUbyUsername() {
     });
     let data = response.json;
    
-    console.log(response.body);
+    console.log(data);
+    // console.log(response.body);
     console.log(response.status); //userful for debug :)
 
    

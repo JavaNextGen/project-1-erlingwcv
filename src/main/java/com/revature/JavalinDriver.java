@@ -59,8 +59,8 @@ public class JavalinDriver {
 // ++++++++++++  Finance Manager Menu Drivers
 // get user by username
 		
-    app.post("finmgr/userbyusername", mmenu.uGetByUsernameHandler);
-	
+//    app.post("finmgr/userbyusername", mmenu.uGetByUsernameHandler);
+//    Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at http://localhost:3000/finmgr/userbyusername. (Reason: CORS request did not succeed). Status code: (null).	
 	
 	
 	
